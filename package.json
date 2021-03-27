@@ -1,0 +1,97 @@
+{
+  "name": "boilerplate-react-node",
+  "version": "1.1.8",
+  "description": "Boilerplate React Node",
+  "repository": "https://github.com/vitorblsantos/boilerplate-react-node",
+  "author": "Vitor Santos",
+  "license": "MIT",
+  "private": false,
+  "keywords": [
+    "Boilerplate",
+    "Boilerplate React",
+    "Boilerplate Node",
+    "Boilerplate React Node"
+  ],
+  "engines": {
+    "node": "12.x",
+    "yarn": "1.22.x"
+  },
+  "scripts": {
+    "build": "cross-env NODE_ENV=production concurrently --kill-others-on-fail \"rm -rf build; mkdir build\" \"webpack --mode=production\" \"sucrase ./server -d ./build/server/ --transforms imports\"",
+    "dev": "cross-env NODE_ENV=development concurrently --kill-others-on-fail \"webpack-dev-server --open --mode development -d\" \"nodemon --exec sucrase-node ./server \"",
+    "lint": "concurrently --kill-others-on-fail \"eslint ./client/**/*.{js,jsx}\" \"eslint ./server/**/*.js\"",
+    "start": "node ./build/server",
+    "server": "cross-env NODE_ENV=development sucrase-node ./server/",
+    "server:debug": "cross-env NODE_ENV=development nodemon --exec sucrase-node ./server/",
+    "test": "cross-env NODE_ENV=test jest",
+    "test:watch": "cross-env NODE_ENV=test jest --watch",
+    "test:coverage": "cross-env NODE_ENV=test jest --coverage"
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest.setup.js"
+    ],
+    "verbose": true
+  },
+  "dependencies": {
+    "@babel/core": "^7.13.13",
+    "@babel/plugin-transform-runtime": "^7.13.10",
+    "@babel/preset-env": "^7.13.12",
+    "@babel/preset-react": "^7.10.4",
+    "@babel/runtime": "^7.13.10",
+    "axios": "^0.21.1",
+    "babel-loader": "^8.1.0",
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "concurrently": "^5.3.0",
+    "core-js": "3",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "html-webpack-plugin": "^4.3.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-is": "^16.13.1",
+    "source-map-resolve": "^0.6.0",
+    "sucrase": "^3.15.0",
+    "typescript": "^4.2.3",
+    "webpack": "^4.44.1",
+    "webpack-bundle-tracker": "^1.0.0-alpha.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.19.0",
+    "@types/cors": "^2.8.7",
+    "@types/enzyme": "^3.10.5",
+    "@types/enzyme-adapter-react-16": "^1.0.6",
+    "@types/express": "^4.17.7",
+    "@types/jest": "^26.0.10",
+    "@types/react": "^16.9.46",
+    "@types/react-dom": "^16.9.8",
+    "@types/react-test-renderer": "^16.9.3",
+    "@types/webpack": "^4.41.21",
+    "babel-jest": "^26.3.0",
+    "chokidar": "^3.4.0",
+    "cross-env": "^7.0.2",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.3",
+    "eslint": "^7.6.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.3.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1",
+    "eslint-plugin-react": "^7.20.5",
+    "jest": "^26.3.0",
+    "nodemon": "^2.0.4",
+    "path": "^0.12.7",
+    "react-test-renderer": "^16.13.1",
+    "supertest": "^4.0.2",
+    "webpack-bundle-analyzer": "^3.8.0",
+    "webpack-manifest-plugin": "^3.1.0"
+  },
+  "resolutions": {
+    "chokidar": "^3.4.0"
+  }
+}
