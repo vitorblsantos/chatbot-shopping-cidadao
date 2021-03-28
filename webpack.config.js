@@ -7,12 +7,12 @@ const path = require('path')
 const webpack = require('webpack')
 
 module.exports = {
+  context: __dirname,
   devtool: 'source-map',
   devServer: {
-    contentBase: path.resolve(__dirname),
-    stats: 'errors-only'
+    historyApiFallback: true
   },
-  entry: path.resolve(__dirname, './client/index.js'),
+  entry: './client/index.js',
   module: {
     rules: [
       {
@@ -52,11 +52,14 @@ module.exports = {
     }
   },
   output: {
-    path: path.resolve(__dirname, './build/client/')
+    filename: 'main.js',
+    path: path.resolve(__dirname, './build/client/'),
+    publicPath: '/'
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, './client/src/index.html')
+      template: path.resolve(__dirname, './client/src/index.html'),
+      filename: 'index.html'
     }),
     new BundleTracker({ filename: 'webpack-stats.json' }),
     new WebpackManifestPlugin({ filename: 'manifest.json' }),
