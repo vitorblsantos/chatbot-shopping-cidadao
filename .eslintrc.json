@@ -1,0 +1,35 @@
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "node": true,
+    "jest": true
+  },
+  "extends": [
+    "standard",
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parserOptions": {
+    "ecmaVersion": 2018
+  },
+  "plugins": ["react"],
+  "rules": {
+    "comma-dangle": "error",
+    "indent": ["error", 2],
+    "no-console": 0,
+    "no-extra-semi": "error",
+    "quotes": [ "error", "single" ],
+    "semi": ["error", "never"]
+  },
+  "settings": {
+    "react": {
+      "version": "latest"
+    }
+  }
+}
