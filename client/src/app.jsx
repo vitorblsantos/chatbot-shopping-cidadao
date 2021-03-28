@@ -1,5 +1,5 @@
 import React from 'react'
-import Base from './components/_base'
+import Base from './components/_base.jsx'
 
 const App = () => (
   <Base />

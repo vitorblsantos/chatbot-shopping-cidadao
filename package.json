@@ -1,9 +1,8 @@
 {
-  "name": "boilerplate-react-node",
-  "version": "1.1.8",
-  "description": "Boilerplate React Node",
-  "repository": "https://github.com/vitorblsantos/boilerplate-react-node",
-  "author": "Vitor Santos",
+  "name": "shopping-cidadao",
+  "version": "1.0.1",
+  "description": "Challenge Shopping Cidadao",
+  "repository": "https://github.com/vitorblsantos/shopping-cidadao",
   "license": "MIT",
   "private": false,
   "keywords": [
