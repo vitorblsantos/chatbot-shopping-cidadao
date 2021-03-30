@@ -1,8 +1,16 @@
 import React from 'react'
-import Base from './components/_base.jsx'
+import { BrowserRouter as Router } from 'react-router-dom'
+import { createBrowserHistory } from 'history'
 
-const App = () => (
-  <Base />
-)
+import Routes from './routes'
+
+const App = () => {
+  const history = createBrowserHistory({ forceRefresh: true })
+  return (
+    <Router {...{ history }}>
+      <Routes />
+    </Router>
+  )
+}
 
 export default App
