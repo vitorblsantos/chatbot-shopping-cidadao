@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 
-import { Api } from '../helpers'
+import { Api } from '../../helpers'
 
 const Hello = () => {
   const [message, setMessage] = useState('')
