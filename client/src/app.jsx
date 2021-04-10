@@ -4,6 +4,8 @@ import { createBrowserHistory } from 'history'
 
 import Routes from './routes'
 
+import './styles/main.scss'
+
 const App = () => {
   const history = createBrowserHistory({ forceRefresh: true })
   return (
