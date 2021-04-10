@@ -6,8 +6,8 @@ import Home from '../components/home'
 
 const Routes = () => (
   <Switch>
-    <Route path='/' exact component={Base} />
-    <Route path='/home' exact component={Home} />
+    <Route path='/' exact component={Home} />
+    <Route path='/base' exact component={Base} />
   </Switch>
 )
 
