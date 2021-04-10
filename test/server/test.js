@@ -12,7 +12,7 @@ describe('Start Server', () => {
   it('Get default endpoint - /api', async done => {
     const { body, status } = await request.get('/api')
     expect(status).toEqual(200)
-    expect(body.message).toBe('Boilerplate React Node')
+    expect(body.message).toBe('Shopping Cidadao')
     done()
   })
 })

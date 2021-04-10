@@ -1,14 +1,32 @@
 'use strict'
 
 import React from 'react'
-import { mount } from 'enzyme'
+import { Route } from 'react-router-dom'
+import { shallow } from 'enzyme'
 
-import App from '../../client/src/App.jsx'
-import Base from '../../client/src/components/_base.jsx'
+import Routes from '../../client/src/routes'
 
-describe('Client', () => {
-  it('Should render _base', done => {
-    const wrapper = mount(<App />)
-    expect(wrapper.find(Base).length).toBe(1)
+import Base from '../../client/src/components/_base'
+import Home from '../../client/src/components/home'
+
+let pathMap = {}
+
+describe('Test client routes', () => {
+  beforeAll(() => {
+    jest.setTimeout(10000)
+    const component = shallow(<Routes />)
+    pathMap = component.find(Route).reduce((pathMap, route) => {
+      const routeProps = route.props()
+      pathMap[routeProps.path] = routeProps.component
+      return pathMap
+    }, {})
+  })
+
+  it('Should render component home for route /', _ => {
+    expect(pathMap['/']).toBe(Home)
+  })
+
+  it('Should render component _base for route /base', _ => {
+    expect(pathMap['/base']).toBe(Base)
   })
 })
