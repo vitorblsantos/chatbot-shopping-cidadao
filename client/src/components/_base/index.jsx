@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 
 import { Api } from '../../helpers'
 
-const Hello = () => {
+const Base = () => {
   const [message, setMessage] = useState('')
 
   useEffect(() => {
@@ -18,4 +18,4 @@ const Hello = () => {
   return <h1>{message}</h1>
 }
 
-export default Hello
+export default Base
