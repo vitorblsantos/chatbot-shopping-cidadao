@@ -1,12 +1,18 @@
 import React from 'react'
-
-import Routes from './routes'
+import Body from './components/body'
+import Header from './components/header'
+import Footer from './components/footer'
+import Wrapper from './components/wrapper'
 
 import './styles/main.scss'
 
 const App = () => {
   return (
-    <Routes />
+    <Wrapper>
+      <Header />
+      <Body />
+      <Footer />
+    </Wrapper>
   )
 }
 
