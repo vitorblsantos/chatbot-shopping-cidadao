@@ -4,7 +4,6 @@ const { resolve } = require('path')
 const { DefinePlugin } = require('webpack')
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin')
 
-const BundleTracker = require('webpack-bundle-tracker')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
@@ -17,10 +16,6 @@ module.exports = {
   entry: './client/index.js',
   module: {
     rules: [
-      {
-        test: /\.svg$/,
-        loader: 'svg-inline-loader'
-      },
       {
         test: /\.(css|scss)$/,
         use: [
@@ -71,7 +66,6 @@ module.exports = {
     publicPath: '/'
   },
   plugins: [
-    new BundleTracker({ filename: 'webpack-stats.json' }),
     new DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     }),
