@@ -21,10 +21,10 @@ export const Container = styled.div`
     animation: ${animation} 1.2s infinite ease-in-out;
     background: #e8c33b;
     border-radius: 24%;
-    height: 50px;
-    width: 4px;
     display: inline-block;
+    height: 50px;
     margin-left: 3px;
+    width: 4px;
 
     :nth-of-type(2) {
       animation-delay:-1.1s;

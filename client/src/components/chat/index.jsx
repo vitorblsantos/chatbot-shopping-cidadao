@@ -2,7 +2,7 @@ import React from 'react'
 import { array } from 'prop-types'
 import { Container, Outside } from './style'
 
-const Wrapper = ({ children }) => (
+const Chat = ({ children }) => (
   <Outside>
     <Container>
       {children}
@@ -10,8 +10,8 @@ const Wrapper = ({ children }) => (
   </Outside>
 )
 
-Wrapper.propTypes = {
+Chat.propTypes = {
   children: array
 }
 
-export default Wrapper
+export default Chat

@@ -1,18 +1,23 @@
 import React from 'react'
+
 import Body from './components/body'
-import Header from './components/header'
+import Chat from './components/chat'
 import Footer from './components/footer'
-import Wrapper from './components/wrapper'
+import Header from './components/header'
+import Toast from './components/toast'
 
 import './styles/main.scss'
 
 const App = () => {
   return (
-    <Wrapper>
-      <Header />
-      <Body />
-      <Footer />
-    </Wrapper>
+    <>
+      <Chat>
+        <Header />
+        <Body />
+        <Footer />
+      </Chat>
+      <Toast />
+    </>
   )
 }
 
