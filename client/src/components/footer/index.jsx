@@ -1,10 +1,12 @@
 import React from 'react'
-import { Container, Input, Submit } from './style'
+import { Container, Input, Button, Send } from './style'
 
 const Footer = () => (
   <Container>
     <Input />
-    <Submit />
+    <Button>
+      <Send />
+    </Button>
   </Container>
 )
 

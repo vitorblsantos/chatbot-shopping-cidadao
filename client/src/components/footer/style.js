@@ -1,4 +1,22 @@
 import styled from 'styled-components'
+import SendImage from '../../images/send.svg'
+
+export const Button = styled.button`
+  align-items: center;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  height: 42px;
+  justify-content: center;
+  margin: 0 0 0 auto;
+  width: 40px;
+
+  :focus {
+    outline: none;
+  }
+`
 
 export const Container = styled.div`
   align-items: center;
@@ -32,19 +50,7 @@ export const Input = styled.input`
     outline: none;
   } 
 `
-export const Submit = styled.button`
-  background: url('https://lh3.googleusercontent.com/proxy/RVMis0a7zIE7yj78HKuFpUwuIA7zLNBXX4jFzM_V6ga6Yn1O9MOJN_d-m5GYnev7BEEA0kwALQRHbBLSgg--YmVj7cOoffeviWJCYs0ppVhe3zkUpVMvWJs') no-repeat;
-  background-position: center;
-  background-size: 24px;
-  background-color: transparent;
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  cursor: pointer;
-  height: 42px;
-  margin: 0 0 0 auto;
-  width: 36px;
-
-  :focus {
-    outline: none;
-  }
+export const Send = styled(SendImage)`
+  height: 24px;
+  width: auto;
 `

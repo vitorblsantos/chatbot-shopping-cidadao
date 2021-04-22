@@ -28,14 +28,20 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: [
           resolve(__dirname, './build/'),
-          resolve(__dirname, './node_modules/'),
-          resolve(__dirname, './test/')
+          resolve(__dirname, './node_modules/')
         ],
         loader: 'babel-loader',
         query: {
           cacheDirectory: true,
           plugins: ['@babel/transform-runtime'],
           presets: ['@babel/preset-react', '@babel/preset-env']
+        }
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        loader: 'file-loader',
+        options: {
+          name: 'build/client/images/[name].[ext]'
         }
       },
       {
