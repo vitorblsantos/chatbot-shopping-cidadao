@@ -1,17 +1,27 @@
-import React from 'react'
-import { array } from 'prop-types'
-import { Container, Outside } from './style'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 
-const Chat = ({ children }) => (
-  <Outside>
-    <Container>
-      {children}
+import Body from '../body'
+import Footer from '../footer'
+import Header from '../header'
+
+import { Container } from './style'
+
+const Chat = () => {
+  const [active, setActive] = useState(false)
+  const { config } = useSelector(({ chatbot }) => chatbot)
+
+  useEffect(() => {
+    setActive(config.active)
+  }, [config])
+
+  return (
+    <Container {...{ active }}>
+      <Header />
+      <Body />
+      <Footer />
     </Container>
-  </Outside>
-)
-
-Chat.propTypes = {
-  children: array
+  )
 }
 
 export default Chat

@@ -1,18 +1,25 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const Container = styled.div`
   background: #ffffff;
   border: 0;
   border-radius: 10px;
-  height: 468px;
+  bottom: -60px;
+  height: 0;
+  opacity: 0;
+  margin: 0 0 0 auto;
   position: relative;
-  transition: all .3s ease-in-out;
-  width: 320px;
-`
+  transition: height .1s, opacity .3s, margin .2s, visibility .3s, width .1s;
+  transition-timing-function: ease-in-out;
+  visibility: hidden;
+  width: 0;
 
-export const Outside = styled.div`
-  bottom: 20px;
-  overflow: hidden;
-  position: absolute;
-  right: 20px;
+  ${({ active }) => active && css`
+    height: 468px;
+    opacity: 1;
+    transition: height .3s, opacity .5s, margin .2s, visibility .5s, width .1s;
+    transition-timing-function: ease-in-out;
+    visibility: visible;
+    width: 320px;
+  `}
 `

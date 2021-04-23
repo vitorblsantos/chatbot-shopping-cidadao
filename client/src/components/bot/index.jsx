@@ -1,14 +1,12 @@
 'use strict'
 
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { array, bool } from 'prop-types'
 
 import { BalloonBot, Content, Icon, Image, Option, Options, Row } from './style'
 
-import Loader from '../loader'
-
 const Bot = ({ loading, options }) => {
-  if (loading) return <Loader />
   return (
     <Row>
       <Content>

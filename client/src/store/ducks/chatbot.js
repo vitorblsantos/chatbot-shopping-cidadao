@@ -15,10 +15,14 @@ export const Types = {
 export default function reducer (state = INITIAL_STATE, { type, payload }) {
   switch (type) {
   case Types.SET_ACTIVE:
-    state = { ...state, 'config.active': payload.loading }
-    return state
+    return {
+      ...state,
+      config: {
+        active: payload.active
+      }
+    }
   case Types.SET_LOADING:
-    state = { ...state, 'config.loading': payload.loading }
+    state.config = { ...state.config, loading: payload.loading }
     return state
   default:
     return state

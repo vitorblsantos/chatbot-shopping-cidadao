@@ -1,19 +1,31 @@
 'use strict'
 
-import React from 'react'
-import { bool } from 'prop-types'
-import { Container } from './style'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { setActive } from '../../store/ducks/chatbot'
 
 import Logo from '../../images/logo.svg'
 
-const Toast = ({ active }) => (
-  <Container {...{ active }}>
-    <Logo />
-  </Container>
-)
+import { Container } from './style'
 
-Toast.propTypes = {
-  active: bool
+const Toast = () => {
+  const dispatch = useDispatch()
+  const [visible, setVisible] = useState(false)
+
+  const { config } = useSelector(({ chatbot }) => chatbot)
+
+  const handleChat = () => dispatch(setActive(!config.active))
+
+  useEffect(() => {
+    setVisible(config.active)
+  }, [config])
+
+  return (
+    <Container onClick={handleChat} active={visible}>
+      <Logo />
+    </Container>
+  )
 }
 
 export default Toast
