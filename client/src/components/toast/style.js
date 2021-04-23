@@ -4,21 +4,22 @@ export const Container = styled.div`
   align-items: center;
   background: #ffffff;
   border: 2px solid #2f94d0;
-  border-radius: 32px;
+  border-radius: 36px;
   bottom: 0;
   cursor: pointer;
   display: flex;
   height: 80px;
   justify-content: center;
-  left: 0;
   margin: 0 0 0 auto;
   opacity: 1;
-  position: relative;
-  transition: all .3s ease-in-out;
+  position: absolute;
+  right: 0;
+  transition: all .3s;
+  transition-timing-function: ease-in-out;
   visibility: visible;
-  width: 112px;
+  width: 100px;
   ${({ active }) => active && css`
-    left: 112px;
+    right: -200px;
     opacity: 0;
     visibility: hidden;
   `}

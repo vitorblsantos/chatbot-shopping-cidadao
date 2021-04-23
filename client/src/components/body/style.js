@@ -1,11 +1,16 @@
 import styled from 'styled-components'
 
-export const Messages = styled.div`
+export const Container = styled.div`
+  background: #fcfcfc;
+  border: 1px solid #0179c0;
+  border-bottom: 0;
+  border-top: 0;
   display: flex;
   flex-flow: column nowrap;
   height: 76%;
   overflow-y: scroll;
   padding: 20px 12px;
+  transition: all .3s ease-in-out;
   width: 100%;
 `
 

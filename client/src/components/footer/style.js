@@ -4,7 +4,7 @@ import SendImage from '../../images/send.svg'
 export const Button = styled.button`
   align-items: center;
   background-color: #ffffff;
-  border: 1px solid #ccc;
+  border: 1px solid #0179c0;
   border-radius: 12px;
   cursor: pointer;
   display: flex;
@@ -20,6 +20,7 @@ export const Button = styled.button`
 
 export const Container = styled.div`
   align-items: center;
+  border: 1px solid #0179c0;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   bottom: 0;
@@ -40,7 +41,7 @@ export const Container = styled.div`
   }
 `
 export const Input = styled.input`
-  border: 1px solid #ccc;
+  border: 1px solid #0179c0;
   border-radius: 8px;
   font-size: 1rem;
   height: 32px;

@@ -9,8 +9,9 @@ const INITIAL_STATE = {
 }
 
 export const Types = {
+  SET_ACTIVE: 'SET_ACTIVE',
   SET_LOADING: 'SET_LOADING',
-  SET_ACTIVE: 'SET_ACTIVE'
+  SET_MESSAGE: 'SET_MESSAGE'
 }
 
 export default function reducer (state = INITIAL_STATE, { type, payload }) {
@@ -33,6 +34,15 @@ export default function reducer (state = INITIAL_STATE, { type, payload }) {
       }
     }
 
+  case Types.SET_MESSAGE:
+    return {
+      ...state,
+      messages: [
+        ...state.messages,
+        payload.messages
+      ]
+    }
+
   default:
     return state
   }
@@ -52,6 +62,15 @@ export function setLoading (loading) {
     type: Types.SET_LOADING,
     payload: {
       loading
+    }
+  }
+}
+
+export function setMessage (messages) {
+  return {
+    type: Types.SET_MESSAGE,
+    payload: {
+      messages
     }
   }
 }
