@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const BalloonUser = styled.div`
+export const Balloon = styled.div`
   background: #f8fdff;
   border: 1px solid #1785c5;
   border-radius: 10px;
@@ -13,8 +13,8 @@ export const BalloonUser = styled.div`
   width: 90%;
 `
 
-export const Wrap = styled.div`
+export const Row = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin: 0 0 20px;
+  margin: 0 0 16px;
 `

@@ -1,44 +1,31 @@
 'use strict'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Messages } from './style'
 
 import Bot from '../bot'
+import Loader from '../loader'
+import Options from '../options'
 import User from '../user'
 
-const loading = 1
+const Body = () => {
+  const [loading, setLoading] = useState(false)
+  const { config } = useSelector(({ chatbot }) => chatbot)
 
-const options = [
-  {
-    label: 'option 1',
-    value: {
-      input: {
-        text: 'Agendamento RG'
-      }
-    }
-  }, {
-    label: 'option 1',
-    value: {
-      input: {
-        text: 'Agendamento RG'
-      }
-    }
-  }, {
-    label: 'option 1',
-    value: {
-      input: {
-        text: 'Agendamento RG'
-      }
-    }
-  }
-]
+  useEffect(() => {
+    setLoading(config.loading)
+  }, [config])
 
-const Body = () => (
-  <Messages>
-    <Bot {...{ loading: false, options }} />
-    <User />
-    <Bot {...{ loading: true, options }} />
-  </Messages>
-)
+  return (
+    <Messages>
+      <Bot />
+      <User />
+      <Options />
+      <User />
+      {loading && <Loader />}
+    </Messages>
+  )
+}
 
 export default Body

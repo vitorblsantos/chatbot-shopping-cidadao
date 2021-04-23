@@ -2,14 +2,14 @@
 
 import React from 'react'
 
-import { BalloonUser, Wrap } from './style'
+import { Balloon, Row } from './style'
 
 const User = () => (
-  <Wrap>
-    <BalloonUser>
+  <Row>
+    <Balloon>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-    </BalloonUser>
-  </Wrap>
+    </Balloon>
+  </Row>
 )
 
 export default User

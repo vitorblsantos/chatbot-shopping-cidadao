@@ -3,8 +3,9 @@
 const INITIAL_STATE = {
   config: {
     active: false,
-    loading: false
-  }
+    loading: true
+  },
+  messages: []
 }
 
 export const Types = {
@@ -18,12 +19,20 @@ export default function reducer (state = INITIAL_STATE, { type, payload }) {
     return {
       ...state,
       config: {
+        ...state.config,
         active: payload.active
       }
     }
+
   case Types.SET_LOADING:
-    state.config = { ...state.config, loading: payload.loading }
-    return state
+    return {
+      ...state,
+      config: {
+        ...state.config,
+        loading: payload.loading
+      }
+    }
+
   default:
     return state
   }

@@ -16,15 +16,17 @@ export const Bot = styled.img.attrs(() => ({
 
 export const Container = styled.div`
   display: block;
-  margin: 6px 0 0;
+  height: 44px;
+  margin: 0;
   div {
     animation: ${animation} 1.2s infinite ease-in-out;
     background: #e8c33b;
     border-radius: 24%;
     display: inline-block;
-    height: 50px;
+    height: 44px;
     margin-left: 3px;
-    width: 4px;
+    margin-top: 8px;
+    width: 3px;
 
     :nth-of-type(2) {
       animation-delay:-1.1s;
