@@ -4,12 +4,12 @@ export const Container = styled.div`
   background: #ffffff;
   border: 0;
   border-radius: 10px;
-  bottom: 0;
+  bottom: 28px;
   height: 0;
   opacity: 0;
   margin: 0 0 0 auto;
   position: absolute;
-  right: 0;
+  right: 24px;
   transition: height .1s, opacity .2s, margin .2s, visibility .2s, width .1s;
   transition-timing-function: ease-in-out;
   visibility: hidden;

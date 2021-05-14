@@ -38,7 +38,7 @@ module.exports = {
         }
       },
       {
-        test: /\.(png|jpe?g|gif)$/i,
+        test: /\.(ico|png|jpe?g|gif|webp)$/i,
         loader: 'file-loader',
         options: {
           name: 'build/client/images/[name].[ext]'
@@ -71,7 +71,7 @@ module.exports = {
     }
   },
   output: {
-    filename: '[name].bundle.js',
+    filename: '[contenthash].bundle.js',
     path: resolve(__dirname, './build/client/'),
     publicPath: '/'
   },
@@ -80,6 +80,7 @@ module.exports = {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     }),
     new HtmlWebpackPlugin({
+      favicon: './client/src/images/logo.svg',
       template: resolve(__dirname, './client/src/index.html'),
       filename: 'index.html'
     }),

@@ -1,15 +1,11 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 export const Container = styled.div`
-  bottom: 20px;
+  bottom: 0;
   overflow: hidden;
-  height: 84px;
+  height: ${({ active }) => active ? '500px' : '132px'};
   position: fixed;
-  right: 20px;
-  width: 120px;
+  right: 0;
+  width: 352px;
 
-  ${({ active }) => active && css`
-    height: 600px;
-    width: 400px;
-  `}
 `
