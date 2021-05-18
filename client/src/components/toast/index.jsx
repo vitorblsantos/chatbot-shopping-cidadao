@@ -30,7 +30,7 @@ const Toast = () => {
 
     setMessage({ active: true, content: messages[random] })
 
-    Sleep(4000).then(() => setMessage({ ...message, active: false }))
+    Sleep(8000).then(() => setMessage({ ...message, active: false }))
   })
 
   useEffect(() => {
