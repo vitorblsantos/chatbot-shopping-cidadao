@@ -2,10 +2,11 @@
 
 import { createStore, combineReducers } from 'redux'
 
-import { chatbot } from './ducks'
+import { chatbot, toast } from './ducks'
 
 const reducer = combineReducers({
-  chatbot
+  chatbot,
+  toast
 })
 
 const store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())

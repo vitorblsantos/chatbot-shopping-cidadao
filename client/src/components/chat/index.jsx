@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
 
 import Body from '../body'
@@ -8,13 +8,7 @@ import Header from '../header'
 import { Container } from './style'
 
 const Chat = () => {
-  const [active, setActive] = useState(false)
-  const { config } = useSelector(({ chatbot }) => chatbot)
-
-  useEffect(() => {
-    setActive(config.active)
-  }, [config])
-
+  const { active } = useSelector(({ chatbot }) => chatbot)
   return (
     <Container {...{ active }}>
       <Header />

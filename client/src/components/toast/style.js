@@ -24,7 +24,7 @@ export const Container = styled.div`
   transition: all .3s;
   transition-timing-function: ease-in-out;
   width: 100%;
-  ${({ chatVisible }) => chatVisible && css`
+  ${({ active }) => !active && css`
     right: -200px;
     opacity: 0;
     visibility: hidden;

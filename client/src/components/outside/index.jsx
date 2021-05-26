@@ -7,10 +7,10 @@ import { array } from 'prop-types'
 import { Container } from './style'
 
 const Outside = ({ children }) => {
-  const { config } = useSelector(({ chatbot }) => chatbot)
+  const { active } = useSelector(({ chatbot }) => chatbot)
 
   return (
-    <Container active={config.active}>
+    <Container {...{ active }}>
       {children}
     </Container>
   )

@@ -19,9 +19,8 @@ const AlwaysScrollToBottom = () => {
 }
 
 const Body = () => {
-  const [loading, setLoading] = useState(false)
   const [scroll, setScroll] = useState(false)
-  const { config, messages } = useSelector(({ chatbot }) => chatbot)
+  const { active, loading, messages } = useSelector(({ chatbot }) => chatbot)
 
   const handleScroll = async bool => {
     await Sleep(700)
@@ -29,9 +28,8 @@ const Body = () => {
   }
 
   useEffect(() => {
-    handleScroll(config.active)
-    setLoading(config.loading)
-  }, [config])
+    handleScroll(active)
+  }, [active])
 
   useEffect(() => {
     if (!messages.length) return () => false

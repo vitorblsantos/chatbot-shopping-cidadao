@@ -2,9 +2,10 @@
 
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Sleep } from '../../helpers'
 
-import { setActive } from '../../store/ducks/chatbot'
+import { Sleep } from '../../helpers'
+import { setChatActive } from '../../store/ducks/chatbot'
+import { setToastActive } from '../../store/ducks/toast'
 
 import { Button, Container, Interaction, Logo } from './style'
 
@@ -13,9 +14,13 @@ const Toast = () => {
   const [message, setMessage] = useState({ active: false, content: '' })
   const [chatVisible, setChatVisible] = useState(false)
 
-  const { config } = useSelector(({ chatbot }) => chatbot)
+  const chatbot = useSelector(({ chatbot }) => chatbot)
+  const toast = useSelector(({ toast }) => toast)
 
-  const handleChat = () => dispatch(setActive(!config.active))
+  const handleChat = () => {
+    dispatch(setChatActive(!chatbot.active))
+    dispatch(setToastActive(!toast.active))
+  }
 
   const handleMessage = () => Sleep(2000).then(() => {
     const messages = [
@@ -34,16 +39,11 @@ const Toast = () => {
   })
 
   useEffect(() => {
-    setChatVisible(config.active)
-    setMessage({ ...message, active: false })
-  }, [config])
-
-  useEffect(() => {
     handleMessage()
   }, [])
 
   return (
-    <Container {...{ chatVisible }}>
+    <Container {...toast}>
       <Button onClick={handleChat}>
         <Logo />
       </Button>
