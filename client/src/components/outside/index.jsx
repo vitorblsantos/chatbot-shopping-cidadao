@@ -1,23 +1,22 @@
 'use strict'
 
 import React from 'react'
-import { useSelector } from 'react-redux'
-import { array } from 'prop-types'
+import { node } from 'prop-types'
 
-import { Container } from './style'
+import { Container, Relative } from './style'
 
 const Outside = ({ children }) => {
-  const { active } = useSelector(({ chatbot }) => chatbot)
-
   return (
-    <Container {...{ active }}>
-      {children}
+    <Container>
+      <Relative>
+        {children}
+      </Relative>
     </Container>
   )
 }
 
 Outside.propTypes = {
-  children: array
+  children: node
 }
 
 export default Outside

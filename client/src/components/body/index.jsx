@@ -20,7 +20,7 @@ const AlwaysScrollToBottom = () => {
 
 const Body = () => {
   const [scroll, setScroll] = useState(false)
-  const { active, loading, messages } = useSelector(({ chatbot }) => chatbot)
+  const { active, loader, messages } = useSelector(({ chatbot }) => chatbot)
 
   const handleScroll = async bool => {
     await Sleep(700)
@@ -41,7 +41,7 @@ const Body = () => {
       <User />
       <Options />
       <User />
-      {loading && <Loader />}
+      {loader && <Loader />}
       {scroll && <AlwaysScrollToBottom />}
     </Container>
   )
