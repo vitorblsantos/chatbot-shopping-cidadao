@@ -39,6 +39,7 @@ export const Message = styled.div`
   border-right: 0;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
+  box-shadow: rgba(0, 0, 0, .25) 0px .0625em .0625em, rgba(0, 0, 0, .25) 0px 0.125em .5em, rgba(255, 255, 255, .1) 0px 0px 0px 1px inset;
   display: flex;
   font-size: 1rem;
   height: 56px;

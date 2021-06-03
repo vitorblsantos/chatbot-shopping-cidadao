@@ -23,7 +23,6 @@ export const Container = styled.div`
     display: inline-block;
     height: 44px;
     margin-left: 3px;
-    margin-top: 8px;
     width: 3px;
 
     :nth-of-type(2) {
