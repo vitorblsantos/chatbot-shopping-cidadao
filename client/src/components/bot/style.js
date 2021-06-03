@@ -2,12 +2,13 @@ import styled from 'styled-components'
 import ImageBalloon from '../../images/balloon.svg'
 
 export const Balloon = styled.div`
+  align-items: center;
   background: #fff7ef;
   border: 1px solid #f7921e;
   border-radius: 16px;
-  border-top-left-radius: 4px;
-  margin: 20px 0 0;
-  padding: 8px 12px;
+  display: flex;
+  margin: 0;
+  padding: 4px 8px;
 `
 
 export const Image = styled(ImageBalloon)`
@@ -28,5 +29,5 @@ export const Icon = styled.div`
 export const Row = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin: 0;
+  margin: 0 0 12px 0;
 `

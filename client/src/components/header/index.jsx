@@ -1,5 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Sleep } from '../../helpers'
 
 import { setChatActive } from '../../store/ducks/chatbot'
 import { setToastActive } from '../../store/ducks/toast'
@@ -12,8 +13,9 @@ const Header = () => {
   const chatbot = useSelector(({ chatbot }) => chatbot)
   const toast = useSelector(({ toast }) => toast)
 
-  const handleChat = () => {
+  const handleChat = async () => {
     dispatch(setChatActive(!chatbot.active))
+    await Sleep(2000)
     dispatch(setToastActive(!toast.active))
   }
 

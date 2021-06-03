@@ -38,7 +38,7 @@ export function setToastMessageActive (active) {
     type: Types.SET_TOAST_MESSAGE_ACTIVE,
     payload: {
       message: {
-        active: !active
+        active
       }
     }
   }

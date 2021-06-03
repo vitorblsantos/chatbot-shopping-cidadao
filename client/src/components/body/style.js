@@ -16,7 +16,7 @@ export const Container = styled.div`
 export const Overflow = styled.div`
   overflow-y: scroll;
   padding: 20px 24px 0px 8px;
-  width: 105%;
+  width: 332px;
 `
 
 export const Row = styled.div`
