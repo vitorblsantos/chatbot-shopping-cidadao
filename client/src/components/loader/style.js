@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components'
-import ImageBot from '../../images/bot.png'
+import ImageBalloon from '../../images/balloon.svg'
 
 const animation = keyframes`
   0% { transform: scaleY(.25) }
@@ -7,11 +7,9 @@ const animation = keyframes`
   40%, 100% { transform: scaleY(.25) } 
 `
 
-export const Bot = styled.img.attrs(() => ({
-  src: ImageBot
-}))`
-    height: 40px;
-    width: auto;
+export const Bot = styled(ImageBalloon)`
+  height: 40px;
+  width: auto;
 `
 
 export const Container = styled.div`
@@ -20,7 +18,7 @@ export const Container = styled.div`
   margin: 0;
   div {
     animation: ${animation} 1.2s infinite ease-in-out;
-    background: #e8c33b;
+    background: #f7921e;
     border-radius: 24%;
     display: inline-block;
     height: 44px;

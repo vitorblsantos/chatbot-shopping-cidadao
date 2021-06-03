@@ -10,7 +10,7 @@ import Loader from '../loader'
 import Options from '../options'
 import User from '../user'
 
-import { Container } from './style'
+import { Container, Overflow } from './style'
 
 const AlwaysScrollToBottom = () => {
   const elementRef = useRef()
@@ -37,12 +37,13 @@ const Body = () => {
 
   return (
     <Container>
-      <Bot />
-      <User />
-      <Options />
-      <User />
-      {loader && <Loader />}
-      {scroll && <AlwaysScrollToBottom />}
+      <Overflow>
+        <Bot />
+        <User />
+        <Options />
+        {loader && <Loader />}
+        {scroll && <AlwaysScrollToBottom />}
+      </Overflow>
     </Container>
   )
 }

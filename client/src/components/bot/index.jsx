@@ -12,7 +12,7 @@ const Bot = () => {
           <Image />
         </Icon>
         <Balloon>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+          Ola
         </Balloon>
       </Content>
     </Row>

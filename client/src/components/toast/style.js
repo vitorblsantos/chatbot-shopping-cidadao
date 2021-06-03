@@ -4,7 +4,7 @@ import Bot from '../../images/bot.png'
 export const Button = styled.div`
   align-items: center;
   background: #ffffff;
-  border: 2px solid #2f94d0;
+  border: 2px solid #3c3c3c;
   border-radius: 36px;
   bottom: 0;
   box-shadow: rgba(0, 0, 0, .25) 0px .0625em .0625em, rgba(0, 0, 0, .25) 0px 0.125em .5em, rgba(255, 255, 255, .1) 0px 0px 0px 1px inset;

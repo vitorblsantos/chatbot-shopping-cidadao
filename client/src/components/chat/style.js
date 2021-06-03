@@ -4,7 +4,7 @@ export const Container = styled.div`
   background: #ffffff;
   border: 0;
   border-radius: 10px;
-  bottom: 28px;
+  bottom: 16px;
   height: 0;
   opacity: 0;
   margin: 0 0 0 auto;
@@ -16,7 +16,7 @@ export const Container = styled.div`
   width: 0;
 
   ${({ active }) => active && css`
-    height: 468px;
+    height: 500px;
     opacity: 1;
     transition: height .3s, opacity .5s, margin .2s, visibility .5s, width .1s;
     transition-timing-function: ease-in-out;

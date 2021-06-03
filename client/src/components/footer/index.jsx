@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Container, Input, Button, Send } from './style'
+import { Background, Button, Container, Input, Send } from './style'
 
 const INITIAL_USER_MESSAGE = { sender: 'user', content: '' }
 
@@ -16,10 +16,12 @@ const Footer = () => {
 
   return (
     <Container>
-      <Input onChange={(e) => handleInput(e)} onKeyDown={e => handleKey(e)} placeholder='Digite sua mensagem...' value={userMessage.content} />
-      <Button>
-        <Send onClick={handleMessage} />
-      </Button>
+      <Background>
+        <Input onChange={(e) => handleInput(e)} onKeyDown={e => handleKey(e)} placeholder='Digite sua mensagem...' value={userMessage.content} />
+        <Button>
+          <Send onClick={handleMessage} />
+        </Button>
+      </Background>
     </Container>
   )
 }

@@ -14,11 +14,9 @@ export const Types = {
 
 export default function reducer (state = INITIAL_STATE, { type, payload }) {
   switch (type) {
-  case Types.SET_CHAT_ACTIVE:
-    return { ...state, ...payload }
-  case Types.SET_CHAT_LOADER:
-    return { ...state, ...payload }
-  case Types.SET_MESSAGES:
+  case Types.SET_CHAT_ACTIVE ||
+    Types.SET_CHAT_LOADER ||
+    Types.SET_MESSAGES:
     return { ...state, ...payload }
   default:
     return state

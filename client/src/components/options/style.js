@@ -1,18 +1,16 @@
 import styled from 'styled-components'
-import ImageBot from '../../images/bot.png'
+import ImageBalloon from '../../images/balloon.svg'
 
 export const Balloon = styled.div`
-  background: #fffcf1;
-  border: 1px solid #e8c33b;
-  border-radius: 10px;
+  background: #fff7ef;
+  border: 1px solid #f7921e;
+  border-radius: 16px;
   border-top-left-radius: 0;
-  margin: 36px 0 0;
+  margin: 20px 0 0;
   padding: 8px;
 `
 
-export const Image = styled.img.attrs(() => ({
-  src: ImageBot
-}))`
+export const Image = styled(ImageBalloon)`
     height: 40px;
     width: auto;
 `
@@ -28,7 +26,7 @@ export const Icon = styled.div`
 `
 
 export const Option = styled.button`
-  background: #e8c33b;
+  background: #f7921e;
   border: 0;
   border-radius: 10px;
   color: #ffffff;
@@ -57,5 +55,5 @@ export const Container = styled.div`
 export const Row = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin: 0 0 16px;
+  margin: 0;
 `

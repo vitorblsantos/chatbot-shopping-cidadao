@@ -7,7 +7,7 @@ import { Balloon, Row } from './style'
 const User = () => (
   <Row>
     <Balloon>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+        Ola, robo.
     </Balloon>
   </Row>
 )

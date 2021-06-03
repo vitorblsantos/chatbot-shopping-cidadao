@@ -8,7 +8,7 @@ export const Container = styled.div`
   width: 352px;
 `
 export const Relative = styled.div`
-  height: 500px;
+  height: 536px;
   position: relative;
   width: 100%;
 `
