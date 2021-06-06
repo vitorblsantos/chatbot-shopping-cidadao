@@ -15,7 +15,7 @@ const Header = () => {
   const toast = useSelector(({ toast }) => toast)
 
   const handleChat = async () => {
-    dispatch(addUserInteraction())
+    dispatch(addUserInteraction('Header', 'handleChat'))
     dispatch(setChatActive(!chatbot.active))
     await Sleep(200)
     dispatch(setToast(!toast.active))

@@ -3,7 +3,7 @@
 import { Api, Date } from '../../helpers'
 
 const INITIAL_STATE = {
-  interactions: 0,
+  interactions: [],
   session: {
     id: '',
     createdAt: '',
@@ -19,7 +19,7 @@ export const Types = {
 export default function reducer (state = INITIAL_STATE, { type, payload }) {
   switch (type) {
   case Types.ADD_USER_INTERACTION:
-    return { ...state, ...payload }
+    return { ...state, interactions: [...state.interactions, { ...payload }] }
   case Types.ADD_USER_SESSION_ID:
     return { ...state, session: { ...state.session, ...payload } }
   default :
@@ -27,14 +27,14 @@ export default function reducer (state = INITIAL_STATE, { type, payload }) {
   }
 }
 
-export const addUserInteraction = () => {
-  return (dispatch, getState) => {
-    let interactions = getState().user.interactions
-    interactions = interactions += 1
+export const addUserInteraction = (description, origin, param) => {
+  return (dispatch) => {
     dispatch({
       type: Types.ADD_USER_INTERACTION,
       payload: {
-        interactions
+        description,
+        origin,
+        ...param
       }
     })
   }
