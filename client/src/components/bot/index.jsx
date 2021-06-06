@@ -2,19 +2,17 @@
 
 import React from 'react'
 
-import { Balloon, Content, Icon, Image, Row } from './style'
+import { Balloon, Icon, Image, Row } from './style'
 
 const Bot = () => {
   return (
     <Row>
-      <Content>
-        <Icon>
-          <Image />
-        </Icon>
-        <Balloon>
-          Ola
-        </Balloon>
-      </Content>
+      <Icon>
+        <Image />
+      </Icon>
+      <Balloon>
+        Ola Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, iste. Sit neque aut quia, porro asperiores soluta sint quo nobis veritatis excepturi tenetur corrupti ex molestias quos quod voluptate magni.
+      </Balloon>
     </Row>
   )
 }

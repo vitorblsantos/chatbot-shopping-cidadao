@@ -2,29 +2,43 @@
 
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Sleep } from '../../helpers'
 
+import Store from '../../store'
 import { setChatActive } from '../../store/ducks/chatbot'
-import { handleMessage, setToastActive } from '../../store/ducks/toast'
+import { setToast, setToastMessage } from '../../store/ducks/toast'
 import { addUserInteraction, addUserSessionId } from '../../store/ducks/user'
 
 import { Button, Container, Logo, Message, Position } from './style'
 
 const Toast = () => {
   const dispatch = useDispatch()
-  const [toastMessage, setToastMessage] = useState('')
+  const [toastMessageContent, setToastMessageContent] = useState('')
 
   const chatbot = useSelector(({ chatbot }) => chatbot)
   const toast = useSelector(({ toast }) => toast)
   const user = useSelector(({ user }) => user)
 
+  const AnimateToastMessage = async () => {
+    await Sleep(8000)
+    let state = Store.getState()
+    if (state.chatbot.active || user.interactions > 0) return false
+    dispatch(setToastMessage(true))
+    await Sleep(8000)
+    state = Store.getState()
+    if (state.chatbot.active || user.interactions > 0) return false
+    dispatch(setToastMessage(false))
+  }
+
   const handleChat = () => {
     dispatch(setChatActive(!chatbot.active))
-    dispatch(setToastActive(!toast.active))
+    dispatch(setToast(!toast.active))
+    dispatch(setToastMessage(false))
     handleSessionId(!chatbot.active)
     dispatch(addUserInteraction())
   }
 
-  const handleToastMessage = async () => {
+  const handleMessage = async () => {
     if (user.interactions > 0) return false
     const messages = [
       { tag: <span>Agendamento <br />de Biometria?</span> },
@@ -35,8 +49,8 @@ const Toast = () => {
     ]
 
     const random = Math.floor(Math.random() * messages.length)
-    setToastMessage(messages[random])
-    dispatch(handleMessage())
+    setToastMessageContent(messages[random])
+    AnimateToastMessage()
   }
 
   const handleSessionId = chatActive => {
@@ -45,14 +59,14 @@ const Toast = () => {
   }
 
   useEffect(() => {
-    handleToastMessage()
-  }, [user.interactions])
+    handleMessage()
+  }, [])
 
   return (
     <Position {...toast}>
       <Container>
         <Message {...toast.message}>
-          {toastMessage.tag}
+          {toastMessageContent.tag}
         </Message>
         <Button onClick={handleChat}>
           <Logo />

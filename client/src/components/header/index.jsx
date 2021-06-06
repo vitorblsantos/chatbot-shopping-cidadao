@@ -2,8 +2,9 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Sleep } from '../../helpers'
 
+import { addUserInteraction } from '../../store/ducks/user'
 import { setChatActive } from '../../store/ducks/chatbot'
-import { setToastActive } from '../../store/ducks/toast'
+import { setToast } from '../../store/ducks/toast'
 
 import { Bot, Button, Container, Span, Status } from './style'
 
@@ -14,9 +15,10 @@ const Header = () => {
   const toast = useSelector(({ toast }) => toast)
 
   const handleChat = async () => {
+    dispatch(addUserInteraction())
     dispatch(setChatActive(!chatbot.active))
     await Sleep(200)
-    dispatch(setToastActive(!toast.active))
+    dispatch(setToast(!toast.active))
   }
 
   return (

@@ -5,9 +5,10 @@ export const Balloon = styled.div`
   border: 1px solid #222;
   border-radius: 16px;
   display: flex;
+  height: fit-content;
   justify-content: flex-end;
   margin: 0 0 0 auto;
-  padding: 8px 12px;
+  padding: 4px 8px;
   text-align: right;
   width: auto;
 `
@@ -15,5 +16,5 @@ export const Balloon = styled.div`
 export const Row = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin: 0 0 12px 0;
+  margin: 0 0 20px 0;
 `

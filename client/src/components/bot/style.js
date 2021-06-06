@@ -7,7 +7,8 @@ export const Balloon = styled.div`
   border: 1px solid #f7921e;
   border-radius: 16px;
   display: flex;
-  margin: 0;
+  height: fit-content;
+  margin: 4px 0 0 0;
   padding: 4px 8px;
 `
 
@@ -16,18 +17,15 @@ export const Image = styled(ImageBalloon)`
   width: auto;
 `
 
-export const Content = styled.div`
-  display: flex;
-  flex-flow: row nowrap;
-`
 export const Icon = styled.div`
   height: 44px;
-  margin: 0 8px 0 0;
+  margin: 0 4px 0 0;
   width: 44px;
 `
 
 export const Row = styled.div`
+  align-items: flex-start;
   display: flex;
-  flex-wrap: wrap;
-  margin: 0 0 12px 0;
+  flex-wrap: nowrap;
+  margin: 0 0 20px 0;
 `
