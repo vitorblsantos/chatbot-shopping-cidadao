@@ -15,7 +15,7 @@ const Header = () => {
 
   const handleChat = async () => {
     dispatch(setChatActive(!chatbot.active))
-    await Sleep(2000)
+    await Sleep(200)
     dispatch(setToastActive(!toast.active))
   }
 
