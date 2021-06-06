@@ -1,5 +1,7 @@
 'use strict'
 
+import { Sleep } from '../../helpers'
+
 const INITIAL_STATE = {
   active: true,
   message: {
@@ -24,22 +26,39 @@ export default function reducer (state = INITIAL_STATE, { type, payload }) {
   }
 }
 
+export function handleMessage () {
+  return async (dispatch, getState) => {
+    await Sleep(8000)
+    const { user } = getState()
+
+    if (user.interactions > 0) return false
+
+    dispatch({
+      type: Types.SET_TOAST_MESSAGE_ACTIVE,
+      payload: {
+        message: {
+          active: true
+        }
+      }
+    })
+
+    await Sleep(8000)
+    dispatch({
+      type: Types.SET_TOAST_MESSAGE_ACTIVE,
+      payload: {
+        message: {
+          active: false
+        }
+      }
+    })
+  }
+}
+
 export function setToastActive (active) {
   return {
     type: Types.SET_TOAST_ACTIVE,
     payload: {
       active
-    }
-  }
-}
-
-export function setToastMessageActive (active) {
-  return {
-    type: Types.SET_TOAST_MESSAGE_ACTIVE,
-    payload: {
-      message: {
-        active
-      }
     }
   }
 }

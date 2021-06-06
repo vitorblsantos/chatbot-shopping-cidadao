@@ -3,10 +3,9 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { Api, Sleep } from '../../helpers'
 import { setChatActive } from '../../store/ducks/chatbot'
-import { setToastActive, setToastMessageActive } from '../../store/ducks/toast'
-import { addUserInteraction } from '../../store/ducks/user'
+import { handleMessage, setToastActive } from '../../store/ducks/toast'
+import { addUserInteraction, addUserSessionId } from '../../store/ducks/user'
 
 import { Button, Container, Logo, Message, Position } from './style'
 
@@ -21,15 +20,12 @@ const Toast = () => {
   const handleChat = () => {
     dispatch(setChatActive(!chatbot.active))
     dispatch(setToastActive(!toast.active))
-    dispatch(setToastMessageActive(false))
-    if (!chatbot.active) {
-      dispatch(addUserInteraction(user.interactions))
-      Api.get('/watson').then(({ data }) => console.log(data))
-    }
+    handleSessionId(!chatbot.active)
+    dispatch(addUserInteraction())
   }
 
-  const handleToastMessage = async chatActive => {
-    if (chatActive || user.interactions > 0) return false
+  const handleToastMessage = async () => {
+    if (user.interactions > 0) return false
     const messages = [
       { tag: <span>Agendamento <br />de Biometria?</span> },
       { tag: <span>Agendamento <br />de CPF?</span> },
@@ -40,15 +36,17 @@ const Toast = () => {
 
     const random = Math.floor(Math.random() * messages.length)
     setToastMessage(messages[random])
-    await Sleep(8000)
-    dispatch(setToastMessageActive(true))
-    await Sleep(8000)
-    dispatch(setToastMessageActive(false))
+    dispatch(handleMessage())
+  }
+
+  const handleSessionId = chatActive => {
+    if (!chatActive) return false
+    dispatch(addUserSessionId())
   }
 
   useEffect(() => {
-    handleToastMessage(chatbot.active)
-  }, [chatbot])
+    handleToastMessage()
+  }, [user.interactions])
 
   return (
     <Position {...toast}>

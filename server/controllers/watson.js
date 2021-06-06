@@ -1,8 +1,12 @@
 'use strict'
 
-const Watson = (req, res) => {
-  const { body } = req
-  return res.status(200).send(body)
+import { Watson } from '../services'
+
+const createSession = async (_, res) => {
+  const session = await Watson.createSession()
+  return res.status(200).send(session)
 }
 
-export default Watson
+export default {
+  createSession
+}

@@ -12,7 +12,7 @@ export const Balloon = styled.div`
 `
 
 export const Image = styled(ImageBalloon)`
-  height: 40px;
+  height: 36px;
   width: auto;
 `
 

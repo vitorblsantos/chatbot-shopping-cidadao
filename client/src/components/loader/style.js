@@ -44,9 +44,9 @@ export const Container = styled.div`
 `
 
 export const Icon = styled.div`
-  height: 44px;
+  height: 32px;
   margin: 0 4px 0 0;
-  width: 44px;
+  width: auto;
 `
 
 export const NoWrap = styled.div`

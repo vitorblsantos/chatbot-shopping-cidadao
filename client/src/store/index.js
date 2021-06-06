@@ -1,8 +1,11 @@
 'use strict'
 
-import { createStore, combineReducers } from 'redux'
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
+import thunk from 'redux-thunk'
 
 import { chatbot, toast, user } from './ducks'
+
+const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 const reducer = combineReducers({
   chatbot,
@@ -10,6 +13,6 @@ const reducer = combineReducers({
   user
 })
 
-const store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+const store = createStore(reducer, composeEnhancer(applyMiddleware(thunk)))
 
 export default store
