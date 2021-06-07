@@ -20,30 +20,34 @@ const AlwaysScrollToBottom = () => {
 
 const Body = () => {
   const [scroll, setScroll] = useState(false)
-  const { active, loader, messages } = useSelector(({ chatbot }) => chatbot)
+  const { chatbot } = useSelector(state => state)
 
-  const handleScroll = async bool => {
+  const handleScroll = async chatActive => {
     await Sleep(700)
-    setScroll(bool)
+    setScroll(chatActive)
   }
 
   useEffect(() => {
-    handleScroll(active)
-  }, [active])
+    handleScroll(chatbot.active)
+  }, [chatbot.active])
 
   useEffect(() => {
-    if (!messages.length) return () => false
-  }, [messages])
+    if (!chatbot.messages.length) return () => false
+  }, [chatbot.messages])
 
   return (
     <Container>
-      <Overflow>
-        <Bot />
-        <User />
-        <Options />
-        {loader && <Loader />}
-        {scroll && <AlwaysScrollToBottom />}
-      </Overflow>
+      { chatbot.active &&
+        <>
+          <Overflow>
+            <Bot />
+            <User />
+            <Options />
+            {chatbot.loader && <Loader />}
+            {scroll && <AlwaysScrollToBottom />}
+          </Overflow>
+        </>
+      }
     </Container>
   )
 }

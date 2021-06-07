@@ -10,7 +10,7 @@ export const Container = styled.div`
   margin: 0 0 0 auto;
   position: absolute;
   right: 28px;
-  transition: height .1s, opacity .2s, margin .2s, visibility .2s, width .1s;
+  transition: height .1s, opacity .1s, visibility .1s, width .1s;
   transition-timing-function: ease-in-out;
   visibility: hidden;
   width: 0;

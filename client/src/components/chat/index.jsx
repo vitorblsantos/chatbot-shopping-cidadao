@@ -10,9 +10,9 @@ import Header from '../header'
 import { Container } from './style'
 
 const Chat = () => {
-  const { active } = useSelector(({ chatbot }) => chatbot)
+  const { chatbot } = useSelector(state => state)
   return (
-    <Container {...{ active }}>
+    <Container {...chatbot}>
       <Header />
       <Body />
       <Footer />

@@ -22,11 +22,11 @@ const Toast = () => {
   const AnimateToastMessage = async () => {
     await Sleep(8000)
     let state = Store.getState()
-    if (state.chatbot.active || user.interactions.length > 0) return false
+    if (state.chatbot.active || state.user.interactions.length > 0) return false
     dispatch(setToastMessage(true))
     await Sleep(8000)
     state = Store.getState()
-    if (state.chatbot.active || user.interactions.length > 0) return false
+    if (state.chatbot.active || state.user.interactions.length > 0) return false
     dispatch(setToastMessage(false))
   }
 
