@@ -8,16 +8,18 @@ const INITIAL_STATE = {
 
 export const Types = {
   SET_CHAT_ACTIVE: 'SET_CHAT_ACTIVE',
-  SET_CHAT_LOADER: 'SET_LOADING',
+  SET_CHAT_LOADER: 'SET_CHAT_LOADER',
   SET_MESSAGES: 'SET_MESSAGES'
 }
 
 export default function reducer (state = INITIAL_STATE, { type, payload }) {
   switch (type) {
-  case Types.SET_CHAT_ACTIVE ||
-    Types.SET_CHAT_LOADER ||
-    Types.SET_MESSAGES:
+  case Types.SET_CHAT_ACTIVE:
     return { ...state, ...payload }
+  case Types.SET_CHAT_LOADER :
+    return { ...state, ...payload }
+  case Types.SET_MESSAGES:
+    return { ...state, messages: [...state.messages, { ...payload }] }
   default:
     return state
   }
@@ -41,11 +43,12 @@ export function setChatLoader (loader) {
   }
 }
 
-export function setMessages (messages) {
+export function setMessages (sender, content) {
   return {
     type: Types.SET_MESSAGES,
     payload: {
-      messages
+      content,
+      sender
     }
   }
 }

@@ -1,20 +1,25 @@
 'use strict'
 
 import React from 'react'
+import { string } from 'prop-types'
 
 import { Balloon, Icon, Image, Row } from './style'
 
-const Bot = () => {
+const Bot = ({ content }) => {
   return (
     <Row>
       <Icon>
         <Image />
       </Icon>
       <Balloon>
-        Ola Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, iste. Sit neque aut quia, porro asperiores soluta sint quo nobis veritatis excepturi tenetur corrupti ex molestias quos quod voluptate magni.
+        {content}
       </Balloon>
     </Row>
   )
+}
+
+Bot.propTypes = {
+  content: string
 }
 
 export default Bot

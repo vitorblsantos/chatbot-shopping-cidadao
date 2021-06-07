@@ -12,25 +12,25 @@ const INITIAL_STATE = {
 }
 
 export const Types = {
-  ADD_USER_INTERACTION: 'ADD_USER_INTERACTION',
-  ADD_USER_SESSION_ID: 'ADD_USER_SESSION_ID'
+  SET_USER_INTERACTION: 'SET_USER_INTERACTION',
+  SET_USER_SESSION_ID: 'SET_USER_SESSION_ID'
 }
 
 export default function reducer (state = INITIAL_STATE, { type, payload }) {
   switch (type) {
-  case Types.ADD_USER_INTERACTION:
+  case Types.SET_USER_INTERACTION:
     return { ...state, interactions: [...state.interactions, { ...payload }] }
-  case Types.ADD_USER_SESSION_ID:
+  case Types.SET_USER_SESSION_ID:
     return { ...state, session: { ...state.session, ...payload } }
   default :
     return state
   }
 }
 
-export const addUserInteraction = (description, origin, param) => {
+export const setUserInteraction = (description, origin, param) => {
   return (dispatch) => {
     dispatch({
-      type: Types.ADD_USER_INTERACTION,
+      type: Types.SET_USER_INTERACTION,
       payload: {
         description,
         origin,
@@ -40,13 +40,13 @@ export const addUserInteraction = (description, origin, param) => {
   }
 }
 
-export function addUserSessionId () {
+export function setUserSessionId () {
   return async (dispatch, getState) => {
     const { user } = getState()
     if (user.session.expiration && Date.compare(user.session.expiration, Date.current) === 1) return false
     const { data } = await Api.get('/watson/session')
     dispatch({
-      type: Types.ADD_USER_SESSION_ID,
+      type: Types.SET_USER_SESSION_ID,
       payload: {
         id: data,
         createdAt: Date.current,

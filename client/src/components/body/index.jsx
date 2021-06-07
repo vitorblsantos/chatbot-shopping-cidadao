@@ -1,9 +1,10 @@
 'use strict'
 
 import React, { useEffect, useRef, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { Sleep } from '../../helpers'
+import { setChatLoader, setMessages } from '../../store/ducks/chatbot'
 
 import Bot from '../bot'
 import Loader from '../loader'
@@ -13,36 +14,50 @@ import User from '../user'
 import { Container, Overflow } from './style'
 
 const AlwaysScrollToBottom = () => {
-  const elementRef = useRef()
-  useEffect(() => elementRef.current.scrollIntoView({ behavior: 'smooth' }))
-  return <div ref={elementRef} />
+  const reference = useRef()
+  useEffect(() => reference.current.scrollIntoView({ behavior: 'smooth' }))
+  return <div ref={reference} />
 }
 
 const Body = () => {
+  const dispatch = useDispatch()
   const [scroll, setScroll] = useState(false)
-  const { chatbot } = useSelector(state => state)
+  const { chatbot, user } = useSelector(state => state)
 
-  const handleScroll = async () => {
-    await Sleep(700)
-    setScroll(true)
+  const handleScroll = async chatActive => {
+    setScroll(chatActive)
+  }
+
+  const startFlow = async () => {
+    if (!chatbot.active || !user.session.id) return false
+    await Sleep(2000)
+    dispatch(setMessages('bot', 'Olá! Eu sou Miguel. O novo Chatbot do UAI.'))
+    await Sleep(1500)
+    dispatch(setChatLoader(false))
+    dispatch(setMessages('bot', 'Vou te ajudar a realizar alguns serviços que estão disponiveis em nosso portal.'))
   }
 
   useEffect(() => {
-    handleScroll()
+    handleScroll(chatbot.active)
   }, [chatbot.active])
 
   useEffect(() => {
-    if (!chatbot.messages.length) return () => false
-  }, [chatbot.messages])
+    startFlow()
+  }, [user.session.id])
 
   return (
     <Container>
       { chatbot.active &&
         <>
           <Overflow>
-            <Bot />
-            <User />
-            <Options />
+            {
+              chatbot && chatbot.messages && chatbot.messages.map(({ content, sender }, i) => (
+                <div key={i}>
+                  {sender === 'bot' && <Bot {...{ content }} />}
+                  {sender === 'user' && <User />}
+                </div>
+              ))
+            }
             {chatbot.loader && <Loader />}
             {scroll && <AlwaysScrollToBottom />}
           </Overflow>
