@@ -28,4 +28,5 @@ export const Row = styled.div`
   display: flex;
   flex-wrap: nowrap;
   margin: 0 0 20px 0;
+  padding: 0 20px 0 4px;
 `

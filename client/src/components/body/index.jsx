@@ -22,13 +22,13 @@ const Body = () => {
   const [scroll, setScroll] = useState(false)
   const { chatbot } = useSelector(state => state)
 
-  const handleScroll = async chatActive => {
+  const handleScroll = async () => {
     await Sleep(700)
-    setScroll(chatActive)
+    setScroll(true)
   }
 
   useEffect(() => {
-    handleScroll(chatbot.active)
+    handleScroll()
   }, [chatbot.active])
 
   useEffect(() => {

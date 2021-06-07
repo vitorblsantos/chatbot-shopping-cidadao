@@ -9,13 +9,13 @@ export const Container = styled.div`
   flex-flow: column nowrap;
   height: 74%;
   overflow: hidden;
-  transition: all .3s ease-in-out;
   width: 100%;
 `
 
 export const Overflow = styled.div`
+  overflow-x: hidden;
   overflow-y: scroll;
-  padding: 20px 24px 0px 8px;
+  padding: 20px 0;
   width: 332px;
 `
 
@@ -23,4 +23,5 @@ export const Row = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin: 0 0 20px;
+  overflow-x: hidden;
 `
