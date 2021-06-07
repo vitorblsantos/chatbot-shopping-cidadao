@@ -58,5 +58,5 @@ export const Wrap = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin: 0 0 20px;
-  padding: 0 20px 0 4px;
+  padding: 0 20px 0 8px;
 `
