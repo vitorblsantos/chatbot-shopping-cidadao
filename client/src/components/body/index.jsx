@@ -30,8 +30,10 @@ const Body = () => {
 
   const startFlow = async () => {
     if (!chatbot.active || !user.session.id) return false
+
     await Sleep(2000)
     dispatch(setMessages('bot', 'Olá! Eu sou Miguel. O novo Chatbot do UAI.'))
+
     await Sleep(1500)
     dispatch(setChatLoader(false))
     dispatch(setMessages('bot', 'Vou te ajudar a realizar alguns serviços que estão disponiveis em nosso portal.'))
@@ -54,7 +56,7 @@ const Body = () => {
               chatbot && chatbot.messages && chatbot.messages.map(({ content, sender }, i) => (
                 <div key={i}>
                   {sender === 'bot' && <Bot {...{ content }} />}
-                  {sender === 'user' && <User />}
+                  {sender === 'user' && <User {...{ content }} />}
                 </div>
               ))
             }

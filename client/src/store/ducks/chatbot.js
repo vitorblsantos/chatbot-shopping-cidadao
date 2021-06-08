@@ -25,7 +25,7 @@ export default function reducer (state = INITIAL_STATE, { type, payload }) {
   }
 }
 
-export function setChatActive (active) {
+export function setChat (active) {
   return {
     type: Types.SET_CHAT_ACTIVE,
     payload: {

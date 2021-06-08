@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Sleep } from '../../helpers'
 
 import Store from '../../store'
-import { setChatActive } from '../../store/ducks/chatbot'
+import { setChat } from '../../store/ducks/chatbot'
 import { setToast, setToastMessage } from '../../store/ducks/toast'
 import { setUserInteraction, setUserSessionId } from '../../store/ducks/user'
 
@@ -31,7 +31,7 @@ const Toast = () => {
   }
 
   const handleChat = () => {
-    dispatch(setChatActive(!chatbot.active))
+    dispatch(setChat(!chatbot.active))
     dispatch(setToast(!toast.active))
     dispatch(setToastMessage(false))
     handleSessionId(!chatbot.active)
