@@ -1,0 +1,20 @@
+:root {
+  color: #333;
+  font-size: 16px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+*:focus {
+  outline: none;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+}
+
+button, div {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}

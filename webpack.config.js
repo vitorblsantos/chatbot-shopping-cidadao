@@ -1,10 +1,11 @@
 'use strict'
 
-const BundleTracker = require('webpack-bundle-tracker')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { resolve } = require('path')
+const { DefinePlugin } = require('webpack')
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin')
-const path = require('path')
-const webpack = require('webpack')
+
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
   context: __dirname,
@@ -16,11 +17,18 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.(css|scss)$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'sass-loader'
+        ]
+      },
+      {
+        test: /\.(js|jsx)$/,
         exclude: [
-          path.resolve(__dirname, './build/'),
-          path.resolve(__dirname, './node_modules/'),
-          path.resolve(__dirname, './test/')
+          resolve(__dirname, './build/'),
+          resolve(__dirname, './node_modules/')
         ],
         loader: 'babel-loader',
         query: {
@@ -28,6 +36,17 @@ module.exports = {
           plugins: ['@babel/transform-runtime'],
           presets: ['@babel/preset-react', '@babel/preset-env']
         }
+      },
+      {
+        test: /\.(ico|png|jpe?g|gif|webp)$/i,
+        loader: 'file-loader',
+        options: {
+          name: 'build/client/images/[name].[ext]'
+        }
+      },
+      {
+        test: /\.svg$/,
+        use: ['@svgr/webpack']
       }
     ]
   },
@@ -52,20 +71,24 @@ module.exports = {
     }
   },
   output: {
-    filename: '[name].bundle.js',
-    path: path.resolve(__dirname, './build/client/'),
+    filename: '[contenthash].bundle.js',
+    path: resolve(__dirname, './build/client/'),
     publicPath: '/'
   },
   plugins: [
+    new DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+    }),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, './client/src/index.html'),
+      favicon: './client/src/images/logo.svg',
+      template: resolve(__dirname, './client/src/index.html'),
       filename: 'index.html'
     }),
-    new BundleTracker({ filename: 'webpack-stats.json' }),
-    new WebpackManifestPlugin({ filename: 'manifest.json' }),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-    })
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash].css',
+      chunkFilename: '[id].css'
+    }),
+    new WebpackManifestPlugin({ filename: 'manifest.json' })
   ],
   resolve: {
     extensions: ['.js', '.jsx']

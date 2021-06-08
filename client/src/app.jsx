@@ -1,15 +1,17 @@
 import React from 'react'
-import { BrowserRouter as Router } from 'react-router-dom'
-import { createBrowserHistory } from 'history'
 
-import Routes from './routes'
+import Chat from './components/chat'
+import Outside from './components/outside'
+import Toast from './components/toast'
+
+import './styles/main.scss'
 
 const App = () => {
-  const history = createBrowserHistory({ forceRefresh: true })
   return (
-    <Router {...{ history }}>
-      <Routes />
-    </Router>
+    <Outside>
+      <Chat />
+      <Toast />
+    </Outside>
   )
 }
 
