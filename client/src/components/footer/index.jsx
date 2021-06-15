@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { setChat, setMessages } from '../../store/ducks/chatbot'
+import { setChatActive, setMessages } from '../../store/ducks/chatbot'
 import { setToast } from '../../store/ducks/toast'
 
 import { Background, Button, Container, Input, Send } from './style'
@@ -14,7 +14,7 @@ const Footer = () => {
     // 13 enter - 27 escape
     if (keyCode === 13) return handleMessage()
     if (keyCode === 27) {
-      dispatch(setChat(false))
+      dispatch(setChatActive(false))
       dispatch(setToast(true))
     }
   }

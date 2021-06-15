@@ -5,9 +5,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Sleep } from '../../helpers'
 
 import Store from '../../store'
-import { setChat } from '../../store/ducks/chatbot'
+import { setChatActive } from '../../store/ducks/chatbot'
 import { setToast, setToastMessage } from '../../store/ducks/toast'
-import { setUserInteraction, setUserSessionId } from '../../store/ducks/user'
+import { setUserInteraction } from '../../store/ducks/user'
+import { setWatsonSessionId } from '../../store/ducks/watson'
 
 import { Button, Container, Logo, Message, Position } from './style'
 
@@ -31,7 +32,7 @@ const Toast = () => {
   }
 
   const handleChat = () => {
-    dispatch(setChat(!chatbot.active))
+    dispatch(setChatActive(!chatbot.active))
     dispatch(setToast(!toast.active))
     dispatch(setToastMessage(false))
     handleSessionId(!chatbot.active)
@@ -55,7 +56,7 @@ const Toast = () => {
 
   const handleSessionId = chatActive => {
     if (!chatActive) return false
-    dispatch(setUserSessionId())
+    dispatch(setWatsonSessionId())
   }
 
   useEffect(() => {

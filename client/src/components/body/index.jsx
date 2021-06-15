@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Sleep } from '../../helpers'
-import { setChatLoader, setMessages } from '../../store/ducks/chatbot'
+import { setChatLoaderActive, setMessages } from '../../store/ducks/chatbot'
 
 import Bot from '../bot'
 import Loader from '../loader'
@@ -22,21 +22,29 @@ const AlwaysScrollToBottom = () => {
 const Body = () => {
   const dispatch = useDispatch()
   const [scroll, setScroll] = useState(false)
-  const { chatbot, user } = useSelector(state => state)
+  const { chatbot, user, watson } = useSelector(state => state)
+
+  const firstInteraction = async () => {
+    await Sleep(chatbot.loader.timer)
+    dispatch(setMessages('bot', 'Olá! Eu sou Miguel. O novo Chatbot do UAI.'))
+
+    await Sleep(chatbot.loader.timer)
+    dispatch(setChatLoaderActive(false))
+    dispatch(setMessages('bot', 'Vou te ajudar a realizar alguns serviços que estão disponiveis em nosso portal.'))
+  }
+
+  const secondInteraction = async () => {
+
+  }
 
   const handleScroll = async chatActive => {
     setScroll(chatActive)
   }
 
   const startFlow = async () => {
-    if (!chatbot.active || !user.session.id) return false
-
-    await Sleep(2000)
-    dispatch(setMessages('bot', 'Olá! Eu sou Miguel. O novo Chatbot do UAI.'))
-
-    await Sleep(1500)
-    dispatch(setChatLoader(false))
-    dispatch(setMessages('bot', 'Vou te ajudar a realizar alguns serviços que estão disponiveis em nosso portal.'))
+    if (!user.interactions.length) return false
+    if (!chatbot.active || !watson.session.id) return false
+    if (user.interactions.length === 1) firstInteraction()
   }
 
   useEffect(() => {
@@ -45,7 +53,7 @@ const Body = () => {
 
   useEffect(() => {
     startFlow()
-  }, [user.session.id])
+  }, [watson.session])
 
   return (
     <Container>
@@ -60,7 +68,7 @@ const Body = () => {
                 </div>
               ))
             }
-            {chatbot.loader && <Loader />}
+            {chatbot.loader.active && <Loader />}
             {scroll && <AlwaysScrollToBottom />}
           </Overflow>
         </>
