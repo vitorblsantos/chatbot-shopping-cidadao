@@ -39,7 +39,7 @@ const Toast = () => {
   }
 
   const handleMessage = async () => {
-    if (user.interactions > 0) return false
+    if (!chatbot.active) return false
     const messages = [
       { tag: <span>Agendamento <br />de Biometria?</span> },
       { tag: <span>Agendamento <br />de CPF?</span> },
@@ -60,7 +60,7 @@ const Toast = () => {
 
   useEffect(() => {
     handleMessage()
-  }, [])
+  }, [chatbot.active])
 
   return (
     <Position {...toast}>

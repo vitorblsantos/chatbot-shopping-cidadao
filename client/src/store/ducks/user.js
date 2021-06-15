@@ -1,6 +1,6 @@
 'use strict'
 
-import { Api, Date } from '../../helpers'
+import { Api, Date, LocalStorage } from '../../helpers'
 
 const INITIAL_STATE = {
   interactions: [],
@@ -43,12 +43,30 @@ export const setUserInteraction = (description, origin, param) => {
 export function setUserSessionId () {
   return async (dispatch, getState) => {
     const { user } = getState()
-    if (user.session.expiration && Date.compare(user.session.expiration, Date.current) === 1) return false
-    const { data } = await Api.get('/watson/session')
+
+    const storageSession = LocalStorage.Get('watsonSession')
+    const storageSessionExpiration = LocalStorage.Get('watsonSessionExpiration')
+
+    let session = ''
+    let sessionValid = false
+
+    if ((user.session.expiration && Date.compare(user.session.expiration, Date.current)) === 1) sessionValid = true
+    if ((storageSessionExpiration && Date.compare(storageSessionExpiration, Date.current)) === 1) sessionValid = true
+
+    if (sessionValid) {
+      console.log(0)
+      session = user.session.id || storageSession
+    } else {
+      const { data } = await Api.get('/watson/session')
+      LocalStorage.Set('watsonSession', data)
+      LocalStorage.Set('watsonSessionExpiration', Date.expiration)
+      session = data
+    }
+
     dispatch({
       type: Types.SET_USER_SESSION_ID,
       payload: {
-        id: data,
+        id: session,
         createdAt: Date.current,
         expiration: Date.expiration
       }
