@@ -18,7 +18,6 @@ const createSession = async () => {
   return result.session_id
 }
 
-<<<<<<< HEAD
 const sendMessage = async (message, sessionId) => {
   const { result } = await assistant.message({
     assistantId: 'c7f39109-43ca-4601-a84f-bb5a4a2a4497',
@@ -35,8 +34,4 @@ const sendMessage = async (message, sessionId) => {
 export default {
   createSession,
   sendMessage
-=======
-export default {
-  createSession
->>>>>>> master
 }
