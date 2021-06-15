@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { Sleep } from '../../helpers'
+import { Sleep, Watson } from '../../helpers'
 import { setChatLoaderActive, setMessages } from '../../store/ducks/chatbot'
 
 import Body from '../body'
@@ -18,6 +18,10 @@ const Chat = () => {
 
   const firstInteraction = async () => {
     await Sleep(chatbot.loader.timer)
+
+    const message = await Watson.sendMessage('ola', watson.session.id)
+    console.log(message)
+
     dispatch(setMessages('bot', 'Olá! Eu sou Miguel. O novo Chatbot do UAI.'))
 
     await Sleep(chatbot.loader.timer)

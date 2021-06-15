@@ -5,4 +5,6 @@ const router = Router()
 
 router.get('/session', Watson.createSession)
 
+router.post('/message', Watson.sendMessage)
+
 export default router
