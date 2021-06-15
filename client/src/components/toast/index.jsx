@@ -5,9 +5,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Sleep } from '../../helpers'
 
 import Store from '../../store'
-import { setChat } from '../../store/ducks/chatbot'
-import { setToast, setToastMessage } from '../../store/ducks/toast'
-import { setUserInteraction, setUserSessionId } from '../../store/ducks/user'
+import { setChatActive } from '../../store/ducks/chatbot'
+import { setToastActive, setToastMessage } from '../../store/ducks/toast'
+import { setUserInteraction } from '../../store/ducks/user'
+import { setWatsonSessionId } from '../../store/ducks/watson'
 
 import { Button, Container, Logo, Message, Position } from './style'
 
@@ -17,7 +18,6 @@ const Toast = () => {
 
   const chatbot = useSelector(({ chatbot }) => chatbot)
   const toast = useSelector(({ toast }) => toast)
-  const user = useSelector(({ user }) => user)
 
   const AnimateToastMessage = async () => {
     await Sleep(8000)
@@ -31,15 +31,15 @@ const Toast = () => {
   }
 
   const handleChat = () => {
-    dispatch(setChat(!chatbot.active))
-    dispatch(setToast(!toast.active))
+    dispatch(setChatActive(!chatbot.active))
+    dispatch(setToastActive(!toast.active))
     dispatch(setToastMessage(false))
     handleSessionId(!chatbot.active)
     dispatch(setUserInteraction('Toast', 'handleChat', { toastMessage: toast.message.active }))
   }
 
   const handleMessage = async () => {
-    if (user.interactions > 0) return false
+    if (!chatbot.active) return false
     const messages = [
       { tag: <span>Agendamento <br />de Biometria?</span> },
       { tag: <span>Agendamento <br />de CPF?</span> },
@@ -55,12 +55,12 @@ const Toast = () => {
 
   const handleSessionId = chatActive => {
     if (!chatActive) return false
-    dispatch(setUserSessionId())
+    dispatch(setWatsonSessionId())
   }
 
   useEffect(() => {
     handleMessage()
-  }, [])
+  }, [chatbot.active])
 
   return (
     <Position {...toast}>

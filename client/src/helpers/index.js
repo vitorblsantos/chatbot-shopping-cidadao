@@ -2,10 +2,14 @@
 
 import Api from './api'
 import Date from './date'
+import LocalStorage from './localStorage'
 import Sleep from './sleep'
+import Watson from './watson'
 
 export {
   Api,
   Date,
-  Sleep
+  LocalStorage,
+  Sleep,
+  Watson
 }
