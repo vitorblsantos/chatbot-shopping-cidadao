@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { Sleep, Watson } from '../../helpers'
 import { setChatLoaderActive, setMessages } from '../../store/ducks/chatbot'
+import { setUserId } from '../../store/ducks/user'
 
 import Body from '../body'
 import Footer from '../footer'
@@ -19,14 +20,16 @@ const Chat = () => {
   const firstInteraction = async () => {
     await Sleep(chatbot.loader.timer)
 
-    const message = await Watson.sendMessage('ola', watson.session.id)
-    console.log(message)
+    const { output, userId } = await Watson.sendMessage('oi', watson.session.id)
+    dispatch(setUserId(userId))
 
-    dispatch(setMessages('bot', 'Olá! Eu sou Miguel. O novo Chatbot do UAI.'))
-
-    await Sleep(chatbot.loader.timer)
+    Promise.all(
+      output.generic.map(async ({ text }) => {
+        dispatch(setMessages('bot', text))
+        await Sleep(chatbot.loader.timer)
+      })
+    )
     dispatch(setChatLoaderActive(false))
-    dispatch(setMessages('bot', 'Vou te ajudar a realizar alguns serviços que estão disponiveis em nosso portal.'))
   }
 
   const startFlow = async () => {
