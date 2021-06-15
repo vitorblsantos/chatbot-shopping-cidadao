@@ -8,7 +8,6 @@ import { setChatLoaderActive, setMessages } from '../../store/ducks/chatbot'
 
 import Bot from '../bot'
 import Loader from '../loader'
-import Options from '../options'
 import User from '../user'
 
 import { Container, Overflow } from './style'
@@ -31,10 +30,6 @@ const Body = () => {
     await Sleep(chatbot.loader.timer)
     dispatch(setChatLoaderActive(false))
     dispatch(setMessages('bot', 'Vou te ajudar a realizar alguns serviços que estão disponiveis em nosso portal.'))
-  }
-
-  const secondInteraction = async () => {
-
   }
 
   const handleScroll = async chatActive => {

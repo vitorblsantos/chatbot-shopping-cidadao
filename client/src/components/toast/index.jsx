@@ -6,7 +6,7 @@ import { Sleep } from '../../helpers'
 
 import Store from '../../store'
 import { setChatActive } from '../../store/ducks/chatbot'
-import { setToast, setToastMessage } from '../../store/ducks/toast'
+import { setToastActive, setToastMessage } from '../../store/ducks/toast'
 import { setUserInteraction } from '../../store/ducks/user'
 import { setWatsonSessionId } from '../../store/ducks/watson'
 
@@ -18,7 +18,6 @@ const Toast = () => {
 
   const chatbot = useSelector(({ chatbot }) => chatbot)
   const toast = useSelector(({ toast }) => toast)
-  const user = useSelector(({ user }) => user)
 
   const AnimateToastMessage = async () => {
     await Sleep(8000)
@@ -33,7 +32,7 @@ const Toast = () => {
 
   const handleChat = () => {
     dispatch(setChatActive(!chatbot.active))
-    dispatch(setToast(!toast.active))
+    dispatch(setToastActive(!toast.active))
     dispatch(setToastMessage(false))
     handleSessionId(!chatbot.active)
     dispatch(setUserInteraction('Toast', 'handleChat', { toastMessage: toast.message.active }))

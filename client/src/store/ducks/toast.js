@@ -24,7 +24,7 @@ export default function reducer (state = INITIAL_STATE, { type, payload }) {
   }
 }
 
-export function setToast (active) {
+export function setToastActive (active) {
   return {
     type: Types.SET_TOAST_ACTIVE,
     payload: {

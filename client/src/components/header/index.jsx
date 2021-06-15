@@ -4,7 +4,7 @@ import { Sleep } from '../../helpers'
 
 import { setUserInteraction } from '../../store/ducks/user'
 import { setChatActive } from '../../store/ducks/chatbot'
-import { setToast } from '../../store/ducks/toast'
+import { setToastActive } from '../../store/ducks/toast'
 
 import { Bot, Button, Container, Span, Status } from './style'
 
@@ -18,7 +18,7 @@ const Header = () => {
     dispatch(setUserInteraction('Header', 'handleChat'))
     dispatch(setChatActive(!chatbot.active))
     await Sleep(200)
-    dispatch(setToast(!toast.active))
+    dispatch(setToastActive(!toast.active))
   }
 
   return (
