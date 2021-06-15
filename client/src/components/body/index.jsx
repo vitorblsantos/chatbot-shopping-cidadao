@@ -1,10 +1,7 @@
 'use strict'
 
 import React, { useEffect, useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-
-import { Sleep } from '../../helpers'
-import { setChatLoaderActive, setMessages } from '../../store/ducks/chatbot'
+import { useSelector } from 'react-redux'
 
 import Bot from '../bot'
 import Loader from '../loader'
@@ -19,36 +16,16 @@ const AlwaysScrollToBottom = () => {
 }
 
 const Body = () => {
-  const dispatch = useDispatch()
   const [scroll, setScroll] = useState(false)
-  const { chatbot, user, watson } = useSelector(state => state)
-
-  const firstInteraction = async () => {
-    await Sleep(chatbot.loader.timer)
-    dispatch(setMessages('bot', 'Olá! Eu sou Miguel. O novo Chatbot do UAI.'))
-
-    await Sleep(chatbot.loader.timer)
-    dispatch(setChatLoaderActive(false))
-    dispatch(setMessages('bot', 'Vou te ajudar a realizar alguns serviços que estão disponiveis em nosso portal.'))
-  }
+  const { chatbot } = useSelector(state => state)
 
   const handleScroll = async chatActive => {
     setScroll(chatActive)
   }
 
-  const startFlow = async () => {
-    if (!user.interactions.length) return false
-    if (!chatbot.active || !watson.session.id) return false
-    if (user.interactions.length === 1) firstInteraction()
-  }
-
   useEffect(() => {
     handleScroll(chatbot.active)
   }, [chatbot.active])
-
-  useEffect(() => {
-    startFlow()
-  }, [watson.session])
 
   return (
     <Container>
