@@ -1,60 +1,40 @@
 'use strict'
 
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { object } from 'prop-types'
 
-import { Balloon, Container, Content, Icon, Image, Option, Row } from './style'
+import { setMessages, setChatLoaderActive } from '../../store/ducks/chatbot'
+import { addUserInteraction } from '../../store/ducks/user'
+import { Container, Option, Row } from './style'
 
-const options = [
-  {
-    label: 'option 1',
-    value: {
-      input: {
-        text: 'Agendamento RG'
-      }
-    }
-  }, {
-    label: 'option 1',
-    value: {
-      input: {
-        text: 'Agendamento RG'
-      }
-    }
-  }, {
-    label: 'option 1',
-    value: {
-      input: {
-        text: 'Agendamento RG'
-      }
-    }
+const Options = ({ content }) => {
+  const dispatch = useDispatch()
+  const handleOption = (input) => {
+    dispatch(addUserInteraction('Options', 'handleOption', input))
+    dispatch(setMessages('user', input.text))
+    dispatch(setChatLoaderActive(true))
   }
-]
 
-const Options = () => {
   return (
     <Row>
-      <Content>
-        <Icon>
-          <Image />
-        </Icon>
-        <Balloon>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-        </Balloon>
-      </Content>
-      {
-        options && (
-          <Container>
-            {
-              options.map(({ value }, i) => (
-                <Option key={i}>
-                  {value.input.text}
-                </Option>
-              ))
-            }
-          </Container>
-        )
-      }
+      <Container>
+        {
+          content.options && content.options.map(({ value }, i) => {
+            return (
+              <Option key={i} onClick={() => handleOption(value.input)}>
+                {value.input.text}
+              </Option>
+            )
+          })
+        }
+      </Container>
     </Row>
   )
+}
+
+Options.propTypes = {
+  content: object
 }
 
 export default Options

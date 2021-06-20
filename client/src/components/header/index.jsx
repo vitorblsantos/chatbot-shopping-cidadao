@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Sleep } from '../../helpers'
 
-import { setUserInteraction } from '../../store/ducks/user'
+import { addUserInteraction } from '../../store/ducks/user'
 import { setChatActive } from '../../store/ducks/chatbot'
 import { setToastActive } from '../../store/ducks/toast'
 
@@ -15,7 +15,7 @@ const Header = () => {
   const toast = useSelector(({ toast }) => toast)
 
   const handleChat = async () => {
-    dispatch(setUserInteraction('Header', 'handleChat'))
+    dispatch(addUserInteraction('Header', 'handleChat'))
     dispatch(setChatActive(!chatbot.active))
     await Sleep(200)
     dispatch(setToastActive(!toast.active))

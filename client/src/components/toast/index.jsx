@@ -7,7 +7,7 @@ import { Sleep } from '../../helpers'
 import Store from '../../store'
 import { setChatActive } from '../../store/ducks/chatbot'
 import { setToastActive, setToastMessageActive } from '../../store/ducks/toast'
-import { setUserInteraction } from '../../store/ducks/user'
+import { addUserInteraction } from '../../store/ducks/user'
 import { setWatsonSessionId } from '../../store/ducks/watson'
 
 import { Button, Container, Logo, Message, Position } from './style'
@@ -35,7 +35,7 @@ const Toast = () => {
     dispatch(setToastActive(!toast.active))
     dispatch(setToastMessageActive(false))
     handleSessionId(!chatbot.active)
-    dispatch(setUserInteraction('Toast', 'handleChat', { toastMessage: toast.message.active }))
+    dispatch(addUserInteraction('Toast', 'handleChat', { toastMessage: toast.message.active }))
   }
 
   const handleToastMessage = async () => {

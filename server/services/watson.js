@@ -27,7 +27,6 @@ const sendMessage = async (message, sessionId) => {
       text: message
     }
   })
-  result.userId = result.user_id
   return result
 }
 

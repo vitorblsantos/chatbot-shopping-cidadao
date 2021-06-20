@@ -54,9 +54,8 @@ export const NoWrap = styled.div`
   flex-flow: row nowrap;
 `
 
-export const Wrap = styled.div`
+export const Row = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  margin: 0 0 20px;
+  margin: 0;
   padding: 0 20px 0 8px;
 `

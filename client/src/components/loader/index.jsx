@@ -1,10 +1,10 @@
 'use strict'
 
 import React from 'react'
-import { Bot, Container, Icon, NoWrap, Wrap } from './style'
+import { Bot, Container, Icon, NoWrap, Row } from './style'
 
 const Loader = () => (
-  <Wrap>
+  <Row>
     <NoWrap>
       <Icon>
         <Bot />
@@ -17,7 +17,7 @@ const Loader = () => (
         <div></div>
       </Container>
     </NoWrap>
-  </Wrap>
+  </Row>
 )
 
 export default Loader

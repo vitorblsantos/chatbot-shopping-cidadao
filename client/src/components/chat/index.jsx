@@ -18,17 +18,13 @@ const Chat = () => {
   const { chatbot, user, watson } = useSelector(state => state)
 
   const firstInteraction = async () => {
-    await Sleep(chatbot.loader.timer)
-
-    const { output, userId } = await Watson.sendMessage('oi', watson.session.id)
+    const { output, user_id: userId } = await Watson.sendMessage('oi', watson.session.id)
     dispatch(setUserId(userId))
-
-    Promise.all(
-      output.generic.map(async ({ text }) => {
-        dispatch(setMessages('bot', text))
-        await Sleep(chatbot.loader.timer)
-      })
-    )
+    for (let counter = 0; counter < output.generic.length; counter++) {
+      output.generic[counter].sender = 'bot'
+      if (output.generic[counter].response_type === 'text') await Sleep(chatbot.loader.timer)
+      dispatch(setMessages('bot', output.generic[counter]))
+    }
     dispatch(setChatLoaderActive(false))
   }
 
