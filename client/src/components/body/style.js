@@ -3,11 +3,9 @@ import styled, { css, keyframes } from 'styled-components'
 const MessageAnimation = keyframes`
   0% {
     opacity: 0;
-    top: 8px;
     visibility: hidden;
-  } 50% {
+  } 30% {
     opacity: 1;
-    top: 0;
     visibility: visible;
   }
 `
@@ -25,22 +23,21 @@ export const Container = styled.div`
 `
 
 export const Overflow = styled.div`
+  height: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
   padding: 20px 0;
+  position: relative;
   width: 332px;
 `
 
 export const Row = styled.div`
-  animation: ${MessageAnimation} .3s ease-in-out;
+  animation: ${MessageAnimation} .5s ease-in-out;
   display: flex;
   position: relative;
-  
-  ${({ options }) => !options && css`
-    :nth-of-type(even) {
-      margin: 12px 0 0;
-    }
-  `}
+  :nth-of-type(even) {
+    margin: 12px 0 0;
+  }
 
   ${({ user }) => user && css`
     margin: 12px 0 0 !important;

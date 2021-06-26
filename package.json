@@ -10,7 +10,7 @@
     "yarn": "1.22.x"
   },
   "scripts": {
-    "build": "cross-env NODE_ENV=production concurrently --kill-others-on-fail \"rm -rf build; mkdir build\" \"webpack --mode=production\" \"sucrase ./server -d ./build/server/ --transforms imports\"",
+    "build": "cross-env NODE_ENV=production concurrently --kill-others-on-fail \"rm -rf ./build && webpack --mode=production && sucrase ./server -d ./build/server/ --transforms imports\"",
     "dev": "cross-env NODE_ENV=development concurrently --kill-others-on-fail \"webpack-dev-server --open --mode development -d\" \"nodemon --exec sucrase-node ./server \"",
     "lint": "concurrently --kill-others-on-fail \"eslint ./client/**/*.{js,jsx}\" \"eslint ./server/**/*.js\"",
     "start": "node ./build/server",
@@ -50,6 +50,7 @@
     "react-is": "^16.13.1",
     "react-redux": "^7.2.3",
     "react-router-dom": "^5.2.0",
+    "react-slick": "^0.28.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "source-map-resolve": "^0.6.0",
@@ -85,6 +86,7 @@
     "path": "^0.12.7",
     "react-test-renderer": "^16.13.1",
     "sass-loader": "^10.1.1",
+    "style-loader": "^3.0.0",
     "webpack-manifest-plugin": "^3.1.0"
   },
   "resolutions": {

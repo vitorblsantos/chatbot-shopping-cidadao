@@ -26,7 +26,7 @@ const Body = () => {
 
   useEffect(() => {
     handleScroll(chatbot.active)
-  }, [chatbot.active])
+  }, [chatbot.messages])
 
   return (
     <Container>
@@ -34,10 +34,10 @@ const Body = () => {
         <>
           <Overflow>
             {
-              chatbot.messages && chatbot.messages.map(({ sender, content }, i) => {
+              chatbot.messages.map(({ sender, content }, i) => {
                 return (
                   <Row key={i} options={content.options || false} user={sender === 'user'}>
-                    {sender === 'bot' && (content.options ? <Options {...{ content }} /> : <Bot {...{ content }} />)}
+                    {sender === 'bot' && <Bot {...{ content }} />}
                     {sender === 'user' && <User {...{ content }} />}
                   </Row>
                 )
@@ -47,6 +47,7 @@ const Body = () => {
             {chatbot.loader.active && <Loader />}
             {scroll && <AlwaysScrollToBottom />}
           </Overflow>
+          {chatbot.options.length ? <Options /> : ''}
         </>
       }
     </Container>

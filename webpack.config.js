@@ -41,7 +41,7 @@ module.exports = {
         test: /\.(ico|png|jpe?g|gif|webp)$/i,
         loader: 'file-loader',
         options: {
-          name: 'build/client/images/[name].[ext]'
+          name: 'images/[name].[ext]'
         }
       },
       {
@@ -71,8 +71,8 @@ module.exports = {
     }
   },
   output: {
-    filename: '[contenthash].bundle.js',
-    path: resolve(__dirname, './build/client/'),
+    filename: 'js/[hash].[name].bundle.js',
+    path: resolve(__dirname, './build'),
     publicPath: '/'
   },
   plugins: [
@@ -85,8 +85,7 @@ module.exports = {
       filename: 'index.html'
     }),
     new MiniCssExtractPlugin({
-      filename: '[name].[contenthash].css',
-      chunkFilename: '[id].css'
+      filename: 'css/[name].[contenthash].css'
     }),
     new WebpackManifestPlugin({ filename: 'manifest.json' })
   ],

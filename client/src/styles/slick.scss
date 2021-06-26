@@ -1,0 +1,29 @@
+.slick {
+  &-list {
+    margin: 0;
+    width: 100%;
+  }
+
+  &-next {
+    right: 0;
+  }
+
+  &-next, &-prev {
+    border-radius: 20px;
+    height: 60px;
+    width: 60px;
+    &:before {
+      background: #ffffff !important;
+      color: #00535e !important;
+      font-size: 4.5rem !important;
+    }
+  }
+
+  &-prev {
+    left: 0;
+  }
+
+  &-track {
+    width: 100%;
+  }
+}

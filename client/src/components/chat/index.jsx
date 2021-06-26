@@ -4,7 +4,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Sleep, Watson } from '../../helpers'
-import { setChatLoaderActive, setMessages } from '../../store/ducks/chatbot'
+import { addOptions, setChatLoaderActive, setMessages } from '../../store/ducks/chatbot'
 import { setUserId } from '../../store/ducks/user'
 
 import Body from '../body'
@@ -22,7 +22,8 @@ const Chat = () => {
     dispatch(setUserId(userId))
     for (let counter = 0; counter < output.generic.length; counter++) {
       output.generic[counter].sender = 'bot'
-      if (output.generic[counter].response_type === 'text') await Sleep(chatbot.loader.timer)
+      if (output.generic[counter].response_type === 'option') return (dispatch(addOptions(output.generic[counter].options)) && dispatch(setChatLoaderActive(false)))
+      await Sleep(chatbot.loader.timer)
       dispatch(setMessages('bot', output.generic[counter]))
     }
     dispatch(setChatLoaderActive(false))
