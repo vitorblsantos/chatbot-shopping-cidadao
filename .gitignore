@@ -1,4 +1,5 @@
 .env
+.lock 
 
 build/
 node_modules/
