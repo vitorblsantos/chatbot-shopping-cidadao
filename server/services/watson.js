@@ -1,26 +1,29 @@
 'use strict'
 
+import 'dotenv/config'
 import AssistantV2 from 'ibm-watson/assistant/v2'
 import { IamAuthenticator } from 'ibm-watson/auth'
 
+const { WATSON_API_KEY, WATSON_ASSISTANT_ID, WATSON_SERVICE_URL, WATSON_SERVICE_VERSION } = process.env
+
 const assistant = new AssistantV2({
-  version: '2020-09-24',
+  version: WATSON_SERVICE_VERSION,
   authenticator: new IamAuthenticator({
-    apikey: '-1Mud9j8hGCu1FmUMypqRJrJqkiCXI3FKof-OzEVTJ49'
+    apikey: WATSON_API_KEY
   }),
-  serviceUrl: 'https://api.us-south.assistant.watson.cloud.ibm.com/'
+  serviceUrl: WATSON_SERVICE_URL
 })
 
 const createSession = async () => {
   const { result } = await assistant.createSession({
-    assistantId: 'c7f39109-43ca-4601-a84f-bb5a4a2a4497'
+    assistantId: WATSON_ASSISTANT_ID
   })
   return result.session_id
 }
 
 const sendMessage = async (message, sessionId) => {
   const { result } = await assistant.message({
-    assistantId: 'c7f39109-43ca-4601-a84f-bb5a4a2a4497',
+    assistantId: WATSON_ASSISTANT_ID,
     sessionId,
     input: {
       message_type: 'text',
