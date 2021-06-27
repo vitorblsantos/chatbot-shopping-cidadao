@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { setChatActive, setMessages } from '../../store/ducks/chatbot'
+import { setChatActive, setChatLoaderActive, setMessages, setOptions } from '../../store/ducks/chatbot'
 import { setToastActive } from '../../store/ducks/toast'
 
 import { Background, Button, Container, Input, Send } from './style'
@@ -20,8 +20,10 @@ const Footer = () => {
   }
   const handleInput = ({ target }) => setInputMessage(target.value)
   const handleMessage = () => {
+    dispatch(setChatLoaderActive(true))
+    dispatch(setOptions([]))
     dispatch(setMessages('user', inputMessage))
-    setInputMessage('')
+    dispatch(setInputMessage(''))
   }
 
   return (

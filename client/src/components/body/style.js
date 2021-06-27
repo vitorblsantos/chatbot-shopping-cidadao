@@ -36,7 +36,7 @@ export const Row = styled.div`
   display: flex;
   position: relative;
   :nth-of-type(even) {
-    margin: 12px 0 0;
+    margin: 12px 0;
   }
 
   ${({ user }) => user && css`

@@ -20,6 +20,8 @@ const Chat = () => {
   const firstInteraction = async () => {
     const { output, user_id: userId } = await Watson.sendMessage('oi', watson.session.id)
     dispatch(setUserId(userId))
+    if (!output.generic) return false
+
     for (let counter = 0; counter < output.generic.length; counter++) {
       output.generic[counter].sender = 'bot'
       if (output.generic[counter].response_type === 'option') return (dispatch(setOptions(output.generic[counter].options)) && dispatch(setChatLoaderActive(false)))
@@ -36,6 +38,7 @@ const Chat = () => {
     if (lastInteraction.sender === 'bot') return false
 
     const { output } = await Watson.sendMessage(lastInteraction.content, watson.session.id)
+    if (!output.generic) return false
 
     for (let counter = 0; counter < output.generic.length; counter++) {
       output.generic[counter].sender = 'bot'
