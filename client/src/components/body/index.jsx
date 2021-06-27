@@ -47,7 +47,7 @@ const Body = () => {
             {chatbot.loader.active && <Loader />}
             {scroll && <AlwaysScrollToBottom />}
           </Overflow>
-          <Options />
+          {chatbot.options.length && chatbot.options.length >= 2 ? <Options /> : ''}
         </>
       }
     </Container>

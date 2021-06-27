@@ -19,11 +19,11 @@ const Options = () => {
 
   const animateOptions = async () => {
     if (!chatbot.options.length) return false
-    if (chatbot.options.length <= 3) return false
+    if (chatbot.options.length <= 2) return false
     if (!slideRef) return false
     if (slideOptions) return false
     if (user.interactions.description && user.interactions.description.some('slide-option')) return false
-    await Sleep(200)
+    await Sleep(400)
     slideRef.current.slickNext()
     await Sleep(600)
     slideRef.current.slickPrev()
@@ -50,7 +50,7 @@ const Options = () => {
     dots: false,
     infinite: false,
     slidesToScroll: 1,
-    slidesToShow: 3,
+    slidesToShow: 2,
     swipeToSlide: true,
     speed: 300,
     afterChange: () => handleSlideOptions(false),
