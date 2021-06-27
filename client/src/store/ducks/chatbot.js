@@ -11,33 +11,24 @@ const INITIAL_STATE = {
 }
 
 export const Types = {
-  ADD_OPTIONS: 'ADD_OPTIONS',
   SET_CHAT_ACTIVE: 'SET_CHAT_ACTIVE',
   SET_CHAT_LOADER_ACTIVE: 'SET_CHAT_LOADER_ACTIVE',
-  SET_MESSAGES: 'SET_MESSAGES'
+  SET_MESSAGES: 'SET_MESSAGES',
+  SET_OPTIONS: 'SET_OPTIONS'
 }
 
 export default function reducer (state = INITIAL_STATE, { type, payload }) {
   switch (type) {
-  case Types.ADD_OPTIONS:
-    return { ...state, options: payload.options }
   case Types.SET_CHAT_ACTIVE:
     return { ...state, ...payload }
   case Types.SET_CHAT_LOADER_ACTIVE :
     return { ...state, loader: { ...state.loader, ...payload } }
   case Types.SET_MESSAGES:
     return { ...state, messages: [...state.messages, { ...payload }] }
+  case Types.SET_OPTIONS:
+    return { ...state, options: payload.options }
   default:
     return state
-  }
-}
-
-export function addOptions (options) {
-  return {
-    type: Types.ADD_OPTIONS,
-    payload: {
-      options
-    }
   }
 }
 
@@ -65,6 +56,15 @@ export function setMessages (sender, content) {
     payload: {
       content,
       sender
+    }
+  }
+}
+
+export function setOptions (options) {
+  return {
+    type: Types.SET_OPTIONS,
+    payload: {
+      options
     }
   }
 }

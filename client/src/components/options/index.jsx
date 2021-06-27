@@ -1,38 +1,80 @@
 'use strict'
 
-import React from 'react'
-// import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect, useRef, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Slider from 'react-slick'
 
-// import { setMessages, setChatLoaderActive } from '../../store/ducks/chatbot'
-// import { addUserInteraction } from '../../store/ducks/user'
-import { Container, Item } from './style'
+import { Sleep } from '../../helpers'
+import { setMessages, setChatLoaderActive, setOptions } from '../../store/ducks/chatbot'
+import { addUserInteraction } from '../../store/ducks/user'
+
+import { Container, Item, Option } from './style'
 
 const Options = () => {
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
+  const slideRef = useRef(null)
+  const [slideOptions, setSlideOptions] = useState(false)
+  const [slidingOptions, setSlidingOptions] = useState(false)
+  const { chatbot, user } = useSelector(state => state)
 
-  // const { chatbot } = useSelector(state => state)
+  const animateOptions = async () => {
+    if (!chatbot.options.length) return false
+    if (chatbot.options.length <= 3) return false
+    if (!slideRef) return false
+    if (slideOptions) return false
+    if (user.interactions.description && user.interactions.description.some('slide-option')) return false
+    await Sleep(200)
+    slideRef.current.slickNext()
+    await Sleep(600)
+    slideRef.current.slickPrev()
+    setSlideOptions(true)
+  }
+
+  const handleOption = (input) => {
+    if (slidingOptions) return false
+    dispatch(addUserInteraction('click-option', 'handleOption', input))
+    dispatch(setMessages('user', input.text))
+    dispatch(setChatLoaderActive(true))
+    dispatch(setOptions([]))
+  }
+
+  const handleSlideOptions = active => {
+    setSlideOptions(true)
+    setSlidingOptions(active)
+    if (!active) return false
+    dispatch(addUserInteraction('slide-options', 'handleSlideOptions'))
+  }
+
   const settings = {
     arrows: false,
     dots: false,
     infinite: false,
     slidesToScroll: 1,
-    slidesToShow: 2,
-    speed: 500
+    slidesToShow: 3,
+    swipeToSlide: true,
+    speed: 300,
+    afterChange: () => handleSlideOptions(false),
+    beforeChange: () => handleSlideOptions(true)
   }
 
-  // const handleOption = (input) => {
-  //   dispatch(addUserInteraction('Options', 'handleOption', input))
-  //   dispatch(setMessages('user', input.text))
-  //   dispatch(setChatLoaderActive(true))
-  // }
+  useEffect(() => {
+    animateOptions()
+  }, [chatbot.options])
 
   return (
     <Container>
-      <Slider {...settings}>
-        <Item>teste</Item>
-        <Item>teste</Item>
-        <Item>teste</Item>
+      <Slider ref={slideRef} {...settings}>
+        {
+          chatbot.options.map(({ value }, i) => {
+            return (
+              <Item key={i}>
+                <Option onClick={() => handleOption(value.input)}>
+                  {value.input.text}
+                </Option>
+              </Item>
+            )
+          })
+        }
       </Slider>
     </Container>
   )

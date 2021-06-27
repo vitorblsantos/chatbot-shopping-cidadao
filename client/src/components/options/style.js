@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 
 export const Container = styled.div`
-  max-width: 332px;
+  display: inline-block;
+  padding: 8px 4px;
   position: relative;
   width: 100%;
 `
@@ -23,6 +24,6 @@ export const Option = styled.button`
   font-weight: bold;
   height: 32px;
   margin: 0 4px;
-  padding: 8px 2px;
-  width: 200px;
+  padding: 8px 4px;
+  width: -webkit-fill-available;
 `
