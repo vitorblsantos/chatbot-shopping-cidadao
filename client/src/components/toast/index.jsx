@@ -35,7 +35,7 @@ const Toast = () => {
     dispatch(setToastActive(!toast.active))
     dispatch(setToastMessageActive(false))
     handleSessionId(!chatbot.active)
-    dispatch(addUserInteraction('Toast', 'handleChat', { toastMessage: toast.message.active }))
+    dispatch(addUserInteraction('toast', 'handleChat', { toastMessage: toast.message.active }))
   }
 
   const handleToastMessage = async () => {

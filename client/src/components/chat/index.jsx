@@ -29,6 +29,23 @@ const Chat = () => {
     dispatch(setChatLoaderActive(false))
   }
 
+  const watsonInteraction = async () => {
+    if (!chatbot.messages.length) return false
+    const lastInteraction = chatbot.messages[chatbot.messages.length - 1]
+
+    if (lastInteraction.sender === 'bot') return false
+
+    const { output } = await Watson.sendMessage(lastInteraction.content, watson.session.id)
+
+    for (let counter = 0; counter < output.generic.length; counter++) {
+      output.generic[counter].sender = 'bot'
+      if (output.generic[counter].response_type === 'option') return (dispatch(setOptions(output.generic[counter].options)) && dispatch(setChatLoaderActive(false)))
+      await Sleep(chatbot.loader.timer)
+      dispatch(setMessages('bot', output.generic[counter]))
+    }
+    dispatch(setChatLoaderActive(false))
+  }
+
   const startFlow = async () => {
     if (!user.interactions.length) return false
     if (!chatbot.active || !watson.session.id) return false
@@ -38,6 +55,10 @@ const Chat = () => {
   useEffect(() => {
     startFlow()
   }, [watson.session])
+
+  useEffect(() => {
+    watsonInteraction()
+  }, [chatbot.messages])
 
   return (
     <Container {...chatbot}>
