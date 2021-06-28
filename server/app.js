@@ -5,7 +5,7 @@ import compression from 'compression'
 import cors from 'cors'
 import express from 'express'
 
-import { Watson } from './routes'
+import { Watson, Webhooks } from './routes'
 
 const App = express()
 
@@ -21,5 +21,6 @@ App.use(express.static('./build/'))
 App.use(json())
 
 App.use('/watson', Watson)
+App.use('/webhooks', Webhooks)
 
 export default App

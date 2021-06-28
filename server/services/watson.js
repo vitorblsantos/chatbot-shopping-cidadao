@@ -27,7 +27,10 @@ const sendMessage = async (message, sessionId) => {
     sessionId,
     input: {
       message_type: 'text',
-      text: message
+      text: message,
+      options: {
+        return_context: true
+      }
     }
   })
   return result
