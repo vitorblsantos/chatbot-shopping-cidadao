@@ -5,11 +5,13 @@ export const Balloon = styled.div`
   border: 1px solid #222;
   border-radius: 16px;
   display: flex;
+  font-size: .95rem;
   height: fit-content;
   justify-content: flex-end;
+  line-height: 1.2;
   margin: 0 0 0 auto;
-  padding: 4px 8px;
-  text-align: right;
+  padding: 8px 12px;
+  text-align: left;
   width: auto;
 `
 

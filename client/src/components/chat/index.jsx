@@ -18,7 +18,7 @@ const Chat = () => {
   const { chatbot, user, watson } = useSelector(state => state)
 
   const firstInteraction = async () => {
-    const { output, user_id: userId } = await Watson.sendMessage('oi', watson.session.id)
+    const { output, user_id: userId } = await Watson.sendMessage('', watson.session.id)
     dispatch(setUserId(userId))
     if (!output.generic) return false
 

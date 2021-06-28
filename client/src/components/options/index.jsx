@@ -65,11 +65,11 @@ const Options = () => {
     <Container>
       <Slider ref={slideRef} {...settings}>
         {
-          chatbot.options.map(({ value }, i) => {
+          chatbot.options.map(({ label, value }, i) => {
             return (
               <Item key={i}>
                 <Option onClick={() => handleOption(value.input)}>
-                  {value.input.text}
+                  {label}
                 </Option>
               </Item>
             )
