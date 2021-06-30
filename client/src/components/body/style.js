@@ -35,8 +35,9 @@ export const Row = styled.div`
   animation: ${MessageAnimation} .5s ease-in-out;
   display: flex;
   position: relative;
-  :nth-of-type(even) {
-    margin: 12px 0;
+
+  :not(:first-of-type) {
+    margin: 8px 0 0;
   }
 
   ${({ user }) => user && css`
