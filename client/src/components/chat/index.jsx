@@ -4,8 +4,10 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Sleep, Watson } from '../../helpers'
-import { setChatLoaderActive, setMessages, setOptions } from '../../store/ducks/chatbot'
+
+import { setChatActions, setChatLoaderActive, setMessages, setOptions } from '../../store/ducks/chatbot'
 import { setUserId } from '../../store/ducks/user'
+import { setWatsonFlowStart } from '../../store/ducks/watson'
 
 import Body from '../body'
 import Footer from '../footer'
@@ -17,18 +19,22 @@ const Chat = () => {
   const dispatch = useDispatch()
   const { chatbot, user, watson } = useSelector(state => state)
 
+  const handleBotMessage = async messages => {
+    for (let counter = 0; counter < messages.length; counter++) {
+      messages[counter].sender = 'bot'
+      if (messages[counter].response_type === 'option') return (dispatch(setOptions(messages[counter].options)) && dispatch(setChatLoaderActive(false)))
+      await Sleep(chatbot.loader.timer)
+      dispatch(setMessages('bot', messages[counter]))
+    }
+    dispatch(setChatLoaderActive(false))
+  }
+
   const firstInteraction = async () => {
     const { output, user_id: userId } = await Watson.sendMessage('', watson.session.id)
     dispatch(setUserId(userId))
+    dispatch(setWatsonFlowStart(true))
     if (!output.generic) return false
-
-    for (let counter = 0; counter < output.generic.length; counter++) {
-      output.generic[counter].sender = 'bot'
-      if (output.generic[counter].response_type === 'option') return (dispatch(setOptions(output.generic[counter].options)) && dispatch(setChatLoaderActive(false)))
-      await Sleep(chatbot.loader.timer)
-      dispatch(setMessages('bot', output.generic[counter]))
-    }
-    dispatch(setChatLoaderActive(false))
+    await handleBotMessage(output.generic)
   }
 
   const watsonInteraction = async () => {
@@ -37,16 +43,16 @@ const Chat = () => {
 
     if (lastInteraction.sender === 'bot') return false
 
-    const { output } = await Watson.sendMessage(lastInteraction.content, watson.session.id)
+    const { context, output } = await Watson.sendMessage(lastInteraction.content, watson.session.id)
     if (!output.generic) return false
 
-    for (let counter = 0; counter < output.generic.length; counter++) {
-      output.generic[counter].sender = 'bot'
-      if (output.generic[counter].response_type === 'option') return (dispatch(setOptions(output.generic[counter].options)) && dispatch(setChatLoaderActive(false)))
-      await Sleep(chatbot.loader.timer)
-      dispatch(setMessages('bot', output.generic[counter]))
-    }
-    dispatch(setChatLoaderActive(false))
+    await handleBotMessage(output.generic)
+
+    const skills = context.skills['main skill'].user_defined
+
+    if (!skills) return false
+
+    if (skills.getEmail) dispatch(setChatActions(skills, 'Digite seu e-mail:'))
   }
 
   const startFlow = async () => {

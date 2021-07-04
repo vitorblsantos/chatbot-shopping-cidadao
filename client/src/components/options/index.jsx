@@ -41,8 +41,6 @@ const Options = () => {
   const handleSlideOptions = active => {
     setSlideOptions(true)
     setSlidingOptions(active)
-    if (!active) return false
-    dispatch(addUserInteraction('slide-options', 'handleSlideOptions'))
   }
 
   const settings = {
@@ -53,8 +51,8 @@ const Options = () => {
     slidesToShow: 2,
     swipeToSlide: true,
     speed: 300,
-    afterChange: () => handleSlideOptions(false),
-    beforeChange: () => handleSlideOptions(true)
+    afterChange: () => slideOptions && handleSlideOptions(false),
+    beforeChange: () => slideOptions && handleSlideOptions(true)
   }
 
   useEffect(() => {

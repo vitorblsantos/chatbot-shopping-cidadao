@@ -14,15 +14,27 @@ const INITIAL_STATE = {
 }
 
 export const Types = {
+  SET_WATSON_FLOW_START: 'SET_WATSON_FLOW_START',
   SET_WATSON_SESSION_ID: 'SET_WATSON_SESSION_ID'
 }
 
 export default function reducer (state = INITIAL_STATE, { type, payload }) {
   switch (type) {
+  case Types.SET_WATSON_FLOW_START:
+    return { ...state, flow: { ...state.flow, ...payload } }
   case Types.SET_WATSON_SESSION_ID:
     return { ...state, session: { ...state.session, ...payload } }
   default:
     return state
+  }
+}
+
+export function setWatsonFlowStart (start) {
+  return {
+    type: Types.SET_WATSON_FLOW_START,
+    payload: {
+      start
+    }
   }
 }
 

@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { setChatActive, setChatLoaderActive, setMessages, setOptions } from '../../store/ducks/chatbot'
 import { setToastActive } from '../../store/ducks/toast'
@@ -10,6 +10,14 @@ const Footer = () => {
   const dispatch = useDispatch()
   const [inputMessage, setInputMessage] = useState('')
 
+  const { chatbot } = useSelector(state => state)
+
+  const handleActions = actions => {
+    if (actions.getEmail === 'true') console.log('getEmail')
+  }
+
+  const handleInput = ({ target }) => setInputMessage(target.value)
+
   const handleKey = async ({ keyCode }) => {
     // 13 enter - 27 escape
     if (keyCode === 13) return handleMessage()
@@ -18,7 +26,7 @@ const Footer = () => {
       dispatch(setToastActive(true))
     }
   }
-  const handleInput = ({ target }) => setInputMessage(target.value)
+
   const handleMessage = () => {
     dispatch(setChatLoaderActive(true))
     dispatch(setOptions([]))
@@ -26,10 +34,14 @@ const Footer = () => {
     dispatch(setInputMessage(''))
   }
 
+  useEffect(() => {
+    handleActions(chatbot.actions)
+  }, [chatbot.actions])
+
   return (
     <Container>
       <Background>
-        <Input onChange={(e) => handleInput(e)} onKeyDown={e => handleKey(e)} placeholder='Digite sua mensagem...' value={inputMessage} />
+        <Input onChange={(e) => handleInput(e)} onKeyDown={e => handleKey(e)} placeholder={chatbot.input.placeholder || 'Digite sua mensagem...'} value={inputMessage} />
         <Button>
           <Send onClick={handleMessage} />
         </Button>

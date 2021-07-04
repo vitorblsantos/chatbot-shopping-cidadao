@@ -1,10 +1,10 @@
 import { model, Schema } from 'mongoose'
 
-const Logs = new Schema({
+const User = new Schema({
   name: String,
-  description: String
+  session: String
 }, {
   timestamps: true
 })
 
-export default model('logs', Logs)
+export default model('user', User)
