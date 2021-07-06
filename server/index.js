@@ -13,5 +13,7 @@ mongoose.connect(urlString, {
   useFindAndModify: true
 })
 
-mongoose.connection.on('connected', () => Server.listen(API_PORT, () => console.log(`Server running on port: ${API_PORT}`)))
-mongoose.connection.on('error', console.error.bind(console, 'Mongoose connection error:'))
+Server.listen(API_PORT, () => console.log(`Server running on port: ${API_PORT}`))
+
+// mongoose.connection.on('connected', () => Server.listen(API_PORT, () => console.log(`Server running on port: ${API_PORT}`)))
+// mongoose.connection.on('error', console.error.bind(console, 'Mongoose connection error:'))
