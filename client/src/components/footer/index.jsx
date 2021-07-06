@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { setChatActive, setChatLoaderActive, setMessages, setOptions } from '../../store/ducks/chatbot'
@@ -11,10 +11,6 @@ const Footer = () => {
   const [inputMessage, setInputMessage] = useState('')
 
   const { chatbot } = useSelector(state => state)
-
-  const handleActions = actions => {
-    if (actions.getEmail === 'true') console.log('getEmail')
-  }
 
   const handleInput = ({ target }) => setInputMessage(target.value)
 
@@ -33,10 +29,6 @@ const Footer = () => {
     dispatch(setMessages('user', inputMessage))
     dispatch(setInputMessage(''))
   }
-
-  useEffect(() => {
-    handleActions(chatbot.actions)
-  }, [chatbot.actions])
 
   return (
     <Container>

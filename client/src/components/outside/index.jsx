@@ -3,15 +3,18 @@
 import React from 'react'
 import { node } from 'prop-types'
 
-import { Container, Relative } from './style'
+import { Background, Container, Relative } from './style'
 
 const Outside = ({ children }) => {
   return (
-    <Container>
-      <Relative>
-        {children}
-      </Relative>
-    </Container>
+    <>
+      <Background />
+      <Container>
+        <Relative>
+          {children}
+        </Relative>
+      </Container>
+    </>
   )
 }
 
