@@ -1,4 +1,14 @@
-import styled from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
+
+const MessageAnimation = keyframes`
+  0% {
+    opacity: 0;
+    visibility: hidden;
+  } 30% {
+    opacity: 1;
+    visibility: visible;
+  }
+`
 
 export const Container = styled.div`
   background: #f7f7f7;
@@ -13,15 +23,25 @@ export const Container = styled.div`
 `
 
 export const Overflow = styled.div`
+  height: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
   padding: 20px 0;
+  position: relative;
   width: 332px;
 `
 
 export const Row = styled.div`
+  animation: ${MessageAnimation} .5s ease-in-out;
   display: flex;
-  flex-wrap: wrap;
-  margin: 0 0 20px;
-  overflow-x: hidden;
+  position: relative;
+
+  :not(:first-of-type) {
+    margin: 8px 0 0;
+  }
+
+  ${({ user }) => user && css`
+    margin: 12px 0 0 !important;
+  `}
+
 `

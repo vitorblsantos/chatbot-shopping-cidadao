@@ -1,7 +1,7 @@
 'use strict'
 
 import React from 'react'
-import { string } from 'prop-types'
+import { object } from 'prop-types'
 
 import { Balloon, Icon, Image, Row } from './style'
 
@@ -12,14 +12,14 @@ const Bot = ({ content }) => {
         <Image />
       </Icon>
       <Balloon>
-        {content}
+        {content.text}
       </Balloon>
     </Row>
   )
 }
 
 Bot.propTypes = {
-  content: string
+  content: object
 }
 
 export default Bot

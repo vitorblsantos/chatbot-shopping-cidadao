@@ -5,9 +5,11 @@ import { useSelector } from 'react-redux'
 
 import Bot from '../bot'
 import Loader from '../loader'
+import Options from '../options'
+import SingleOption from '../singleOption'
 import User from '../user'
 
-import { Container, Overflow } from './style'
+import { Container, Overflow, Row } from './style'
 
 const AlwaysScrollToBottom = () => {
   const reference = useRef()
@@ -25,7 +27,7 @@ const Body = () => {
 
   useEffect(() => {
     handleScroll(chatbot.active)
-  }, [chatbot.active])
+  }, [chatbot.messages])
 
   return (
     <Container>
@@ -33,16 +35,21 @@ const Body = () => {
         <>
           <Overflow>
             {
-              chatbot && chatbot.messages && chatbot.messages.map(({ content, sender }, i) => (
-                <div key={i}>
-                  {sender === 'bot' && <Bot {...{ content }} />}
-                  {sender === 'user' && <User {...{ content }} />}
-                </div>
-              ))
+              chatbot.messages.map(({ sender, content }, i) => {
+                return (
+                  <Row key={i} options={content.options || false} user={sender === 'user'}>
+                    {sender === 'bot' && <Bot {...{ content }} />}
+                    {sender === 'user' && <User {...{ content }} />}
+                  </Row>
+                )
+              }
+              )
             }
             {chatbot.loader.active && <Loader />}
+            {chatbot.options.length && chatbot.options.length === 1 ? <SingleOption /> : ''}
             {scroll && <AlwaysScrollToBottom />}
           </Overflow>
+          {chatbot.options.length && chatbot.options.length >= 2 ? <Options /> : ''}
         </>
       }
     </Container>

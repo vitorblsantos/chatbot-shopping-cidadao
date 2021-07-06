@@ -33,7 +33,7 @@ export function setToastActive (active) {
   }
 }
 
-export function setToastMessage (active) {
+export function setToastMessageActive (active) {
   return {
     type: Types.SET_TOAST_MESSAGE_ACTIVE,
     payload: {

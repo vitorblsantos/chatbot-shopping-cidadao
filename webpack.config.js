@@ -8,10 +8,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
-  context: __dirname,
-  devtool: 'source-map',
+  devtool: 'eval-source-map',
   devServer: {
-    historyApiFallback: true
+    historyApiFallback: true,
+    hot: true
   },
   entry: './client/index.js',
   module: {
@@ -20,15 +20,20 @@ module.exports = {
         test: /\.(css|scss)$/,
         use: [
           MiniCssExtractPlugin.loader,
-          'css-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1
+            }
+          },
           'sass-loader'
         ]
       },
       {
         test: /\.(js|jsx)$/,
         exclude: [
-          resolve(__dirname, './build/'),
-          resolve(__dirname, './node_modules/')
+          resolve(__dirname, 'build'),
+          resolve(__dirname, 'node_modules')
         ],
         loader: 'babel-loader',
         query: {
@@ -41,7 +46,7 @@ module.exports = {
         test: /\.(ico|png|jpe?g|gif|webp)$/i,
         loader: 'file-loader',
         options: {
-          name: 'build/client/images/[name].[ext]'
+          name: 'images/[name].[ext]'
         }
       },
       {
@@ -54,6 +59,7 @@ module.exports = {
     fs: 'empty'
   },
   optimization: {
+    minimize: true,
     runtimeChunk: 'single',
     splitChunks: {
       chunks: 'all',
@@ -71,8 +77,8 @@ module.exports = {
     }
   },
   output: {
-    filename: '[contenthash].bundle.js',
-    path: resolve(__dirname, './build/client/'),
+    filename: '[hash].bundle.js',
+    path: resolve(__dirname, 'build'),
     publicPath: '/'
   },
   plugins: [
@@ -81,16 +87,19 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       favicon: './client/src/images/logo.svg',
-      template: resolve(__dirname, './client/src/index.html'),
-      filename: 'index.html'
+      filename: 'index.html',
+      minify: {
+        removeComments: true
+      },
+      template: resolve(__dirname, './client/src/index.html')
     }),
     new MiniCssExtractPlugin({
-      filename: '[name].[contenthash].css',
-      chunkFilename: '[id].css'
+      filename: 'css/style.[hash].css'
     }),
     new WebpackManifestPlugin({ filename: 'manifest.json' })
   ],
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
+    modules: ['node_modules']
   }
 }
