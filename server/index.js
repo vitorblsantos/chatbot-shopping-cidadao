@@ -4,10 +4,10 @@ import { db } from './sequelize'
 
 import Server from './server'
 
-const { API_PORT } = process.env
+const { PORT } = process.env
 
 db.authenticate().then(() => {
-  return Server.listen(API_PORT || 5000, () => console.log(`Server running on port: ${API_PORT}`))
+  return Server.listen(PORT || 5000, () => console.log(`Server running on port: ${PORT}`))
 }).catch(err => {
   throw new Error(err)
 })
