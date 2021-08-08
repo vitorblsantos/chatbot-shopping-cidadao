@@ -1,6 +1,6 @@
 import { INTEGER, STRING } from 'sequelize'
 
-import database from '../config/database'
+const database = require('../sequelize/')
 
 export default database.define('stations', {
   _id: {
