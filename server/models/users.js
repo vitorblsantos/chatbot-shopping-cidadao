@@ -1,8 +1,10 @@
-import { INTEGER, STRING } from 'sequelize'
+const { INTEGER, STRING } = require('sequelize')
 
-const database = require('../sequelize')
+const { Messages } = require('../models/')
 
-export default database.define('users', {
+const Database = require('../sequelize')
+
+const Users = Database.define('users', {
   _id: {
     autoIncrement: true,
     type: INTEGER,
@@ -22,3 +24,10 @@ export default database.define('users', {
   tableName: 'users',
   timestamps: true
 })
+
+Users.hasMany(Messages, {
+  foreignKey: 'user',
+  sourceKey: '_id'
+})
+
+module.exports = Users

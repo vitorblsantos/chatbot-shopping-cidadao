@@ -1,8 +1,8 @@
-import { INTEGER, STRING } from 'sequelize'
+const { INTEGER, STRING } = require('sequelize')
 
-const database = require('../sequelize/')
+const Database = require('../sequelize/')
 
-export default database.define('stations', {
+export default Database.define('stations', {
   _id: {
     autoIncrement: true,
     type: INTEGER,
