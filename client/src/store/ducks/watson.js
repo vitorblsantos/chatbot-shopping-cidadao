@@ -1,6 +1,6 @@
 'use strict'
 
-import { Api, Date, LocalStorage } from '../../helpers'
+import { Api, DateFNS, LocalStorage } from '../../helpers'
 
 const INITIAL_STATE = {
   session: {
@@ -40,23 +40,19 @@ export function setWatsonFlowStart (start) {
 
 export function setWatsonSessionId () {
   return async (dispatch, getState) => {
-    const { watson } = getState()
-
-    const storageSession = LocalStorage.Get('watsonSession')
-    const storageSessionExpiration = LocalStorage.Get('watsonSessionExpiration')
+    const watsonLS = JSON.parse(LocalStorage.Get('watson'))
+    const watsonState = getState(state => state.watson)
 
     let session = ''
     let sessionValid = false
 
-    if ((watson.session.expiration && Date.compare(watson.session.expiration, Date.current)) === 1) sessionValid = true
-    if ((storageSessionExpiration && Date.compare(storageSessionExpiration, Date.current)) === 1) sessionValid = true
+    if (watsonLS && DateFNS.compare(watsonLS.expiration, DateFNS.current) === 1) sessionValid = true
 
     if (sessionValid) {
-      session = watson.session.id || storageSession
+      session = watsonState.session ? watsonState.session : watsonLS.session
     } else {
       const { data } = await Api.get('/watson/session')
-      LocalStorage.Set('watsonSession', data)
-      LocalStorage.Set('watsonSessionExpiration', Date.expiration)
+      LocalStorage.Set('watson', JSON.stringify({ expiration: DateFNS.expiration, session: data }))
       session = data
     }
 
@@ -64,8 +60,8 @@ export function setWatsonSessionId () {
       type: Types.SET_WATSON_SESSION_ID,
       payload: {
         id: session,
-        createdAt: Date.current,
-        expiration: Date.expiration
+        createdAt: DateFNS.current,
+        expiration: DateFNS.expiration
       }
     })
   }
