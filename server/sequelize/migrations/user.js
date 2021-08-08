@@ -6,14 +6,20 @@ module.exports = {
       type: Sequelize.INTEGER,
       primaryKey: true
     },
+    createdAt: {
+      type: Sequelize.DATE
+    },
+    document: {
+      type: Sequelize.STRING(11)
+    },
     email: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING(100)
     },
     name: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING(80)
     },
-    session: {
-      type: Sequelize.STRING
+    updatedAt: {
+      type: Sequelize.DATE
     }
   })
 }

@@ -29,6 +29,7 @@
     "dev": "cross-env NODE_ENV=development concurrently --kill-others-on-fail \"webpack-dev-server --open --mode development -d\" \"nodemon --exec sucrase-node ./server \"",
     "lint": "concurrently --kill-others-on-fail \"eslint ./client/**/*.{js,jsx}\" \"eslint ./server/**/*.js\"",
     "sequelize": "sequelize db:migrate",
+    "sequelize:drop": "sequelize db:migrate:undo",
     "start": "node ./build/server",
     "server": "cross-env NODE_ENV=development sucrase-node ./server/",
     "server:debug": "cross-env NODE_ENV=development nodemon --exec sucrase-node ./server/"

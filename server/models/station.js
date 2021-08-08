@@ -2,23 +2,23 @@ import { INTEGER, STRING } from 'sequelize'
 
 import database from '../config/database'
 
-export default database.define('user', {
+export default database.define('stations', {
   _id: {
     autoIncrement: true,
     type: INTEGER,
     primaryKey: true
   },
-  document: {
-    type: STRING(11)
+  description: {
+    type: STRING
   },
-  email: {
-    type: STRING(100)
+  cordX: {
+    type: STRING
   },
-  name: {
-    type: STRING(100)
+  cordY: {
+    type: STRING
   }
 }, {
   freezeTableName: true,
-  tableName: 'user',
+  tableName: 'station',
   timestamps: true
 })
