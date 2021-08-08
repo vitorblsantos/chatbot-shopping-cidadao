@@ -13,7 +13,7 @@ module.exports = {
       type: Sequelize.STRING(100)
     },
     latitude: {
-      type: Sequelize.STRING(13)
+      type: Sequelize.STRING(12)
     },
     longitude: {
       type: Sequelize.STRING(13)

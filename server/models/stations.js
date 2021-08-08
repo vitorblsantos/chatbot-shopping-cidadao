@@ -12,7 +12,7 @@ export default database.define('stations', {
     type: STRING(100)
   },
   latitude: {
-    type: STRING(13)
+    type: STRING(12)
   },
   longitude: {
     type: STRING(13)
