@@ -7,18 +7,23 @@ module.exports = {
       primaryKey: true
     },
     createdAt: {
+      allowNull: false,
       type: Sequelize.DATE
     },
     document: {
+      allowNull: false,
       type: Sequelize.STRING(11)
     },
     email: {
+      allowNull: false,
       type: Sequelize.STRING(100)
     },
     name: {
+      allowNull: false,
       type: Sequelize.STRING(80)
     },
     updatedAt: {
+      allowNull: false,
       type: Sequelize.DATE
     }
   })

@@ -1,4 +1,3 @@
-require("babel-register")
 const { resolve } = require('path')
 
 module.exports = {

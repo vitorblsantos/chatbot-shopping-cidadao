@@ -1,22 +1,33 @@
 module.exports = {
-  down: queryInterface => queryInterface.dropTable('sessions'),
-  up: (queryInterface, Sequelize) => queryInterface.createTable('sessions', {
+  down: queryInterface => queryInterface.dropTable('schedules'),
+  up: (queryInterface, Sequelize) => queryInterface.createTable('schedules', {
     _id: {
       autoIncrement: true,
       type: Sequelize.INTEGER,
       primaryKey: true
     },
-    createdAt: {
+    date: {
       allowNull: false,
       type: Sequelize.DATE
     },
-    watsonId: {
+    session: {
       allowNull: false,
-      type: Sequelize.STRING(40)
+      type: Sequelize.INTEGER,
+      references: {
+        model: 'sessions',
+        key: '_id'
+      }
+    },
+    station: {
+      allowNull: false,
+      type: Sequelize.INTEGER,
+      references: {
+        model: 'stations',
+        key: '_id'
+      }
     },
     user: {
       allowNull: false,
-      foreignKey: true,
       type: Sequelize.INTEGER,
       references: {
         model: 'users',
