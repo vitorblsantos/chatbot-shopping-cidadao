@@ -6,6 +6,10 @@ module.exports = {
       type: Sequelize.INTEGER,
       primaryKey: true
     },
+    createdAt: {
+      allowNull: false,
+      type: Sequelize.DATE
+    },
     date: {
       allowNull: false,
       type: Sequelize.DATE
@@ -25,16 +29,6 @@ module.exports = {
         model: 'stations',
         key: '_id'
       }
-    },
-    user: {
-      allowNull: false,
-      type: Sequelize.INTEGER,
-      references: {
-        model: 'users',
-        key: '_id'
-      },
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
     },
     updatedAt: {
       allowNull: false,

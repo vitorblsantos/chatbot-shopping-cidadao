@@ -28,9 +28,7 @@ module.exports = {
       references: {
         model: 'users',
         key: '_id'
-      },
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
+      }
     }
   })
 }

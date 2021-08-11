@@ -10,10 +10,6 @@ module.exports = {
       allowNull: false,
       type: Sequelize.DATE
     },
-    watsonId: {
-      allowNull: false,
-      type: Sequelize.STRING(40)
-    },
     user: {
       allowNull: false,
       foreignKey: true,
@@ -21,13 +17,15 @@ module.exports = {
       references: {
         model: 'users',
         key: '_id'
-      },
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
+      }
     },
     updatedAt: {
       allowNull: false,
       type: Sequelize.DATE
+    },
+    watsonId: {
+      allowNull: false,
+      type: Sequelize.STRING(40)
     }
   })
 }

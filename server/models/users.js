@@ -1,7 +1,5 @@
 const { INTEGER, STRING } = require('sequelize')
 
-const { Messages } = require('../models/')
-
 const Database = require('../sequelize')
 
 const Users = Database.define('users', {
@@ -23,11 +21,6 @@ const Users = Database.define('users', {
   freezeTableName: true,
   tableName: 'users',
   timestamps: true
-})
-
-Users.hasMany(Messages, {
-  foreignKey: 'user',
-  sourceKey: '_id'
 })
 
 module.exports = Users

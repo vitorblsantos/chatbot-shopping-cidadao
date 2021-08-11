@@ -1,6 +1,7 @@
 const { INTEGER, STRING } = require('sequelize')
 
 const { Users } = require('./index')
+
 const Database = require('../sequelize')
 
 const Messages = Database.define('messages', {
@@ -17,12 +18,20 @@ const Messages = Database.define('messages', {
   },
   user: {
     type: INTEGER,
-    references: { model: Users, key: '_id' }
+    references: {
+      key: '_id',
+      model: Users
+    }
   }
 }, {
   freezeTableName: true,
   tableName: 'messages',
   timestamps: true
+})
+
+Messages.hasOne(Users, {
+  onDelete: 'cascade',
+  onUpdate: 'cascade'
 })
 
 module.exports = Messages
