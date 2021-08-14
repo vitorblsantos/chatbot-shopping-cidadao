@@ -10,15 +10,6 @@ module.exports = {
       allowNull: false,
       type: Sequelize.DATE
     },
-    user: {
-      allowNull: false,
-      foreignKey: true,
-      type: Sequelize.INTEGER,
-      references: {
-        model: 'users',
-        key: '_id'
-      }
-    },
     updatedAt: {
       allowNull: false,
       type: Sequelize.DATE

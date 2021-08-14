@@ -16,19 +16,15 @@ module.exports = {
     },
     session: {
       allowNull: false,
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
+      references: {
+        model: 'sessions',
+        key: '_id'
+      }
     },
     updatedAt: {
       allowNull: false,
       type: Sequelize.DATE
-    },
-    user: {
-      allowNull: false,
-      type: Sequelize.INTEGER,
-      references: {
-        model: 'users',
-        key: '_id'
-      }
     }
   })
 }
