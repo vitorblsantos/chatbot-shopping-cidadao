@@ -1,26 +1,32 @@
-const { INTEGER, STRING } = require('sequelize')
+const { Model } = require('sequelize')
 
-const Database = require('../sequelize')
-
-const Users = Database.define('users', {
-  _id: {
-    autoIncrement: true,
-    type: INTEGER,
-    primaryKey: true
-  },
-  document: {
-    type: STRING(11)
-  },
-  email: {
-    type: STRING(100)
-  },
-  name: {
-    type: STRING(100)
+module.exports = (sequelize, DataTypes) => {
+  class User extends Model {
+    static associate (models) {}
   }
-}, {
-  freezeTableName: true,
-  tableName: 'users',
-  timestamps: true
-})
 
-module.exports = Users
+  User.init({
+    _id: {
+      autoIncrement: true,
+      defaultValue: DataTypes.UUIDV4,
+      type: DataTypes.UUID,
+      primaryKey: true
+    },
+    document: {
+      type: DataTypes.STRING(11)
+    },
+    email: {
+      type: DataTypes.STRING(100)
+    },
+    name: {
+      type: DataTypes.STRING(100)
+    }
+  }, {
+    freezeTableName: true,
+    sequelize,
+    tableName: 'users',
+    timestamps: true
+  })
+
+  return User
+}

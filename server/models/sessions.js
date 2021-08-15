@@ -1,44 +1,27 @@
-const { DATE, INTEGER, STRING } = require('sequelize')
+const { Model } = require('sequelize')
 
-const { Users } = require('./')
-const Database = require('../sequelize/')
-
-const Sessions = Database.define('schedules', {
-  _id: {
-    autoIncrement: true,
-    type: INTEGER,
-    primaryKey: true
-  },
-  createdAt: {
-    allowNull: false,
-    type: DATE
-  },
-  session: {
-    allowNull: false,
-    foreignKey: true,
-    type: INTEGER,
-    references: {
-      model: 'sessions',
-      key: '_id'
-    }
-  },
-  updatedAt: {
-    allowNull: false,
-    type: DATE
-  },
-  watsonId: {
-    allowNull: false,
-    type: STRING(40)
+module.exports = (sequelize, DataTypes) => {
+  class Session extends Model {
+    static associate (models) {}
   }
-}, {
-  freezeTableName: true,
-  tableName: 'schedules',
-  timestamps: true
-})
 
-Sessions.hasOne(Users, {
-  onDelete: 'cascade',
-  onUpdate: 'cascade'
-})
+  Session.init({
+    _id: {
+      allowNull: false,
+      defaultValue: DataTypes.UUIDV4,
+      type: DataTypes.UUID,
+      primaryKey: true
+    },
+    watsonId: {
+      allowNull: false,
+      type: DataTypes.STRING(40)
+    }
+  }, {
+    freezeTableName: true,
+    sequelize,
+    tableName: 'sessions',
+    timestamps: true
+  })
 
-module.exports = Sessions
+  return Session
+}

@@ -1,22 +1,23 @@
 module.exports = {
   down: queryInterface => queryInterface.dropTable('messages'),
-  up: (queryInterface, Sequelize) => queryInterface.createTable('messages', {
+  up: (queryInterface, DataTypes) => queryInterface.createTable('messages', {
     _id: {
-      autoIncrement: true,
-      type: Sequelize.INTEGER,
+      allowNull: false,
+      defaultValue: DataTypes.UUIDV4,
+      type: DataTypes.UUID,
       primaryKey: true
     },
     content: {
       allowNull: false,
-      type: Sequelize.STRING(150)
+      type: DataTypes.STRING(150)
     },
     createdAt: {
       allowNull: false,
-      type: Sequelize.DATE
+      type: DataTypes.DATE
     },
     session: {
       allowNull: false,
-      type: Sequelize.INTEGER,
+      type: DataTypes.UUID,
       references: {
         model: 'sessions',
         key: '_id'
@@ -24,7 +25,7 @@ module.exports = {
     },
     updatedAt: {
       allowNull: false,
-      type: Sequelize.DATE
+      type: DataTypes.DATE
     }
   })
 }

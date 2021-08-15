@@ -1,30 +1,31 @@
 module.exports = {
   down: queryInterface => queryInterface.dropTable('stations'),
-  up: (queryInterface, Sequelize) => queryInterface.createTable('stations', {
+  up: (queryInterface, DataTypes) => queryInterface.createTable('stations', {
     _id: {
-      autoIncrement: true,
-      type: Sequelize.INTEGER,
+      allowNull: false,
+      defaultValue: DataTypes.UUIDV4,
+      type: DataTypes.UUID,
       primaryKey: true
     },
     createdAt: {
       allowNull: false,
-      type: Sequelize.DATE
+      type: DataTypes.DATE
     },
     description: {
       allowNull: false,
-      type: Sequelize.STRING(100)
+      type: DataTypes.STRING(100)
     },
     latitude: {
       allowNull: false,
-      type: Sequelize.STRING(12)
+      type: DataTypes.STRING(12)
     },
     longitude: {
       allowNull: false,
-      type: Sequelize.STRING(13)
+      type: DataTypes.STRING(13)
     },
     updatedAt: {
       allowNull: false,
-      type: Sequelize.DATE
+      type: DataTypes.DATE
     }
   })
 }

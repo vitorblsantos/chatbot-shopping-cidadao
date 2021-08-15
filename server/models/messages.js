@@ -1,37 +1,29 @@
-const { INTEGER, STRING } = require('sequelize')
+const { Model } = require('sequelize')
 
-const { Users } = require('./index')
-
-const Database = require('../sequelize')
-
-const Messages = Database.define('messages', {
-  _id: {
-    autoIncrement: true,
-    type: INTEGER,
-    primaryKey: true
-  },
-  content: {
-    type: STRING(150)
-  },
-  session: {
-    type: INTEGER
-  },
-  user: {
-    type: INTEGER,
-    references: {
-      key: '_id',
-      model: Users
+module.exports = (sequelize, DataTypes) => {
+  class Messages extends Model {
+    static associate (models) {
+      this.hasOne(models.Session, { foreignKey: '_id', as: 'session' })
     }
   }
-}, {
-  freezeTableName: true,
-  tableName: 'messages',
-  timestamps: true
-})
 
-Messages.hasOne(Users, {
-  onDelete: 'cascade',
-  onUpdate: 'cascade'
-})
+  Messages.init({
+    _id: {
+      allowNull: false,
+      defaultValue: DataTypes.UUIDV4,
+      type: DataTypes.UUID,
+      primaryKey: true
+    },
+    content: {
+      allowNull: false,
+      type: DataTypes.STRING(150)
+    }
+  }, {
+    freezeTableName: true,
+    sequelize,
+    tableName: 'messages',
+    timestamps: true
+  })
 
-module.exports = Messages
+  return Messages
+}

@@ -1,22 +1,26 @@
 module.exports = {
   down: queryInterface => queryInterface.dropTable('schedules'),
-  up: (queryInterface, Sequelize) => queryInterface.createTable('schedules', {
+  up: (queryInterface, DataTypes) => queryInterface.createTable('schedules', {
     _id: {
-      autoIncrement: true,
-      type: Sequelize.INTEGER,
+      allowNull: false,
+      defaultValue: DataTypes.UUIDV4,
+      type: DataTypes.UUID,
       primaryKey: true
     },
     createdAt: {
       allowNull: false,
-      type: Sequelize.DATE
+      type: DataTypes.DATE
     },
+
     date: {
       allowNull: false,
-      type: Sequelize.DATE
+      type: DataTypes.DATE
     },
+
     session: {
       allowNull: false,
-      type: Sequelize.INTEGER,
+      defaultValue: DataTypes.UUIDV4,
+      type: DataTypes.UUID,
       references: {
         model: 'sessions',
         key: '_id'
@@ -24,7 +28,8 @@ module.exports = {
     },
     station: {
       allowNull: false,
-      type: Sequelize.INTEGER,
+      defaultValue: DataTypes.UUIDV4,
+      type: DataTypes.UUID,
       references: {
         model: 'stations',
         key: '_id'
@@ -32,11 +37,12 @@ module.exports = {
     },
     updatedAt: {
       allowNull: false,
-      type: Sequelize.DATE
+      type: DataTypes.DATE
     },
     user: {
       allowNull: false,
-      type: Sequelize.INTEGER,
+      defaultValue: DataTypes.UUIDV4,
+      type: DataTypes.UUID,
       references: {
         model: 'users',
         key: '_id'

@@ -1,26 +1,35 @@
-const { INTEGER, STRING } = require('sequelize')
+const { Model } = require('sequelize')
 
-const Database = require('../sequelize/')
-
-const Stations = Database.define('stations', {
-  _id: {
-    autoIncrement: true,
-    type: INTEGER,
-    primaryKey: true
-  },
-  description: {
-    type: STRING(100)
-  },
-  latitude: {
-    type: STRING(12)
-  },
-  longitude: {
-    type: STRING(13)
+module.exports = (sequelize, DataTypes) => {
+  class Station extends Model {
+    static associate (models) {}
   }
-}, {
-  freezeTableName: true,
-  tableName: 'stations',
-  timestamps: true
-})
 
-module.exports = Stations
+  Station.init({
+    _id: {
+      allowNull: false,
+      defaultValue: DataTypes.UUIDV4,
+      type: DataTypes.UUID,
+      primaryKey: true
+    },
+    description: {
+      allowNull: false,
+      type: DataTypes.STRING(100)
+    },
+    latitude: {
+      allowNull: false,
+      type: DataTypes.STRING(12)
+    },
+    longitude: {
+      allowNull: false,
+      type: DataTypes.STRING(13)
+    }
+  }, {
+    freezeTableName: true,
+    sequelize,
+    tableName: 'stations',
+    timestamps: true
+  })
+
+  return Station
+}

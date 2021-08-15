@@ -1,22 +1,23 @@
 module.exports = {
   down: queryInterface => queryInterface.dropTable('sessions'),
-  up: (queryInterface, Sequelize) => queryInterface.createTable('sessions', {
+  up: (queryInterface, DataTypes) => queryInterface.createTable('sessions', {
     _id: {
-      autoIncrement: true,
-      type: Sequelize.INTEGER,
+      allowNull: false,
+      defaultValue: DataTypes.UUIDV4,
+      type: DataTypes.UUID,
       primaryKey: true
     },
     createdAt: {
       allowNull: false,
-      type: Sequelize.DATE
+      type: DataTypes.DATE
     },
     updatedAt: {
       allowNull: false,
-      type: Sequelize.DATE
+      type: DataTypes.DATE
     },
     watsonId: {
       allowNull: false,
-      type: Sequelize.STRING(40)
+      type: DataTypes.STRING(40)
     }
   })
 }

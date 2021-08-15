@@ -2,14 +2,19 @@
 
 import { Watson } from '../services'
 
+const { Session } = require('../models/')
+
 const createSession = async (_, res) => {
-  const session = await Watson.createSession()
-  return res.status(200).send(session)
+  const watsonId = await Watson.createSession()
+  const data = await Session.create({ watsonId })
+  return res.status(200).send(data.dataValues._id)
 }
 
 const sendMessage = async (req, res) => {
   const { message, sessionId } = req.body
-  const response = await Watson.sendMessage(message, sessionId)
+  const { dataValues: storedSession } = await Session.findOne({ where: { _id: sessionId } })
+
+  const response = await Watson.sendMessage(message, storedSession.watsonId)
   res.status(200).send(response)
 }
 

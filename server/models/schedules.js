@@ -1,56 +1,31 @@
-const { DATE, INTEGER } = require('sequelize')
+const { Model } = require('sequelize')
 
-const { Users, Stations } = require('./')
-const Database = require('../sequelize/')
-
-const Schedules = Database.define('schedules', {
-  _id: {
-    autoIncrement: true,
-    type: INTEGER,
-    primaryKey: true
-  },
-  createdAt: {
-    allowNull: false,
-    type: DATE
-  },
-  date: {
-    allowNull: false,
-    type: DATE
-  },
-  session: {
-    allowNull: false,
-    type: INTEGER,
-    references: {
-      model: 'sessions',
-      key: '_id'
+module.exports = (sequelize, DataTypes) => {
+  class Schedules extends Model {
+    static associate (models) {
+      this.hasOne(models.User, { foreignKey: '_id', as: 'user' })
+      this.hasOne(models.Session, { foreignKey: '_id', as: 'session' })
+      this.hasOne(models.Station, { foreignKey: '_id', as: 'station' })
     }
-  },
-  station: {
-    allowNull: false,
-    type: INTEGER,
-    references: {
-      model: 'stations',
-      key: '_id'
-    }
-  },
-  updatedAt: {
-    allowNull: false,
-    type: DATE
   }
-}, {
-  freezeTableName: true,
-  tableName: 'schedules',
-  timestamps: true
-})
 
-Schedules.hasOne(Users, {
-  onDelete: 'cascade',
-  onUpdate: 'cascade'
-})
+  Schedules.init({
+    _id: {
+      allowNull: false,
+      defaultValue: DataTypes.UUIDV4,
+      type: DataTypes.UUID,
+      primaryKey: true
+    },
+    date: {
+      allowNull: false,
+      type: DataTypes.DATE
+    }
+  }, {
+    freezeTableName: true,
+    sequelize,
+    tableName: 'schedules',
+    timestamps: true
+  })
 
-Schedules.hasOne(Stations, {
-  onDelete: 'cascade',
-  onUpdate: 'cascade'
-})
-
-module.exports = Schedules
+  return Schedules
+}
