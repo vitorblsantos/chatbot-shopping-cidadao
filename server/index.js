@@ -1,6 +1,6 @@
 import 'dotenv/config'
 
-import database from './sequelize'
+import database from '../sequelize'
 
 import Server from './server'
 

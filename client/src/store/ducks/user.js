@@ -3,7 +3,6 @@
 const INITIAL_STATE = {
   name: '',
   email: '',
-  id: '',
   interactions: []
 }
 
@@ -16,8 +15,8 @@ export const Types = {
 
 export default function reducer (state = INITIAL_STATE, { type, payload }) {
   switch (type) {
-  case Types.SET_USER_EMAIL || Types.SET_USER_ID:
-    return { ...state, ...payload }
+  case Types.SET_USER_EMAIL:
+    return { ...state, email: payload.email }
   case Types.ADD_USER_INTERACTION:
     return { ...state, interactions: [...state.interactions, { ...payload }] }
   default:

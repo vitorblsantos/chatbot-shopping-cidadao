@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Sleep, Watson } from '../../helpers'
 
 import { setChatActions, setChatLoaderActive, setMessages, setOptions } from '../../store/ducks/chatbot'
-import { setUserId } from '../../store/ducks/user'
 import { setWatsonFlowStart } from '../../store/ducks/watson'
 
 import Body from '../body'
@@ -30,8 +29,7 @@ const Chat = () => {
   }
 
   const firstInteraction = async () => {
-    const { output, user_id: userId } = await Watson.sendMessage('', watson.session.id)
-    dispatch(setUserId(userId))
+    const { output } = await Watson.sendMessage('', watson.session.id)
     dispatch(setWatsonFlowStart(true))
     if (!output.generic) return false
     await handleBotMessage(output.generic)
