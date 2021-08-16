@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { setChatActive, setChatLoaderActive, setMessages, setOptions } from '../../store/ducks/chatbot'
 import { setToastActive } from '../../store/ducks/toast'
+import { addUserInteraction } from '../../store/ducks/user'
 
 import { Background, Button, Container, Input, Send } from './style'
 
@@ -26,6 +27,7 @@ const Footer = () => {
   const handleMessage = () => {
     dispatch(setChatLoaderActive(true))
     dispatch(setOptions([]))
+    dispatch(addUserInteraction('footer', 'handleMessage', { message: inputMessage }))
     dispatch(setMessages({ content: inputMessage, context: {}, sender: 'user' }))
     setInputMessage('')
   }
