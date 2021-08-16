@@ -1,6 +1,6 @@
 'use strict'
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 
 import Bot from '../bot'
@@ -9,25 +9,15 @@ import Options from '../options'
 import SingleOption from '../singleOption'
 import User from '../user'
 
-import { Container, Overflow, Row } from './style'
-
-const AlwaysScrollToBottom = () => {
-  const reference = useRef()
-  useEffect(() => reference.current.scrollIntoView({ behavior: 'smooth' }))
-  return <div ref={reference} />
-}
+import { Container, Overflow, Row, ScrollBottom, Status, Warning } from './style'
 
 const Body = () => {
-  const [scroll, setScroll] = useState(false)
   const { chatbot } = useSelector(state => state)
-
-  const handleScroll = async chatActive => {
-    setScroll(chatActive)
-  }
+  const reference = useRef('')
 
   useEffect(() => {
-    handleScroll(chatbot.active)
-  }, [chatbot.messages])
+    reference.current && reference.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
+  })
 
   return (
     <Container>
@@ -47,9 +37,12 @@ const Body = () => {
             }
             {chatbot.loader.active && <Loader />}
             {chatbot.options.length && chatbot.options.length === 1 ? <SingleOption /> : ''}
-            {scroll && <AlwaysScrollToBottom />}
+            <ScrollBottom ref={reference} />
           </Overflow>
           {chatbot.options.length && chatbot.options.length >= 2 ? <Options /> : ''}
+          <Status>
+            <Warning /> <span>teste</span>
+          </Status>
         </>
       }
     </Container>

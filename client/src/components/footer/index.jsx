@@ -26,8 +26,8 @@ const Footer = () => {
   const handleMessage = () => {
     dispatch(setChatLoaderActive(true))
     dispatch(setOptions([]))
-    dispatch(setMessages({ context: {}, content: inputMessage, sender: 'user' }))
-    dispatch(setInputMessage(''))
+    dispatch(setMessages({ content: inputMessage, context: {}, sender: 'user' }))
+    setInputMessage('')
   }
 
   return (

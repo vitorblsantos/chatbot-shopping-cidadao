@@ -56,7 +56,6 @@ const Options = () => {
   }
 
   useEffect(() => {
-    console.log(0)
     animateOptions()
   }, [chatbot.options])
 
