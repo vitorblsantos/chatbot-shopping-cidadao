@@ -11,24 +11,8 @@ const Footer = () => {
   const dispatch = useDispatch()
   const [inputMessage, setInputMessage] = useState('')
   const [inputValid, setInputValid] = useState(true)
-  const [context, setContext] = useState({})
 
   const { chatbot } = useSelector(state => state)
-
-  const handleContext = ({ actions }) => {
-    if (actions.getEmail === 'true') {
-      const draftContext = {
-        skills: {
-          'main skill': {
-            user_defined: {
-              getEmail: false
-            }
-          }
-        }
-      }
-      setContext(draftContext)
-    }
-  }
 
   const handleInput = ({ target }) => setInputMessage(target.value)
 
@@ -43,6 +27,16 @@ const Footer = () => {
 
   const handleMessage = () => {
     const isEmail = inputMessage.match(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/)
+    const draftContext = {
+      skills: {
+        'main skill': {
+          user_defined: {
+            email: isEmail ? 'true' : 'false',
+            getEmail: 'false'
+          }
+        }
+      }
+    }
 
     if (chatbot.actions && chatbot.actions.getEmail === 'true') {
       if (!isEmail) {
@@ -56,14 +50,10 @@ const Footer = () => {
       dispatch(setChatLoaderActive(true))
       dispatch(setOptions([]))
       dispatch(addUserInteraction('footer', 'handleMessage', { message: inputMessage }))
-      dispatch(setMessages({ content: inputMessage, context, sender: 'user' }))
+      dispatch(setMessages({ content: inputMessage, context: draftContext, sender: 'user' }))
       setInputMessage('')
     }
   }
-
-  useEffect(() => {
-    handleContext(chatbot)
-  }, [chatbot.actions])
 
   return (
     <Container>
