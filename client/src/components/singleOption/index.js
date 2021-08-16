@@ -12,7 +12,7 @@ const singleOption = () => {
 
   const handleSingleOption = (input) => {
     dispatch(addUserInteraction('click-single-option', 'handleSingleOption', input))
-    dispatch(setMessages('user', input.text))
+    dispatch(setMessages({ content: input.text, context: {}, sender: 'user' }))
     dispatch(setChatLoaderActive(true))
     dispatch(setOptions([]))
   }

@@ -79,11 +79,12 @@ export function setChatLoaderActive (active) {
   }
 }
 
-export function setMessages (sender, content) {
+export function setMessages ({ content, context, sender }) {
   return {
     type: Types.SET_MESSAGES,
     payload: {
       content,
+      context,
       sender
     }
   }

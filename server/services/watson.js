@@ -21,7 +21,7 @@ const createSession = async () => {
   return result.session_id
 }
 
-const sendMessage = async (context, message, sessionId) => {
+const sendMessage = async ({ context, message, sessionId }) => {
   const { result } = await assistant.message({
     assistantId: WATSON_ASSISTANT_ID,
     sessionId,

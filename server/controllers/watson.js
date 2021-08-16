@@ -12,9 +12,8 @@ const createSession = async (_, res) => {
 
 const sendMessage = async (req, res) => {
   const { context, message, sessionId } = req.body
-  const { dataValues: storedSession } = await Session.findOne({ where: { _id: sessionId } })
-
-  const response = await Watson.sendMessage(context, message, storedSession.watsonId)
+  const { dataValues } = await Session.findOne({ where: { _id: sessionId } })
+  const response = await Watson.sendMessage({ context, message, sessionId: dataValues.watsonId })
   res.status(200).send(response)
 }
 

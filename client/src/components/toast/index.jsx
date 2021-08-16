@@ -8,7 +8,6 @@ import Store from '../../store'
 import { setChatActive } from '../../store/ducks/chatbot'
 import { setToastActive, setToastMessageActive } from '../../store/ducks/toast'
 import { addUserInteraction } from '../../store/ducks/user'
-import { setWatsonSessionId } from '../../store/ducks/watson'
 
 import { Button, Container, Logo, Message, Position } from './style'
 
@@ -34,7 +33,6 @@ const Toast = () => {
     dispatch(setChatActive(!chatbot.active))
     dispatch(setToastActive(!toast.active))
     dispatch(setToastMessageActive(false))
-    handleSessionId(!chatbot.active)
     dispatch(addUserInteraction('toast', 'handleChat', { toastMessage: toast.message.active }))
   }
 
@@ -50,11 +48,6 @@ const Toast = () => {
     const random = Math.floor(Math.random() * messages.length)
     setToastMessageContent(messages[random])
     AnimateToastMessage()
-  }
-
-  const handleSessionId = chatActive => {
-    if (!chatActive) return false
-    dispatch(setWatsonSessionId())
   }
 
   useEffect(() => {

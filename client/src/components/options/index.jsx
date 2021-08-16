@@ -33,7 +33,7 @@ const Options = () => {
   const handleOption = (input) => {
     if (slidingOptions) return false
     dispatch(addUserInteraction('click-option', 'handleOption', input))
-    dispatch(setMessages('user', input.text))
+    dispatch(setMessages({ content: input.text, context: {}, sender: 'user' }))
     dispatch(setChatLoaderActive(true))
     dispatch(setOptions([]))
   }
@@ -56,6 +56,7 @@ const Options = () => {
   }
 
   useEffect(() => {
+    console.log(0)
     animateOptions()
   }, [chatbot.options])
 

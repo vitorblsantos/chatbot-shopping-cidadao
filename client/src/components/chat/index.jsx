@@ -1,47 +1,30 @@
 'use strict'
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Sleep, Watson } from '../../helpers'
 
 import { setChatActions, setChatLoaderActive, setMessages, setOptions } from '../../store/ducks/chatbot'
-import { setWatsonFlowStart } from '../../store/ducks/watson'
+import { setWatsonFlowStart, setWatsonSessionId } from '../../store/ducks/watson'
 
 import Body from '../body'
 import Footer from '../footer'
 import Header from '../header'
 
 import { Container } from './style'
-
 const Chat = () => {
   const dispatch = useDispatch()
   const { chatbot, user, watson } = useSelector(state => state)
+  const [watsonId, setWatsonId] = useState('')
 
-  const handleBotMessage = async messages => {
-    for (let counter = 0; counter < messages.length; counter++) {
-      messages[counter].sender = 'bot'
-      if (messages[counter].response_type === 'option') return (dispatch(setOptions(messages[counter].options)) && dispatch(setChatLoaderActive(false)))
-      await Sleep(chatbot.loader.timer)
-      dispatch(setMessages('bot', messages[counter]))
-    }
-    dispatch(setChatLoaderActive(false))
-  }
-
-  const firstInteraction = async () => {
-    const { output } = await Watson.sendMessage('', watson.session.id)
-    dispatch(setWatsonFlowStart(true))
-    if (!output.generic) return false
-    await handleBotMessage(output.generic)
-  }
-
-  const watsonInteraction = async () => {
-    if (!chatbot.messages.length) return false
+  const continuousInteraction = async () => {
     const lastInteraction = chatbot.messages[chatbot.messages.length - 1]
-
+    if (!lastInteraction) return false
     if (lastInteraction.sender === 'bot') return false
 
-    const { context, output } = await Watson.sendMessage(lastInteraction.content, watson.session.id)
+    const { context, output } = await Watson.sendMessage({ context: {}, message: lastInteraction.content, sessionId: watsonId })
+
     if (!output.generic) return false
 
     await handleBotMessage(output.generic)
@@ -53,19 +36,64 @@ const Chat = () => {
     if (skills.getEmail) dispatch(setChatActions(skills, 'Digite seu e-mail:'))
   }
 
-  const startFlow = async () => {
-    if (!user.interactions.length) return false
-    if (!chatbot.active || !watson.session.id) return false
-    if (user.interactions.length === 1) firstInteraction()
+  const firstInteraction = async () => {
+    const draftContext = {
+      skills: {
+        'main skill': {
+          user_defined: {
+            firstInteraction: true
+          }
+        }
+      }
+    }
+
+    const { output } = await Watson.sendMessage({ context: draftContext, message: '', sessionId: watsonId })
+    if (!output.generic) return false
+    await handleBotMessage(output.generic)
+  }
+
+  const handleBotMessage = async messages => {
+    for (let counter = 0; counter < messages.length; counter++) {
+      messages[counter].sender = 'bot'
+      if (messages[counter].response_type === 'option') return (dispatch(setOptions(messages[counter].options)) && dispatch(setChatLoaderActive(false)))
+      await Sleep(chatbot.loader.timer)
+      dispatch(setMessages({ content: messages[counter], sender: 'bot' }))
+    }
+    dispatch(setChatLoaderActive(false))
+  }
+
+  const handleFlow = async chatbot => {
+    if (!chatbot.active) return false
+    if (user.interactions.length === 1) return firstInteraction()
+    return continuousInteraction()
+  }
+
+  const handleWatsonId = ({ id }) => {
+    if (!id) return false
+    setWatsonId(id)
+  }
+
+  const setupSession = async ({ active }) => {
+    if (!active) return false
+    await dispatch(setWatsonSessionId())
+    await dispatch(setWatsonFlowStart(true))
   }
 
   useEffect(() => {
-    startFlow()
-  }, [watson.session])
+    setupSession(chatbot)
+  }, [chatbot.active])
 
   useEffect(() => {
-    watsonInteraction()
-  }, [chatbot.messages])
+    handleWatsonId(watson.session)
+  }, [watson.session.id])
+
+  useEffect(() => {
+    handleFlow(chatbot)
+  }, [watsonId])
+
+  useEffect(() => {
+    handleFlow(chatbot)
+  }, [user.interactions])
 
   return (
     <Container {...chatbot}>

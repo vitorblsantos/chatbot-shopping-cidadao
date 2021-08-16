@@ -2,7 +2,7 @@
 
 import { Api } from '../helpers'
 
-const sendMessage = async (message, sessionId) => {
+const sendMessage = async ({ message, sessionId }) => {
   const params = {
     message,
     sessionId
