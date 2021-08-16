@@ -20,7 +20,7 @@ const Chat = () => {
 
   const continuousInteraction = async () => {
     const lastInteraction = chatbot.messages[chatbot.messages.length - 1]
-    if (!lastInteraction) return false
+    if (!lastInteraction || !watsonId) return false
     if (lastInteraction.sender === 'bot') return false
 
     const { context, output } = await Watson.sendMessage({ context: {}, message: lastInteraction.content, sessionId: watsonId })
@@ -37,6 +37,7 @@ const Chat = () => {
   }
 
   const firstInteraction = async () => {
+    if (!watsonId) return false
     const draftContext = {
       skills: {
         'main skill': {
