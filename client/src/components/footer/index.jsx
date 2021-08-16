@@ -27,22 +27,23 @@ const Footer = () => {
 
   const handleMessage = () => {
     const isEmail = inputMessage.match(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/)
-    const draftContext = {
-      skills: {
-        'main skill': {
-          user_defined: {
-            email: isEmail ? 'true' : 'false',
-            getEmail: 'false'
+    const draftContext = {}
+
+    if (chatbot.actions) {
+      if (chatbot.actions.getEmail === 'true') {
+        draftContext.skills = {
+          'main skill': {
+            user_defined: {
+              email: isEmail ? 'true' : 'false',
+              getEmail: 'false'
+            }
           }
         }
-      }
-    }
-
-    if (chatbot.actions && chatbot.actions.getEmail === 'true') {
-      if (!isEmail) {
-        setInputValid(false)
-      } else {
-        dispatch(setUserEmail(inputMessage))
+        if (!isEmail) {
+          setInputValid(false)
+        } else {
+          dispatch(setUserEmail(inputMessage))
+        }
       }
     }
 
