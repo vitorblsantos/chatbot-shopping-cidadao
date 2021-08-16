@@ -23,7 +23,7 @@ const Chat = () => {
     if (!lastInteraction || !watsonId) return false
     if (lastInteraction.sender === 'bot') return false
 
-    const { context, output } = await Watson.sendMessage({ context: {}, message: lastInteraction.content, sessionId: watsonId })
+    const { context, output } = await Watson.sendMessage({ context: lastInteraction.context, message: lastInteraction.content, sessionId: watsonId })
 
     if (!output.generic) return false
 
