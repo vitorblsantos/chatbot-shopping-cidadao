@@ -19,6 +19,8 @@ export default function reducer (state = INITIAL_STATE, { type, payload }) {
     return { ...state, email: payload.email }
   case Types.ADD_USER_INTERACTION:
     return { ...state, interactions: [...state.interactions, { ...payload }] }
+  case Types.SET_USER_NAME:
+    return { ...state, name: payload.name }
   default:
     return state
   }
@@ -53,11 +55,11 @@ export const setUserId = id => {
   }
 }
 
-export const setUserName = email => {
+export const setUserName = name => {
   return {
-    type: Types.SET_USER_EMAIL,
+    type: Types.SET_USER_NAME,
     payload: {
-      email
+      name
     }
   }
 }

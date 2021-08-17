@@ -27,13 +27,14 @@ const Chat = () => {
 
     if (!output.generic) return false
 
-    await handleBotMessage(output.generic)
+    await handleBotMessage(context, output.generic)
 
     const skills = context.skills['main skill'].user_defined
 
     if (!skills) return false
 
-    if (skills.getEmail) dispatch(setChatActions(skills, 'Digite seu e-mail:'))
+    if (skills.getEmail) dispatch(setChatActions({ getEmail: skills.getEmail }, 'Digite seu e-mail:'))
+    if (skills.getName) dispatch(setChatActions({ getName: skills.getName }, 'Digite seu nome:'))
   }
 
   const firstInteraction = async () => {
@@ -48,17 +49,17 @@ const Chat = () => {
       }
     }
 
-    const { output } = await Watson.sendMessage({ context: draftContext, message: '', sessionId: watsonId })
+    const { context, output } = await Watson.sendMessage({ context: draftContext, message: '', sessionId: watsonId })
     if (!output.generic) return false
-    await handleBotMessage(output.generic)
+    await handleBotMessage(context, output.generic)
   }
 
-  const handleBotMessage = async messages => {
+  const handleBotMessage = async (context, messages) => {
     for (let counter = 0; counter < messages.length; counter++) {
       messages[counter].sender = 'bot'
       if (messages[counter].response_type === 'option') return (dispatch(setOptions(messages[counter].options)) && dispatch(setChatLoaderActive(false)))
       await Sleep(chatbot.loader.timer)
-      dispatch(setMessages({ content: messages[counter], sender: 'bot' }))
+      dispatch(setMessages({ content: messages[counter], context, sender: 'bot' }))
     }
     dispatch(setChatLoaderActive(false))
   }

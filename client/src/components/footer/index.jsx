@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { setChatActive, setChatLoaderActive, setMessages, setOptions } from '../../store/ducks/chatbot'
 import { setToastActive } from '../../store/ducks/toast'
-import { addUserInteraction, setUserEmail } from '../../store/ducks/user'
+import { addUserInteraction, setUserEmail, setUserName } from '../../store/ducks/user'
 
 import { Background, Button, Container, Input, Send } from './style'
 
@@ -26,8 +26,14 @@ const Footer = () => {
   }
 
   const handleMessage = () => {
-    const isEmail = inputMessage.match(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/)
     const draftContext = {}
+    const isEmail = inputMessage.match(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/)
+    const lastInteraction = chatbot.messages[chatbot.messages.length - 1]
+
+    if (lastInteraction) {
+      draftContext.skills = { ...lastInteraction.context.skills }
+      draftContext.skills['main skill'].user_defined.firstInteraction = false
+    }
 
     if (chatbot.actions) {
       if (chatbot.actions.getEmail === 'true') {
@@ -43,6 +49,22 @@ const Footer = () => {
           setInputValid(false)
         } else {
           dispatch(setUserEmail(inputMessage))
+        }
+      }
+
+      if (chatbot.actions.getName === 'true') {
+        draftContext.skills = {
+          'main skill': {
+            user_defined: {
+              name: inputMessage.length ? 'true' : 'false',
+              getName: 'false'
+            }
+          }
+        }
+        if (!inputMessage) {
+          setInputValid(false)
+        } else {
+          dispatch(setUserName(inputMessage))
         }
       }
     }
