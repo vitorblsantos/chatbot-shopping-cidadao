@@ -2,7 +2,7 @@
 
 import { Watson } from '../services'
 
-const { Session } = require('../models/')
+import { Session } from '../models/'
 
 const createSession = async (_, res) => {
   const watsonId = await Watson.createSession()

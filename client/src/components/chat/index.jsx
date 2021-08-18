@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { Sleep, Watson } from '../../helpers'
+import { Users, Sleep, Watson } from '../../helpers'
 
 import { setChatActions, setChatLoaderActive, setMessages, setOptions } from '../../store/ducks/chatbot'
 import { setWatsonFlowStart, setWatsonSessionId } from '../../store/ducks/watson'
@@ -35,6 +35,7 @@ const Chat = () => {
 
     if (skills.getEmail) dispatch(setChatActions({ getEmail: skills.getEmail }, 'Digite seu e-mail:'))
     if (skills.getName) dispatch(setChatActions({ getName: skills.getName }, 'Digite seu nome:'))
+    if ((skills.getEmail === 'false' && skills.email === 'true') && (skills.getName === 'false' && skills.name === 'true')) Users.save({ email: user.email, name: user.name })
   }
 
   const firstInteraction = async () => {
