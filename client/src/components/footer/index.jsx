@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { setChatActive, setChatLoaderActive, setMessages, setOptions } from '../../store/ducks/chatbot'
@@ -9,8 +9,9 @@ import { Background, Button, Container, Input, Send } from './style'
 
 const Footer = () => {
   const dispatch = useDispatch()
+  const [context, setContext] = useState({})
   const [inputMessage, setInputMessage] = useState('')
-  const [inputValid, setInputValid] = useState(true)
+  const [inputValid, setInputValid] = useState(false)
 
   const { chatbot } = useSelector(state => state)
 
@@ -25,10 +26,21 @@ const Footer = () => {
     }
   }
 
+  const handleInputValid = valid => {
+    if (!valid) return false
+    dispatch(setChatLoaderActive(true))
+    dispatch(setOptions([]))
+    dispatch(addUserInteraction('footer', 'handleMessage', { message: inputMessage }))
+    dispatch(setMessages({ content: inputMessage, context, sender: 'user' }))
+    setInputMessage('')
+  }
+
   const handleMessage = () => {
     const draftContext = {}
     const isEmail = inputMessage.match(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/)
     const lastInteraction = chatbot.messages[chatbot.messages.length - 1]
+
+    if (!inputMessage) return setInputValid(false)
 
     if (lastInteraction) {
       draftContext.skills = { ...lastInteraction.context.skills }
@@ -48,8 +60,12 @@ const Footer = () => {
         if (!isEmail) {
           setInputValid(false)
         } else {
+          setContext(draftContext)
           dispatch(setUserEmail(inputMessage))
         }
+      } else {
+        setContext(draftContext)
+        setInputValid(true)
       }
 
       if (chatbot.actions.getName === 'true') {
@@ -65,18 +81,22 @@ const Footer = () => {
           setInputValid(false)
         } else {
           dispatch(setUserName(inputMessage))
+          setContext(draftContext)
+          setInputValid(true)
         }
+      } else {
+        setContext(draftContext)
+        setInputValid(true)
       }
-    }
-
-    if (inputValid) {
-      dispatch(setChatLoaderActive(true))
-      dispatch(setOptions([]))
-      dispatch(addUserInteraction('footer', 'handleMessage', { message: inputMessage }))
-      dispatch(setMessages({ content: inputMessage, context: draftContext, sender: 'user' }))
-      setInputMessage('')
+    } else {
+      setContext(draftContext)
+      setInputValid(true)
     }
   }
+
+  useEffect(() => {
+    handleInputValid(inputValid)
+  }, [inputValid])
 
   return (
     <Container>
