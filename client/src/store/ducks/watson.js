@@ -40,21 +40,21 @@ export function setWatsonFlowStart (start) {
 
 export function setWatsonSessionId () {
   return async (dispatch, getState) => {
-    const watsonLS = JSON.parse(LocalStorage.Get('watson'))
-    const watsonState = getState(state => state.watson)
+    // const watsonLS = JSON.parse(LocalStorage.Get('watson'))
+    // const watsonState = getState(state => state.watson)
 
     let session = ''
-    let sessionValid = false
+    // let sessionValid = false
 
-    if (watsonLS && DateFNS.compare(watsonLS.expiration, DateFNS.current) === 1) sessionValid = true
+    // if (watsonLS && DateFNS.compare(watsonLS.expiration, DateFNS.current) === 1) sessionValid = true
 
-    if (sessionValid) {
-      session = watsonState.session ? watsonState.session : watsonLS.session
-    } else {
-      const { data } = await Api.get('/watson/session')
-      LocalStorage.Set('watson', JSON.stringify({ expiration: DateFNS.expiration, session: data }))
-      session = data
-    }
+    // if (sessionValid) {
+    //   session = watsonState.session ? watsonState.session : watsonLS.session
+    // } else {
+    const { data } = await Api.get('/watson/session')
+    LocalStorage.Set('watson', JSON.stringify({ expiration: DateFNS.expiration, session: data }))
+    session = data
+    // }
 
     dispatch({
       type: Types.SET_WATSON_SESSION_ID,
