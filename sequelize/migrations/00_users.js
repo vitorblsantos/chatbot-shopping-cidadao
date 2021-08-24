@@ -11,10 +11,6 @@ module.exports = {
       allowNull: false,
       type: DataTypes.DATE
     },
-    document: {
-      allowNull: false,
-      type: DataTypes.STRING(11)
-    },
     email: {
       allowNull: false,
       type: DataTypes.STRING(100)

@@ -12,9 +12,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       primaryKey: true
     },
-    document: {
-      type: DataTypes.STRING(11)
-    },
     email: {
       type: DataTypes.STRING(100)
     },
