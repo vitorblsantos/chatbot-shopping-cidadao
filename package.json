@@ -30,7 +30,7 @@
     "lint": "concurrently --kill-others-on-fail \"eslint ./client/**/*.{js,jsx}\" \"eslint ./server/**/*.js\"",
     "sequelize:migrate": "sequelize db:migrate",
     "sequelize:migrate:undo": "sequelize db:migrate:undo:all",
-    "sequelize:seed": "sequelize db:seed:all",
+    "sequelize:seed": "sequelize db:seed:all --debug",
     "sequelize:seed:undo": "sequelize db:seed:undo:all",
     "start": "node ./build/server",
     "server": "cross-env NODE_ENV=development sucrase-node ./server/",
