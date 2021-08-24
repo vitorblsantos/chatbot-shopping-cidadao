@@ -9,7 +9,8 @@ import Options from '../options'
 import SingleOption from '../singleOption'
 import User from '../user'
 
-import { Container, Overflow, Row, Status, Warning } from './style'
+import { Container, Overflow, Row } from './style'
+// import { Container, Overflow, Row, Status, Warning } from './style'
 
 const AlwaysScrollToBottom = () => {
   const ref = useRef()
@@ -40,9 +41,9 @@ const Body = () => {
             <AlwaysScrollToBottom />
           </Overflow>
           {chatbot.options.length && chatbot.options.length >= 2 ? <Options /> : ''}
-          <Status>
+          {/* <Status>
             <Warning /> <span>teste</span>
-          </Status>
+          </Status> */}
         </>
       }
     </Container>
