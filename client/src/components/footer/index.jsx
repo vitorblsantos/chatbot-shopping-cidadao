@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { setChatActive, setChatLoaderActive, setMessages, setOptions } from '../../store/ducks/chatbot'
+import { setChatActions, setChatActive, setChatLoaderActive, setMessages, setOptions } from '../../store/ducks/chatbot'
 import { setToastActive } from '../../store/ducks/toast'
 import { addUserInteraction, setUserEmail, setUserName } from '../../store/ducks/user'
 
@@ -60,6 +60,7 @@ const Footer = () => {
             }
           }
         }
+        dispatch(setChatActions({ getEmail: false }, ''))
         setUserEmail(inputMessage)
       } else {
         canSubmit = false
@@ -80,7 +81,8 @@ const Footer = () => {
             }
           }
         }
-        setUserName(inputMessage)
+        dispatch(setChatActions({ getName: false }, ''))
+        dispatch(setUserName(inputMessage))
       } else {
         canSubmit = false
       }

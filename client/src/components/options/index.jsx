@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Slider from 'react-slick'
 
 import { Sleep } from '../../helpers'
-import { setMessages, setChatLoaderActive, setOptions } from '../../store/ducks/chatbot'
+import { setMessages, setChatActions, setChatLoaderActive, setOptions } from '../../store/ducks/chatbot'
 import { addUserInteraction } from '../../store/ducks/user'
 
 import { Container, Item, Option } from './style'
@@ -13,9 +13,10 @@ import { Container, Item, Option } from './style'
 const Options = () => {
   const dispatch = useDispatch()
   const slideRef = useRef(null)
+  const [context, setContext] = useState({})
   const [slideOptions, setSlideOptions] = useState(false)
   const [slidingOptions, setSlidingOptions] = useState(false)
-  const { chatbot, user } = useSelector(state => state)
+  const { chatbot, user, stations } = useSelector(state => state)
 
   const animateOptions = async () => {
     if (!chatbot.options.length) return false
@@ -30,10 +31,72 @@ const Options = () => {
     setSlideOptions(true)
   }
 
-  const handleOption = (input) => {
+  const handleContext = messages => {
+    const lastInteraction = messages[chatbot.messages.length - 1]
+    if (!lastInteraction) return false
+    setContext({ ...lastInteraction.context })
+  }
+
+  const handleOption = (context, input) => {
     if (slidingOptions) return false
+    let canSubmit = true
+    context = {
+      skills: {
+        'main skill': {
+          user_defined: {
+            ...chatbot.actions,
+            ...context?.skills['main skill']?.user_defined,
+            firstInteraction: false
+          }
+        }
+      }
+    }
+
+    const userDefined = context.skills['main skill'].user_defined
+    console.log(userDefined)
+
+    if (userDefined.getLocation) {
+      if (typeof input.text === 'string') {
+        context = {
+          skills: {
+            'main skill': {
+              user_defined: {
+                ...context?.skills['main skill']?.user_defined,
+                getLocation: false,
+                location: input
+              }
+            }
+          }
+        }
+        console.log(stations)
+        dispatch(setChatActions({ getLocation: false }, ''))
+      } else {
+        canSubmit = false
+      }
+    }
+
+    if (userDefined.getService) {
+      if (typeof input.text === 'string') {
+        context = {
+          skills: {
+            'main skill': {
+              user_defined: {
+                ...context?.skills['main skill']?.user_defined,
+                getService: false,
+                service: input.text
+              }
+            }
+          }
+        }
+        dispatch(setChatActions({ getService: false }, ''))
+      } else {
+        canSubmit = false
+      }
+    }
+
+    if (!canSubmit || !input) return false
     dispatch(addUserInteraction('click-option', 'handleOption', input))
-    dispatch(setMessages({ content: input.text, context: {}, sender: 'user' }))
+    dispatch(setMessages({ content: input.text, context, sender: 'user' }))
     dispatch(setChatLoaderActive(true))
     dispatch(setOptions([]))
   }
@@ -56,6 +119,10 @@ const Options = () => {
   }
 
   useEffect(() => {
+    handleContext(chatbot.messages)
+  }, [chatbot.messages])
+
+  useEffect(() => {
     animateOptions()
   }, [chatbot.options])
 
@@ -66,7 +133,7 @@ const Options = () => {
           chatbot.options.map(({ label, value }, i) => {
             return (
               <Item key={i}>
-                <Option onClick={() => handleOption(value.input)}>
+                <Option onClick={() => handleOption(context, value.input)}>
                   {label}
                 </Option>
               </Item>

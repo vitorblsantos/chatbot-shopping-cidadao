@@ -25,5 +25,5 @@ export const Option = styled.button`
   height: 32px;
   margin: 0 4px;
   padding: 8px 4px;
-  width: -webkit-fill-available;
+  width: 140px;
 `

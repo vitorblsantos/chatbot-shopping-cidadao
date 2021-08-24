@@ -5,7 +5,7 @@ export const Balloon = styled.div`
   border: 1px solid #222;
   border-radius: 16px;
   display: flex;
-  font-size: .95rem;
+  font-size: .9rem;
   height: fit-content;
   justify-content: flex-end;
   line-height: 1.2;

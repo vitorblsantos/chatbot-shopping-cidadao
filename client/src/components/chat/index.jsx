@@ -3,9 +3,12 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { Sleep, Watson } from '../../helpers'
+import { Distance, Sleep, Watson } from '../../helpers'
+
+import { getStations } from '../../store/ducks/stations'
 
 import { setChatActions, setChatLoaderActive, setMessages, setOptions } from '../../store/ducks/chatbot'
+import { setUserCoords } from '../../store/ducks/user'
 import { setWatsonFlowStart, setWatsonSessionId } from '../../store/ducks/watson'
 
 import Body from '../body'
@@ -15,7 +18,7 @@ import Header from '../header'
 import { Container } from './style'
 const Chat = () => {
   const dispatch = useDispatch()
-  const { chatbot, user, watson } = useSelector(state => state)
+  const { chatbot, stations, user, watson } = useSelector(state => state)
   const [watsonId, setWatsonId] = useState('')
 
   const continuousInteraction = async () => {
@@ -34,7 +37,9 @@ const Chat = () => {
     if (!skills) return false
 
     if (skills.getEmail) dispatch(setChatActions({ getEmail: skills.getEmail }, 'Digite seu e-mail:'))
+    if (skills.getLocation) handleGeolocation(skills)
     if (skills.getName) dispatch(setChatActions({ getName: skills.getName }, 'Digite seu nome:'))
+    if (skills.getService) dispatch(setChatActions({ getService: skills.getService }, 'Selecione o servico desejado:'))
     // if ((!skills.getEmail && skills.email) && (!skills.getName && skills.name)) await Users.save({ email: user.email, name: user.name })
   }
 
@@ -71,6 +76,46 @@ const Chat = () => {
     return continuousInteraction()
   }
 
+  const handleGeolocation = ({ getLocation }) => {
+    const options = []
+    if (!user.coords.latitude || !user.coords.longitude) return false
+
+    stations.map(el => {
+      el.distance = Distance(user.coords.latitude, user.coords.longitude, el.latitude, el.longitude)
+      return el
+    })
+
+    const draftStations = stations.sort((a, b) => (a.distance > b.distance) ? 1 : -1)
+
+    draftStations.slice(0, 5).map(el => {
+      const option = {
+        label: '',
+        value: {
+          input: {
+            text: ''
+          }
+        }
+      }
+      option.label = el.description
+      option.value.input.text = el.description
+      options.push(option)
+      return el
+    })
+
+    dispatch(setOptions(options))
+
+    dispatch(setChatActions({ getLocation }, 'Selecione o posto de atendimento:'))
+  }
+
+  const handlePositions = position => {
+    if (!position) return false
+    const coords = {
+      latitude: position.coords.latitude,
+      longitude: position.coords.longitude
+    }
+    dispatch(setUserCoords(coords))
+  }
+
   const handleWatsonId = ({ id }) => {
     if (!id) return false
     setWatsonId(id)
@@ -89,9 +134,14 @@ const Chat = () => {
 
   const setupSession = async ({ active }) => {
     if (!active) return false
+    if (navigator.geolocation) navigator.geolocation.getCurrentPosition(handlePositions)
     await dispatch(setWatsonSessionId())
     await dispatch(setWatsonFlowStart(true))
   }
+
+  useEffect(() => {
+    dispatch(getStations())
+  }, [])
 
   useEffect(() => {
     setupSession(chatbot)
