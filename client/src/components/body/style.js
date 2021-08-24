@@ -47,11 +47,6 @@ export const Row = styled.div`
 
 `
 
-export const ScrollBottom = styled.div`
-  height: 12px;
-  width: 100%;
-`
-
 export const Status = styled.div`
   align-items: center;
   background: #5f5c5a;

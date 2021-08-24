@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { Users, Sleep, Watson } from '../../helpers'
+import { Sleep, Watson } from '../../helpers'
 
 import { setChatActions, setChatLoaderActive, setMessages, setOptions } from '../../store/ducks/chatbot'
 import { setWatsonFlowStart, setWatsonSessionId } from '../../store/ducks/watson'

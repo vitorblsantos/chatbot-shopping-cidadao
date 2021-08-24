@@ -9,15 +9,16 @@ import Options from '../options'
 import SingleOption from '../singleOption'
 import User from '../user'
 
-import { Container, Overflow, Row, ScrollBottom, Status, Warning } from './style'
+import { Container, Overflow, Row, Status, Warning } from './style'
+
+const AlwaysScrollToBottom = () => {
+  const ref = useRef()
+  useEffect(() => ref.current.scrollIntoView())
+  return <div ref={ref} />
+}
 
 const Body = () => {
   const { chatbot } = useSelector(state => state)
-  const reference = useRef('')
-
-  useEffect(() => {
-    reference.current && reference.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
-  })
 
   return (
     <Container>
@@ -36,7 +37,7 @@ const Body = () => {
             }
             {chatbot.loader.active && <Loader />}
             {chatbot.options.length && chatbot.options.length === 1 ? <SingleOption /> : ''}
-            <ScrollBottom ref={reference} />
+            <AlwaysScrollToBottom />
           </Overflow>
           {chatbot.options.length && chatbot.options.length >= 2 ? <Options /> : ''}
           <Status>
