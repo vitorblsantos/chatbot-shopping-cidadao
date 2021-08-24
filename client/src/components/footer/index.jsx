@@ -11,23 +11,81 @@ const Footer = () => {
   const dispatch = useDispatch()
   const [context, setContext] = useState({})
   const [inputMessage, setInputMessage] = useState('')
-  const [inputValid, setInputValid] = useState(false)
 
   const { chatbot } = useSelector(state => state)
 
+  const handleContext = messages => {
+    const lastInteraction = messages[chatbot.messages.length - 1]
+    if (!lastInteraction) return false
+    setContext({ ...lastInteraction.context })
+  }
+
   const handleInput = ({ target }) => setInputMessage(target.value)
 
+  // 13 enter - 27 escape
   const handleKey = async ({ keyCode }) => {
-    // 13 enter - 27 escape
-    if (keyCode === 13) return handleMessage()
+    if (keyCode === 13) return handleMessage(context, inputMessage)
     if (keyCode === 27) {
       dispatch(setChatActive(false))
       dispatch(setToastActive(true))
     }
   }
 
-  const handleInputValid = valid => {
-    if (!valid) return false
+  const handleMessage = (context, inputMessage) => {
+    let canSubmit = true
+    context = {
+      skills: {
+        'main skill': {
+          user_defined: {
+            ...chatbot.actions,
+            ...context?.skills['main skill']?.user_defined,
+            firstInteraction: false
+          }
+        }
+      }
+    }
+
+    const userDefined = context.skills['main skill'].user_defined
+
+    if (userDefined.getEmail) {
+      if ((/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/.test(inputMessage))) {
+        context = {
+          skills: {
+            'main skill': {
+              user_defined: {
+                ...context?.skills['main skill']?.user_defined,
+                email: inputMessage,
+                getEmail: false
+              }
+            }
+          }
+        }
+        setUserEmail(inputMessage)
+      } else {
+        canSubmit = false
+      }
+    }
+
+    if (userDefined.getName) {
+      if (typeof inputMessage === 'string') {
+        context = {
+          skills: {
+            'main skill': {
+              user_defined: {
+                ...context?.skills['main skill']?.user_defined,
+                name: inputMessage,
+                getName: false
+              }
+            }
+          }
+        }
+        setUserName(inputMessage)
+      } else {
+        canSubmit = false
+      }
+    }
+
+    if (!canSubmit || !inputMessage) return false
     dispatch(setChatLoaderActive(true))
     dispatch(setOptions([]))
     dispatch(addUserInteraction('footer', 'handleMessage', { message: inputMessage }))
@@ -35,75 +93,16 @@ const Footer = () => {
     setInputMessage('')
   }
 
-  const handleMessage = () => {
-    const draftContext = {}
-    const isEmail = inputMessage.match(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/)
-    const lastInteraction = chatbot.messages[chatbot.messages.length - 1]
-
-    if (!inputMessage) return setInputValid(false)
-
-    if (lastInteraction) {
-      draftContext.skills = { ...lastInteraction.context.skills }
-      draftContext.skills['main skill'].user_defined.firstInteraction = false
-    }
-
-    if (chatbot.actions) {
-      if (chatbot.actions.getEmail === 'true') {
-        draftContext.skills = {
-          'main skill': {
-            user_defined: {
-              email: isEmail ? 'true' : 'false',
-              getEmail: 'false'
-            }
-          }
-        }
-        if (!isEmail) {
-          setInputValid(false)
-        } else {
-          setContext(draftContext)
-          dispatch(setUserEmail(inputMessage))
-        }
-      } else {
-        setContext(draftContext)
-        setInputValid(true)
-      }
-
-      if (chatbot.actions.getName === 'true') {
-        draftContext.skills = {
-          'main skill': {
-            user_defined: {
-              name: inputMessage.length ? 'true' : 'false',
-              getName: 'false'
-            }
-          }
-        }
-        if (!inputMessage) {
-          setInputValid(false)
-        } else {
-          dispatch(setUserName(inputMessage))
-          setContext(draftContext)
-          setInputValid(true)
-        }
-      } else {
-        setContext(draftContext)
-        setInputValid(true)
-      }
-    } else {
-      setContext(draftContext)
-      setInputValid(true)
-    }
-  }
-
   useEffect(() => {
-    handleInputValid(inputValid)
-  }, [inputValid])
+    handleContext(chatbot.messages)
+  }, [chatbot.messages])
 
   return (
     <Container>
       <Background>
         <Input onChange={(e) => handleInput(e)} onKeyDown={e => handleKey(e)} placeholder={chatbot.input.placeholder || 'Digite sua mensagem...'} value={inputMessage} />
         <Button>
-          <Send onClick={handleMessage} />
+          <Send onClick={() => handleMessage(context, inputMessage)} />
         </Button>
       </Background>
     </Container>

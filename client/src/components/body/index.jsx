@@ -32,8 +32,7 @@ const Body = () => {
                     {sender === 'user' && <User {...{ content }} />}
                   </Row>
                 )
-              }
-              )
+              })
             }
             {chatbot.loader.active && <Loader />}
             {chatbot.options.length && chatbot.options.length === 1 ? <SingleOption /> : ''}

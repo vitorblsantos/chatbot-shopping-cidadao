@@ -3,7 +3,9 @@
 const INITIAL_STATE = {
   active: false,
   actions: {
-    getEmail: 'false'
+    getEmail: false,
+    getName: false,
+    finished: false
   },
   input: {
     placeholder: ''
@@ -80,13 +82,15 @@ export function setChatLoaderActive (active) {
 }
 
 export function setMessages ({ content, context, sender }) {
-  return {
-    type: Types.SET_MESSAGES,
-    payload: {
-      content,
-      context,
-      sender
-    }
+  return (dispatch, getState) => {
+    dispatch({
+      type: Types.SET_MESSAGES,
+      payload: {
+        content,
+        context,
+        sender
+      }
+    })
   }
 }
 
