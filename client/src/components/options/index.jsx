@@ -16,7 +16,7 @@ const Options = () => {
   const [context, setContext] = useState({})
   const [slideOptions, setSlideOptions] = useState(false)
   const [slidingOptions, setSlidingOptions] = useState(false)
-  const { chatbot, user, stations } = useSelector(state => state)
+  const { chatbot, user } = useSelector(state => state)
 
   const animateOptions = async () => {
     if (!chatbot.options.length) return false
@@ -53,7 +53,25 @@ const Options = () => {
     }
 
     const userDefined = context.skills['main skill'].user_defined
-    console.log(userDefined)
+
+    if (userDefined.getDate) {
+      if (typeof input.text === 'string') {
+        context = {
+          skills: {
+            'main skill': {
+              user_defined: {
+                ...context?.skills['main skill']?.user_defined,
+                date: new Date(input),
+                getDate: false
+              }
+            }
+          }
+        }
+        dispatch(setChatActions({ getDate: false }, ''))
+      } else {
+        canSubmit = false
+      }
+    }
 
     if (userDefined.getLocation) {
       if (typeof input.text === 'string') {
@@ -68,7 +86,6 @@ const Options = () => {
             }
           }
         }
-        console.log(stations)
         dispatch(setChatActions({ getLocation: false }, ''))
       } else {
         canSubmit = false

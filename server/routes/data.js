@@ -1,8 +1,9 @@
 import { Router } from 'express'
-import { Messages, Stations, Users } from '../controllers'
+import { Messages, Schedules, Stations, Users } from '../controllers'
 
 const router = Router()
 
+router.get('/schedules/available', Schedules.getAvailableDates)
 router.get('/stations', Stations.get)
 
 router.post('/users', Users.create)

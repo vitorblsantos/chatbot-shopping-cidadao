@@ -19,11 +19,11 @@ const Toast = () => {
   const toast = useSelector(({ toast }) => toast)
 
   const AnimateToastMessage = async () => {
-    await Sleep(8000)
+    await Sleep(3000)
     let state = Store.getState()
     if (state.chatbot.active || state.user.interactions.length > 0) return false
     dispatch(setToastMessageActive(true))
-    await Sleep(8000)
+    await Sleep(6000)
     state = Store.getState()
     if (state.chatbot.active || state.user.interactions.length > 0) return false
     dispatch(setToastMessageActive(false))

@@ -12,7 +12,7 @@ const INITIAL_STATE = {
   },
   loader: {
     active: true,
-    timer: 1000
+    timer: 1500
   },
   messages: [],
   options: []

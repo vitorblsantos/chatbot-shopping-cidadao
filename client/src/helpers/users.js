@@ -5,7 +5,6 @@ const save = async ({ email, name }) => {
     email,
     name
   }
-  console.log(email, name)
   await Api.post('/data/users', params)
 }
 

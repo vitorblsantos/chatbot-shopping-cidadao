@@ -20,10 +20,10 @@ export const Option = styled.button`
   border-radius: 10px;
   color: #ffffff;
   cursor: pointer;
-  font-size: .75rem;
+  font-size: .7rem;
   font-weight: bold;
   height: 32px;
   margin: 0 4px;
   padding: 8px 4px;
-  width: 140px;
+  width: 152px;
 `

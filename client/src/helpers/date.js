@@ -1,6 +1,4 @@
-'use strict'
-
-import { parseISO } from 'date-fns/'
+import { parseISO } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { format, utcToZonedTime } from 'date-fns-tz'
 

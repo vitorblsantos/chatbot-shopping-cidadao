@@ -2,8 +2,9 @@
 
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import format from 'date-fns/format'
 
-import { Distance, Sleep, Watson } from '../../helpers'
+import { Api, Distance, Sleep, Watson } from '../../helpers'
 
 import { getStations } from '../../store/ducks/stations'
 
@@ -36,6 +37,7 @@ const Chat = () => {
 
     if (!skills) return false
 
+    if (skills.getDate) handleDate(skills)
     if (skills.getEmail) dispatch(setChatActions({ getEmail: skills.getEmail }, 'Digite seu e-mail:'))
     if (skills.getLocation) handleGeolocation(skills)
     if (skills.getName) dispatch(setChatActions({ getName: skills.getName }, 'Digite seu nome:'))
@@ -68,6 +70,27 @@ const Chat = () => {
       dispatch(setMessages({ content: messages[counter], context, sender: 'bot' }))
     }
     dispatch(setChatLoaderActive(false))
+  }
+
+  const handleDate = async ({ getDate }) => {
+    const options = []
+    const { data } = await Api.get('/data/schedules/available')
+    data && data.map(el => {
+      const option = {
+        label: '',
+        value: {
+          input: {
+            text: ''
+          }
+        }
+      }
+      option.label = format(new Date(el), 'dd/MM/yyyy HH:mm')
+      option.value.input.text = format(new Date(el), 'dd/MM/yyyy HH:mm')
+      options.push(option)
+      return el
+    })
+    dispatch(setOptions(options))
+    dispatch(setChatActions({ getDate }, 'Selecione a data desejada:'))
   }
 
   const handleFlow = async chatbot => {
