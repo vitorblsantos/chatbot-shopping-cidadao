@@ -24,4 +24,4 @@ Server.use('/data', Data)
 Server.use('/watson', Watson)
 Server.use('/webhooks', Webhooks)
 
-export default Server
+module.exports = Server

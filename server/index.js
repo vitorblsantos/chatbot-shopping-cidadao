@@ -1,8 +1,8 @@
-import 'dotenv/config'
+require('dotenv/config')
 
-import database from '../sequelize'
+const database = require('./sequelize/')
 
-import Server from './server'
+const Server = require('./server.js')
 
 const { PORT } = process.env
 
