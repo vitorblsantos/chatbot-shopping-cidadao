@@ -73,8 +73,9 @@ const Footer = () => {
             'main skill': {
               user_defined: {
                 ...context?.skills['main skill']?.user_defined,
+                getName: false,
                 name: inputMessage,
-                getName: false
+                userData: true
               }
             }
           }

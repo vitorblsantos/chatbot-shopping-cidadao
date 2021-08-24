@@ -5,7 +5,7 @@ const INITIAL_STATE = {
   actions: {
     getEmail: false,
     getName: false,
-    finished: false
+    userData: false
   },
   input: {
     placeholder: ''

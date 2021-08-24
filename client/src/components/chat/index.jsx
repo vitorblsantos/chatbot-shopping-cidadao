@@ -21,7 +21,7 @@ const Chat = () => {
   const continuousInteraction = async () => {
     const lastInteraction = chatbot.messages[chatbot.messages.length - 1]
     if (!lastInteraction || !watsonId) return false
-    if (lastInteraction.sender === 'bot') return false
+    if (lastInteraction.sender === 'bot') return restartFlow()
 
     const { context, output } = await Watson.sendMessage({ context: lastInteraction.context, message: lastInteraction.content, sessionId: watsonId })
 
@@ -35,7 +35,7 @@ const Chat = () => {
 
     if (skills.getEmail) dispatch(setChatActions({ getEmail: skills.getEmail }, 'Digite seu e-mail:'))
     if (skills.getName) dispatch(setChatActions({ getName: skills.getName }, 'Digite seu nome:'))
-    if ((skills.getEmail === 'false' && skills.email === 'true') && (skills.getName === 'false' && skills.name === 'true')) Users.save({ email: user.email, name: user.name })
+    // if ((!skills.getEmail && skills.email) && (!skills.getName && skills.name)) await Users.save({ email: user.email, name: user.name })
   }
 
   const firstInteraction = async () => {
@@ -74,6 +74,17 @@ const Chat = () => {
   const handleWatsonId = ({ id }) => {
     if (!id) return false
     setWatsonId(id)
+  }
+
+  const restartFlow = async () => {
+    dispatch(setChatLoaderActive(true))
+    dispatch(setOptions([]))
+    const lastInteraction = chatbot.messages[chatbot.messages.length - 1]
+    const { context, output } = await Watson.sendMessage({ context: lastInteraction.context, message: '', sessionId: watsonId })
+
+    if (!output.generic) return false
+
+    await handleBotMessage(context, output.generic)
   }
 
   const setupSession = async ({ active }) => {
