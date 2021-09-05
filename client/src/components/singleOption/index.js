@@ -1,21 +1,35 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { setMessages, setChatLoaderActive, setOptions } from '../../store/ducks/chatbot'
 import { addUserInteraction } from '../../store/ducks/user'
 
+import { Message } from '../../helpers'
+
 import { Option, Row } from './style'
 
 const singleOption = () => {
   const dispatch = useDispatch()
-  const { chatbot } = useSelector(state => state)
+  const [context, setContext] = useState({})
+  const { chatbot, watson } = useSelector(state => state)
+
+  const handleContext = messages => {
+    const lastInteraction = messages[chatbot.messages.length - 1]
+    if (!lastInteraction) return false
+    setContext({ ...lastInteraction.context })
+  }
 
   const handleSingleOption = (input) => {
+    Message.save({ content: { context, input, sender: 'user' }, sessionId: watson.session.id })
     dispatch(addUserInteraction('click-single-option', 'handleSingleOption', input))
     dispatch(setMessages({ content: input.text, context: {}, sender: 'user' }))
     dispatch(setChatLoaderActive(true))
     dispatch(setOptions([]))
   }
+
+  useEffect(() => {
+    handleContext(chatbot.messages)
+  }, [chatbot.messages])
 
   return (
     <Row>

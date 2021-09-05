@@ -2,11 +2,7 @@ const { Model } = require('sequelize')
 
 module.exports = (sequelize, DataTypes) => {
   class Schedules extends Model {
-    static associate (models) {
-      this.hasOne(models.User, { foreignKey: '_id', as: 'user' })
-      this.hasOne(models.Session, { foreignKey: '_id', as: 'session' })
-      this.hasOne(models.Station, { foreignKey: '_id', as: 'station' })
-    }
+    static associate (_) {}
   }
 
   Schedules.init({
@@ -19,6 +15,21 @@ module.exports = (sequelize, DataTypes) => {
     date: {
       allowNull: false,
       type: DataTypes.DATE
+    },
+    session: {
+      referencesKey: '_id',
+      references: 'sessions',
+      type: DataTypes.UUID
+    },
+    station: {
+      referencesKey: '_id',
+      references: 'stations',
+      type: DataTypes.UUID
+    },
+    user: {
+      referencesKey: '_id',
+      references: 'users',
+      type: DataTypes.UUID
     }
   }, {
     freezeTableName: true,

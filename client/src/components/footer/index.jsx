@@ -5,6 +5,8 @@ import { setChatActions, setChatActive, setChatLoaderActive, setMessages, setOpt
 import { setToastActive } from '../../store/ducks/toast'
 import { addUserInteraction, setUserEmail, setUserName } from '../../store/ducks/user'
 
+import { Message } from '../../helpers'
+
 import { Background, Button, Container, Input, Send } from './style'
 
 const Footer = () => {
@@ -12,7 +14,7 @@ const Footer = () => {
   const [context, setContext] = useState({})
   const [inputMessage, setInputMessage] = useState('')
 
-  const { chatbot } = useSelector(state => state)
+  const { chatbot, watson } = useSelector(state => state)
 
   const handleContext = messages => {
     const lastInteraction = messages[chatbot.messages.length - 1]
@@ -89,6 +91,7 @@ const Footer = () => {
     }
 
     if (!canSubmit || !inputMessage) return false
+    Message.save({ content: { context, inputMessage, sender: 'user' }, sessionId: watson.session.id })
     dispatch(setChatLoaderActive(true))
     dispatch(setOptions([]))
     dispatch(addUserInteraction('footer', 'handleMessage', { message: inputMessage }))

@@ -1,13 +1,11 @@
 const { Model } = require('sequelize')
 
 module.exports = (sequelize, DataTypes) => {
-  class Messages extends Model {
-    static associate (models) {
-      this.hasOne(models.Session, { foreignKey: '_id', as: 'session' })
-    }
+  class Message extends Model {
+    static associate (_) {}
   }
 
-  Messages.init({
+  Message.init({
     _id: {
       allowNull: false,
       defaultValue: DataTypes.UUIDV4,
@@ -17,6 +15,11 @@ module.exports = (sequelize, DataTypes) => {
     content: {
       allowNull: false,
       type: DataTypes.STRING(150)
+    },
+    session: {
+      referencesKey: '_id',
+      references: 'sessions',
+      type: DataTypes.UUID
     }
   }, {
     freezeTableName: true,
@@ -25,5 +28,5 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: true
   })
 
-  return Messages
+  return Message
 }

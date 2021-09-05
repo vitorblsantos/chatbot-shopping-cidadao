@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import format from 'date-fns/format'
 
-import { Api, Distance, Sleep, Watson } from '../../helpers'
+import { Api, Distance, Message, Sleep, Watson } from '../../helpers'
 
 import { getStations } from '../../store/ducks/stations'
 
@@ -31,7 +31,7 @@ const Chat = () => {
 
     if (!output.generic) return false
 
-    await handleBotMessage(context, output.generic)
+    await handleBotMessage(context, output.generic, watsonId)
 
     const skills = context.skills['main skill'].user_defined
 
@@ -59,10 +59,11 @@ const Chat = () => {
 
     const { context, output } = await Watson.sendMessage({ context: draftContext, message: '', sessionId: watsonId })
     if (!output.generic) return false
-    await handleBotMessage(context, output.generic)
+    await handleBotMessage(context, output.generic, watsonId)
   }
 
-  const handleBotMessage = async (context, messages) => {
+  const handleBotMessage = async (context, messages, watsonId) => {
+    Message.save({ content: { context, messages, sender: 'bot' }, sessionId: watsonId })
     for (let counter = 0; counter < messages.length; counter++) {
       messages[counter].sender = 'bot'
       if (messages[counter].response_type === 'option') return (dispatch(setOptions(messages[counter].options)) && dispatch(setChatLoaderActive(false)))
@@ -152,14 +153,14 @@ const Chat = () => {
 
     if (!output.generic) return false
 
-    await handleBotMessage(context, output.generic)
+    await handleBotMessage(context, output.generic, watsonId)
   }
 
   const setupSession = async ({ active }) => {
     if (!active) return false
     if (navigator.geolocation) navigator.geolocation.getCurrentPosition(handlePositions)
-    await dispatch(setWatsonSessionId())
-    await dispatch(setWatsonFlowStart(true))
+    dispatch(setWatsonSessionId())
+    dispatch(setWatsonFlowStart(true))
   }
 
   useEffect(() => {

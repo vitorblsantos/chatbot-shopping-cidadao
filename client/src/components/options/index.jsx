@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Slider from 'react-slick'
 
-import { Sleep } from '../../helpers'
+import { Message, Sleep } from '../../helpers'
 import { setMessages, setChatActions, setChatLoaderActive, setOptions } from '../../store/ducks/chatbot'
 import { addUserInteraction } from '../../store/ducks/user'
 
@@ -16,7 +16,7 @@ const Options = () => {
   const [context, setContext] = useState({})
   const [slideOptions, setSlideOptions] = useState(false)
   const [slidingOptions, setSlidingOptions] = useState(false)
-  const { chatbot, user } = useSelector(state => state)
+  const { chatbot, user, watson } = useSelector(state => state)
 
   const animateOptions = async () => {
     if (!chatbot.options.length) return false
@@ -112,6 +112,7 @@ const Options = () => {
     }
 
     if (!canSubmit || !input) return false
+    Message.save({ content: { context, input, sender: 'user' }, sessionId: watson.session.id })
     dispatch(addUserInteraction('click-option', 'handleOption', input))
     dispatch(setMessages({ content: input.text, context, sender: 'user' }))
     dispatch(setChatLoaderActive(true))
