@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import format from 'date-fns/format'
 
-import { Api, Distance, Message, Sleep, Watson, User } from '../../helpers'
+import { Api, Distance, Message, Sleep, Watson } from '../../helpers'
 
 import { getStations } from '../../store/ducks/stations'
 
