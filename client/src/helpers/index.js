@@ -6,7 +6,7 @@ import Distance from './geolocation'
 import LocalStorage from './localStorage'
 import Message from './messages'
 import Sleep from './sleep'
-import Users from './users'
+import User from './users'
 import Watson from './watson'
 
 export {
@@ -16,6 +16,6 @@ export {
   LocalStorage,
   Message,
   Sleep,
-  Users,
+  User,
   Watson
 }

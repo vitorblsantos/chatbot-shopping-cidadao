@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import format from 'date-fns/format'
 
-import { Api, Distance, Message, Sleep, Watson } from '../../helpers'
+import { Api, Distance, Message, Sleep, Watson, User } from '../../helpers'
 
 import { getStations } from '../../store/ducks/stations'
 
@@ -17,6 +17,7 @@ import Footer from '../footer'
 import Header from '../header'
 
 import { Container } from './style'
+
 const Chat = () => {
   const dispatch = useDispatch()
   const { chatbot, stations, user, watson } = useSelector(state => state)

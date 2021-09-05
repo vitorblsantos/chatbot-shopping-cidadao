@@ -1,6 +1,6 @@
 import { Api } from './'
 
-const save = async ({ email, name }) => {
+const create = async ({ email, name }) => {
   const params = {
     email,
     name
@@ -9,5 +9,5 @@ const save = async ({ email, name }) => {
 }
 
 export default {
-  save
+  create
 }
