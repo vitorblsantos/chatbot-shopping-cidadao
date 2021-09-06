@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { format, utcToZonedTime } from 'date-fns-tz'
 
 import { setMessages, setChatLoaderActive, setOptions } from '../../store/ducks/chatbot'
 import { addUserInteraction } from '../../store/ducks/user'
@@ -22,7 +23,7 @@ const singleOption = () => {
   const handleSingleOption = (input) => {
     Message.save({ content: { context, input, sender: 'user' }, sessionId: watson.session.id })
     dispatch(addUserInteraction('click-single-option', 'handleSingleOption', input))
-    dispatch(setMessages({ content: input.text, context: {}, sender: 'user' }))
+    dispatch(setMessages({ content: input.text, context: {}, sender: 'user', time: format(utcToZonedTime(new Date(), 'America/Sao_paulo'), 'HH:mm') }))
     dispatch(setChatLoaderActive(true))
     dispatch(setOptions([]))
   }

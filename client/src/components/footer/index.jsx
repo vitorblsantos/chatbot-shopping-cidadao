@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { format, utcToZonedTime } from 'date-fns-tz'
 
 import { setChatActions, setChatActive, setChatLoaderActive, setMessages, setOptions } from '../../store/ducks/chatbot'
 import { setToastActive } from '../../store/ducks/toast'
@@ -97,7 +98,7 @@ const Footer = () => {
     dispatch(setChatLoaderActive(true))
     dispatch(setOptions([]))
     dispatch(addUserInteraction('footer', 'handleMessage', { message: inputMessage }))
-    dispatch(setMessages({ content: inputMessage, context, sender: 'user' }))
+    dispatch(setMessages({ content: inputMessage, context, sender: 'user', time: format(utcToZonedTime(new Date(), 'America/Sao_paulo'), 'HH:mm') }))
     setInputMessage('')
   }
 

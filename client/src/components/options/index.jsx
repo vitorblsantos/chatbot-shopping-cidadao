@@ -1,8 +1,7 @@
-'use strict'
-
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Slider from 'react-slick'
+import { format, utcToZonedTime } from 'date-fns-tz'
 
 import { Message, Sleep } from '../../helpers'
 import { setMessages, setChatActions, setChatLoaderActive, setOptions } from '../../store/ducks/chatbot'
@@ -114,7 +113,7 @@ const Options = () => {
     if (!canSubmit || !input) return false
     Message.save({ content: { context, input, sender: 'user' }, sessionId: watson.session.id })
     dispatch(addUserInteraction('click-option', 'handleOption', input))
-    dispatch(setMessages({ content: input.text, context, sender: 'user' }))
+    dispatch(setMessages({ content: input.text, context, sender: 'user', time: format(utcToZonedTime(new Date(), 'America/Sao_paulo'), 'HH:mm') }))
     dispatch(setChatLoaderActive(true))
     dispatch(setOptions([]))
   }

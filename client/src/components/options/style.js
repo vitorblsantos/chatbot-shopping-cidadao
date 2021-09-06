@@ -17,7 +17,7 @@ export const Item = styled.div`
 export const Option = styled.button`
   background: #f7921e;
   border: 0;
-  border-radius: 10px;
+  border-radius: 8px;
   color: #ffffff;
   cursor: pointer;
   font-size: .7rem;

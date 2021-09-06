@@ -1,8 +1,6 @@
-'use strict'
-
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import format from 'date-fns/format'
+import { format, utcToZonedTime } from 'date-fns-tz'
 
 import { Api, Distance, Message, Sleep, Watson } from '../../helpers'
 
@@ -69,7 +67,7 @@ const Chat = () => {
       messages[counter].sender = 'bot'
       if (messages[counter].response_type === 'option') return (dispatch(setOptions(messages[counter].options)) && dispatch(setChatLoaderActive(false)))
       await Sleep(chatbot.loader.timer)
-      dispatch(setMessages({ content: messages[counter], context, sender: 'bot' }))
+      dispatch(setMessages({ content: messages[counter], context, sender: 'bot', time: format(utcToZonedTime(new Date(), 'America/Sao_paulo'), 'HH:mm') }))
     }
     dispatch(setChatLoaderActive(false))
   }

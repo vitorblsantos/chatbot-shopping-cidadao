@@ -62,11 +62,11 @@ export const Message = styled.div`
 `
 
 export const Position = styled.div`
-  bottom: 28px;
-  position: absolute;
+  bottom: 20px;
+  position: fixed;
   height: 80px;
   opacity: 1;
-  right: 28px;
+  right: 12px;
   transition: all .2s;
   transition-timing-function: ease-in-out;
   visibility: visible;

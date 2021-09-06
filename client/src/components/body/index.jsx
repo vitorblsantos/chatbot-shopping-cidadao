@@ -27,11 +27,11 @@ const Body = () => {
         <>
           <Overflow>
             {
-              chatbot.messages.map(({ sender, content }, i) => {
+              chatbot.messages.map(({ sender, content, time }, i) => {
                 return (
-                  <Row key={i} options={content.options || false} user={sender === 'user'}>
-                    {sender === 'bot' && <Bot {...{ content }} />}
-                    {sender === 'user' && <User {...{ content }} />}
+                  <Row key={i} user={sender === 'user'}>
+                    {sender === 'bot' && <Bot {...{ content, time }} />}
+                    {sender === 'user' && <User {...{ content, time }} />}
                   </Row>
                 )
               })

@@ -81,14 +81,15 @@ export function setChatLoaderActive (active) {
   }
 }
 
-export function setMessages ({ content, context, sender }) {
+export function setMessages ({ content, context, sender, time }) {
   return (dispatch, getState) => {
     dispatch({
       type: Types.SET_MESSAGES,
       payload: {
         content,
         context,
-        sender
+        sender,
+        time
       }
     })
   }

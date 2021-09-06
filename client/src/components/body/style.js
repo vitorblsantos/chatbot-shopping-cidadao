@@ -37,13 +37,16 @@ export const Row = styled.div`
   display: flex;
   position: relative;
 
-  :not(:first-of-type) {
-    margin: 8px 0 0;
-  }
-
-  ${({ user }) => user && css`
-    margin: 12px 0 0 !important;
-  `}
+  ${({ user }) => !user
+    ? css`
+      &:not(:first-of-type) {
+        margin: 16px 0 0;
+      }
+    `
+    : css`
+      margin: 24px 0 0;
+    `
+}
 
 `
 
