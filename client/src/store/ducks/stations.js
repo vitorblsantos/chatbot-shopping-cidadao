@@ -10,10 +10,10 @@ export const Types = {
 
 export default function reducer (state = INITIAL_STATE, { type, payload }) {
   switch (type) {
-  case Types.SET_STATIONS:
-    return payload.data
-  default:
-    return state
+    case Types.SET_STATIONS:
+      return payload.data
+    default:
+      return state
   }
 }
 

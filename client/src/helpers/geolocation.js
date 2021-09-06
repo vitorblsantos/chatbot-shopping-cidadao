@@ -1,5 +1,5 @@
-function toRad(Value) {
-  return Value * Math.PI / 180;
+function toRad (Value) {
+  return Value * Math.PI / 180
 }
 
 export default function Distance (lon1, lat1, lon2, lat2) {

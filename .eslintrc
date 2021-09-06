@@ -21,7 +21,9 @@
   "plugins": ["react"],
   "rules": {
     "comma-dangle": "error",
-    "indent": ["error", 2],
+    "indent": ["error", 2, { 
+      "SwitchCase": 1 
+    }],
     "no-console": 0,
     "no-extra-semi": "error",
     "quotes": [ "error", "single" ],

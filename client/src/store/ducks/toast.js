@@ -14,13 +14,12 @@ export const Types = {
 
 export default function reducer (state = INITIAL_STATE, { type, payload }) {
   switch (type) {
-  case Types.SET_TOAST_ACTIVE:
-    return { ...state, ...payload }
-  case Types.SET_TOAST_MESSAGE_ACTIVE:
-    return { ...state, message: { ...state.message, ...payload } }
-
-  default:
-    return state
+    case Types.SET_TOAST_ACTIVE:
+      return { ...state, ...payload }
+    case Types.SET_TOAST_MESSAGE_ACTIVE:
+      return { ...state, message: { ...state.message, ...payload } }
+    default:
+      return state
   }
 }
 

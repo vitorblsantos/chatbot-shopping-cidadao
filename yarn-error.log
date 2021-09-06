@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\Dell G3\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add 
+  C:\Program Files\nodejs\node.exe C:\Users\Dell G3\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add -D standard
 
 PATH: 
   C:\Users\Dell G3\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Dell G3\bin;C:\Python39\Scripts;C:\Python39;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Users\Dell G3\AppData\Local\Microsoft\WindowsApps;C:\Users\Dell G3\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Dell G3\AppData\Roaming\npm;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/: Bad Request
+  Error: https://registry.yarnpkg.com/standard: Bad Request
       at Request.params.callback [as _callback] (C:\Users\Dell G3\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66992:18)
       at Request.self.callback (C:\Users\Dell G3\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140763:22)
       at Request.emit (events.js:400:28)

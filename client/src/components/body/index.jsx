@@ -23,7 +23,7 @@ const Body = () => {
 
   return (
     <Container>
-      { chatbot.active &&
+      {chatbot.active &&
         <>
           <Overflow>
             {
@@ -44,8 +44,7 @@ const Body = () => {
           {/* <Status>
             <Warning /> <span>teste</span>
           </Status> */}
-        </>
-      }
+        </>}
     </Container>
   )
 }

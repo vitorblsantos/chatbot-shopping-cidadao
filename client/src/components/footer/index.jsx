@@ -84,7 +84,6 @@ const Footer = () => {
             }
           }
         }
-        console.log(user.email)
         User.create({ email: user.email, name: inputMessage })
         dispatch(setChatActions({ getName: false }, ''))
         dispatch(setUserName(inputMessage))

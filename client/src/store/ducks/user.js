@@ -17,16 +17,16 @@ export const Types = {
 
 export default function reducer (state = INITIAL_STATE, { type, payload }) {
   switch (type) {
-  case Types.SET_USER_EMAIL:
-    return { ...state, email: payload.email }
-  case Types.ADD_USER_INTERACTION:
-    return { ...state, interactions: [...state.interactions, { ...payload }] }
-  case Types.SET_USER_COORDS:
-    return { ...state, coords: payload.coords }
-  case Types.SET_USER_NAME:
-    return { ...state, name: payload.name }
-  default:
-    return state
+    case Types.SET_USER_EMAIL:
+      return { ...state, email: payload.email }
+    case Types.ADD_USER_INTERACTION:
+      return { ...state, interactions: [...state.interactions, { ...payload }] }
+    case Types.SET_USER_COORDS:
+      return { ...state, coords: payload.coords }
+    case Types.SET_USER_NAME:
+      return { ...state, name: payload.name }
+    default:
+      return state
   }
 }
 
@@ -69,10 +69,13 @@ export const setUserCoords = coords => {
 }
 
 export const setUserName = name => {
-  return {
-    type: Types.SET_USER_NAME,
-    payload: {
-      name
-    }
+  return (dispatch, getState) => {
+    console.log(getState())
+    dispatch({
+      type: Types.SET_USER_NAME,
+      payload: {
+        name
+      }
+    })
   }
 }

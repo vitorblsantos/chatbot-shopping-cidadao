@@ -24,7 +24,7 @@ const Chat = () => {
   const continuousInteraction = async () => {
     const lastInteraction = chatbot.messages[chatbot.messages.length - 1]
     if (!lastInteraction || !watsonId) return false
-    if (lastInteraction.sender === 'bot') return restartFlow()
+    if (lastInteraction.sender === 'bot') return false
 
     const { context, output } = await Watson.sendMessage({ context: lastInteraction.context, message: lastInteraction.content, sessionId: watsonId })
 
@@ -41,6 +41,7 @@ const Chat = () => {
     if (skills.getLocation) handleGeolocation(skills)
     if (skills.getName) dispatch(setChatActions({ getName: skills.getName }, 'Digite seu nome:'))
     if (skills.getService) dispatch(setChatActions({ getService: skills.getService }, 'Selecione o servico desejado:'))
+    if (skills.finishedSchedule) dispatch(setChatActions({ finishedSchedule: skills.finishedSchedule }, `Ainda precisa de ajuda, ${user.name[0].toUpperCase() + user.name.slice(1)}?`))
     // if ((!skills.getEmail && skills.email) && (!skills.getName && skills.name)) await Users.save({ email: user.email, name: user.name })
   }
 
@@ -144,16 +145,16 @@ const Chat = () => {
     setWatsonId(id)
   }
 
-  const restartFlow = async () => {
-    dispatch(setChatLoaderActive(true))
-    dispatch(setOptions([]))
-    const lastInteraction = chatbot.messages[chatbot.messages.length - 1]
-    const { context, output } = await Watson.sendMessage({ context: lastInteraction.context, message: '', sessionId: watsonId })
+  // const restartFlow = async () => {
+  //   dispatch(setChatLoaderActive(true))
+  //   dispatch(setOptions([]))
+  //   const lastInteraction = chatbot.messages[chatbot.messages.length - 1]
+  //   const { context, output } = await Watson.sendMessage({ context: lastInteraction.context, message: '', sessionId: watsonId })
 
-    if (!output.generic) return false
+  //   if (!output.generic) return false
 
-    await handleBotMessage(context, output.generic, watsonId)
-  }
+  //   await handleBotMessage(context, output.generic, watsonId)
+  // }
 
   const setupSession = async ({ active }) => {
     if (!active) return false

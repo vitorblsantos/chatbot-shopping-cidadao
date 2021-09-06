@@ -3,8 +3,12 @@
 const INITIAL_STATE = {
   active: false,
   actions: {
+    finishedSchedule: false,
+    getDate: false,
     getEmail: false,
+    getLocation: false,
     getName: false,
+    getService: false,
     userData: false
   },
   input: {
@@ -29,20 +33,20 @@ export const Types = {
 
 export default function reducer (state = INITIAL_STATE, { type, payload }) {
   switch (type) {
-  case Types.SET_CHAT_ACTIVE:
-    return { ...state, ...payload }
-  case Types.SET_CHAT_ACTIONS:
-    return { ...state, actions: { ...state.actions, ...payload } }
-  case Types.SET_CHAT_INPUT_PLACEHOLDER:
-    return { ...state, input: { ...state.input, ...payload } }
-  case Types.SET_CHAT_LOADER_ACTIVE :
-    return { ...state, loader: { ...state.loader, ...payload } }
-  case Types.SET_MESSAGES:
-    return { ...state, messages: [...state.messages, { ...payload }] }
-  case Types.SET_OPTIONS:
-    return { ...state, options: payload.options }
-  default:
-    return state
+    case Types.SET_CHAT_ACTIVE:
+      return { ...state, ...payload }
+    case Types.SET_CHAT_ACTIONS:
+      return { ...state, actions: { ...state.actions, ...payload } }
+    case Types.SET_CHAT_INPUT_PLACEHOLDER:
+      return { ...state, input: { ...state.input, ...payload } }
+    case Types.SET_CHAT_LOADER_ACTIVE :
+      return { ...state, loader: { ...state.loader, ...payload } }
+    case Types.SET_MESSAGES:
+      return { ...state, messages: [...state.messages, { ...payload }] }
+    case Types.SET_OPTIONS:
+      return { ...state, options: payload.options }
+    default:
+      return state
   }
 }
 
