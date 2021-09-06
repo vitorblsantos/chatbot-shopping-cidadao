@@ -1,5 +1,3 @@
-'use strict'
-
 import { Api } from '../../helpers'
 
 const INITIAL_STATE = [{}]

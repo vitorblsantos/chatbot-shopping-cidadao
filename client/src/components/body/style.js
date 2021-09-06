@@ -47,7 +47,6 @@ export const Row = styled.div`
       margin: 24px 0 0;
     `
 }
-
 `
 
 export const Status = styled.div`

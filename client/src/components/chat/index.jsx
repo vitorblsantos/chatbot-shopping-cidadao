@@ -63,7 +63,7 @@ const Chat = () => {
   }
 
   const handleBotMessage = async (context, messages, watsonId) => {
-    Message.save({ content: { context, messages, sender: 'bot' }, sessionId: watsonId })
+    Message.create({ content: { context, messages, sender: 'bot' }, sessionId: watsonId })
     for (let counter = 0; counter < messages.length; counter++) {
       messages[counter].sender = 'bot'
       if (messages[counter].response_type === 'option') return (dispatch(setOptions(messages[counter].options)) && dispatch(setChatLoaderActive(false)))
@@ -122,6 +122,7 @@ const Chat = () => {
       }
       option.label = el.description
       option.value.input.text = el.description
+      option.value.input.value = el._id
       options.push(option)
       return el
     })

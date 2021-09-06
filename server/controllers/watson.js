@@ -6,8 +6,7 @@ import { Session } from '../models/'
 
 const createSession = async (_, res) => {
   const watsonId = await Watson.createSession()
-  await Session.create({ watsonId })
-  return res.status(200).send(watsonId)
+  return res.status(200).send(await Session.create({ watsonId }))
 }
 
 const sendMessage = async (req, res) => {

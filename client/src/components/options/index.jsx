@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import Slider from 'react-slick'
 import { format, utcToZonedTime } from 'date-fns-tz'
 
-import { Message, Sleep } from '../../helpers'
+import { Message, Schedule, Sleep } from '../../helpers'
 import { setMessages, setChatActions, setChatLoaderActive, setOptions } from '../../store/ducks/chatbot'
-import { addUserInteraction } from '../../store/ducks/user'
+import { addUserInteraction, setUserScheduledDate, setUserScheduledStation } from '../../store/ducks/user'
 
 import { Container, Item, Option } from './style'
 
@@ -60,12 +60,14 @@ const Options = () => {
             'main skill': {
               user_defined: {
                 ...context?.skills['main skill']?.user_defined,
-                date: new Date(input),
+                date: new Date(input.text),
                 getDate: false
               }
             }
           }
         }
+        Schedule.create({ date: new Date(input.text), session: watson.session._id, station: user.scheduledStation, user: user.id })
+        dispatch(setUserScheduledDate(new Date(input.text)))
         dispatch(setChatActions({ getDate: false }, ''))
       } else {
         canSubmit = false
@@ -80,11 +82,12 @@ const Options = () => {
               user_defined: {
                 ...context?.skills['main skill']?.user_defined,
                 getLocation: false,
-                location: input
+                location: input.value
               }
             }
           }
         }
+        dispatch(setUserScheduledStation(input.value))
         dispatch(setChatActions({ getLocation: false }, ''))
       } else {
         canSubmit = false
@@ -111,7 +114,7 @@ const Options = () => {
     }
 
     if (!canSubmit || !input) return false
-    Message.save({ content: { context, input, sender: 'user' }, sessionId: watson.session.id })
+    Message.create({ content: { context, input, sender: 'user' }, sessionId: watson.session.id })
     dispatch(addUserInteraction('click-option', 'handleOption', input))
     dispatch(setMessages({ content: input.text, context, sender: 'user', time: format(utcToZonedTime(new Date(), 'America/Sao_paulo'), 'HH:mm') }))
     dispatch(setChatLoaderActive(true))

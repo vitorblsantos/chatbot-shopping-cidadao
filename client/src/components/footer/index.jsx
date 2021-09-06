@@ -4,7 +4,7 @@ import { format, utcToZonedTime } from 'date-fns-tz'
 
 import { setChatActions, setChatActive, setChatLoaderActive, setMessages, setOptions } from '../../store/ducks/chatbot'
 import { setToastActive } from '../../store/ducks/toast'
-import { addUserInteraction, setUserEmail, setUserName } from '../../store/ducks/user'
+import { addUserInteraction, setUserEmail, setUserId, setUserName } from '../../store/ducks/user'
 
 import { Message, User } from '../../helpers'
 
@@ -84,16 +84,16 @@ const Footer = () => {
             }
           }
         }
-        User.create({ email: user.email, name: inputMessage })
         dispatch(setChatActions({ getName: false }, ''))
         dispatch(setUserName(inputMessage))
+        User.create({ email: user.email, name: inputMessage }).then(({ _id }) => dispatch(setUserId(_id)))
       } else {
         canSubmit = false
       }
     }
 
     if (!canSubmit || !inputMessage) return false
-    Message.save({ content: { context, inputMessage, sender: 'user' }, sessionId: watson.session.id })
+    Message.create({ content: { context, inputMessage, sender: 'user' }, sessionId: watson.session.id })
     dispatch(setChatLoaderActive(true))
     dispatch(setOptions([]))
     dispatch(addUserInteraction('footer', 'handleMessage', { message: inputMessage }))

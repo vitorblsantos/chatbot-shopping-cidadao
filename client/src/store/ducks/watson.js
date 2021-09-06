@@ -4,9 +4,10 @@ import { Api, DateFNS, LocalStorage } from '../../helpers'
 
 const INITIAL_STATE = {
   session: {
-    id: '',
+    _id: '',
     createdAt: '',
-    expiration: ''
+    expiration: '',
+    id: ''
   },
   flow: {
     start: false
@@ -59,7 +60,8 @@ export function setWatsonSessionId () {
     dispatch({
       type: Types.SET_WATSON_SESSION_ID,
       payload: {
-        id: session,
+        _id: session._id,
+        id: session.watsonId,
         createdAt: DateFNS.current,
         expiration: DateFNS.expiration
       }

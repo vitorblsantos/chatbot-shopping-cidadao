@@ -4,7 +4,10 @@ const INITIAL_STATE = {
   coords: {},
   name: '',
   email: '',
-  interactions: []
+  id: '',
+  interactions: [],
+  scheduledDate: new Date(),
+  scheduledStation: ''
 }
 
 export const Types = {
@@ -12,7 +15,9 @@ export const Types = {
   SET_USER_EMAIL: 'SET_USER_EMAIL',
   SET_USER_ID: 'SET_USER_ID',
   SET_USER_COORDS: 'SET_USER_COORDS',
-  SET_USER_NAME: 'SET_USER_NAME'
+  SET_USER_NAME: 'SET_USER_NAME',
+  SET_USER_SCHEDULED_DATE: 'SET_USER_SCHEDULED_DATE',
+  SET_USER_SCHEDULED_STATION: 'SET_USER_SCHEDULED_STATION'
 }
 
 export default function reducer (state = INITIAL_STATE, { type, payload }) {
@@ -23,8 +28,14 @@ export default function reducer (state = INITIAL_STATE, { type, payload }) {
       return { ...state, interactions: [...state.interactions, { ...payload }] }
     case Types.SET_USER_COORDS:
       return { ...state, coords: payload.coords }
+    case Types.SET_USER_ID:
+      return { ...state, id: payload.id }
     case Types.SET_USER_NAME:
       return { ...state, name: payload.name }
+    case Types.SET_USER_SCHEDULED_DATE:
+      return { ...state, scheduledDate: payload.scheduledDate }
+    case Types.SET_USER_SCHEDULED_STATION:
+      return { ...state, scheduledStation: payload.scheduledStation }
     default:
       return state
   }
@@ -70,12 +81,29 @@ export const setUserCoords = coords => {
 
 export const setUserName = name => {
   return (dispatch, getState) => {
-    console.log(getState())
     dispatch({
       type: Types.SET_USER_NAME,
       payload: {
         name
       }
     })
+  }
+}
+
+export const setUserScheduledDate = scheduledDate => {
+  return {
+    type: Types.SET_USER_SCHEDULED_DATE,
+    payload: {
+      scheduledDate
+    }
+  }
+}
+
+export const setUserScheduledStation = scheduledStation => {
+  return {
+    type: Types.SET_USER_SCHEDULED_STATION,
+    payload: {
+      scheduledStation
+    }
   }
 }

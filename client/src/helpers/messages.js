@@ -1,6 +1,6 @@
 import { Api } from '../helpers'
 
-const save = async ({ content, sessionId }) => {
+const create = async ({ content, sessionId }) => {
   const params = {
     content,
     sessionId
@@ -10,5 +10,5 @@ const save = async ({ content, sessionId }) => {
 }
 
 export default {
-  save
+  create
 }

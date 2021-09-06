@@ -5,7 +5,8 @@ const create = async ({ email, name }) => {
     email,
     name
   }
-  await Api.post('/data/users', params)
+  const { data } = await Api.post('/data/users', params)
+  return data
 }
 
 export default {

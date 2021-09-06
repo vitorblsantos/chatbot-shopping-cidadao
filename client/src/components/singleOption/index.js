@@ -21,7 +21,7 @@ const singleOption = () => {
   }
 
   const handleSingleOption = (input) => {
-    Message.save({ content: { context, input, sender: 'user' }, sessionId: watson.session.id })
+    Message.create({ content: { context, input, sender: 'user' }, sessionId: watson.session.id })
     dispatch(addUserInteraction('click-single-option', 'handleSingleOption', input))
     dispatch(setMessages({ content: input.text, context: {}, sender: 'user', time: format(utcToZonedTime(new Date(), 'America/Sao_paulo'), 'HH:mm') }))
     dispatch(setChatLoaderActive(true))

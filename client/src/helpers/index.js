@@ -5,6 +5,7 @@ import DateFNS from './date'
 import Distance from './geolocation'
 import LocalStorage from './localStorage'
 import Message from './messages'
+import Schedule from './schedule'
 import Sleep from './sleep'
 import User from './users'
 import Watson from './watson'
@@ -15,6 +16,7 @@ export {
   Distance,
   LocalStorage,
   Message,
+  Schedule,
   Sleep,
   User,
   Watson

@@ -1,9 +1,23 @@
 import { Op } from 'sequelize'
 import { DateFNS } from '../helpers'
-import { Schedules } from '../models/'
+import { Schedule } from '../models/'
+
+const create = async (req, res) => {
+  const { date, session, station, user } = req.body
+  try {
+    res.status(201).send(await Schedule.create({
+      date,
+      session: session,
+      station: station,
+      user: user
+    }))
+  } catch (err) {
+    res.status(500).send(err)
+  }
+}
 
 const get = async (_, res) => {
-  const data = await Schedules.findAll({})
+  const data = await Schedule.findAll({})
   return res.status(200).send(data)
 }
 
@@ -14,7 +28,7 @@ const getAvailableDates = async (_, res) => {
 
   while (availableDates.length <= 5) {
     const nextDay = new Date(today.getTime() + (86400000 * counter))
-    const data = await Schedules.findAll({
+    const data = await Schedule.findAll({
       where: {
         date: {
           [Op.eq]: nextDay
@@ -29,6 +43,7 @@ const getAvailableDates = async (_, res) => {
 }
 
 export default {
+  create,
   get,
   getAvailableDates
 }

@@ -3,8 +3,7 @@ import { Session } from '../models/'
 const create = async (req, res) => {
   const { body } = req
   try {
-    await Session.create({ ...body })
-    return res.status(200).send('Sessao criada')
+    return res.status(201).send(await Session.create({ ...body }))
   } catch (e) {
     return res.status(500).send(e)
   }

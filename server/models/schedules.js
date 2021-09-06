@@ -1,11 +1,11 @@
 const { Model } = require('sequelize')
 
 module.exports = (sequelize, DataTypes) => {
-  class Schedules extends Model {
+  class Schedule extends Model {
     static associate (_) {}
   }
 
-  Schedules.init({
+  Schedule.init({
     _id: {
       allowNull: false,
       defaultValue: DataTypes.UUIDV4,
@@ -38,5 +38,5 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: true
   })
 
-  return Schedules
+  return Schedule
 }
