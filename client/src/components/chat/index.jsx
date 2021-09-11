@@ -23,8 +23,8 @@ const Chat = () => {
 
   const continuousInteraction = async () => {
     const lastInteraction = chatbot.messages[chatbot.messages.length - 1]
-    if (!lastInteraction || !watsonId) return false
-    if (lastInteraction.sender === 'bot') return false
+
+    if (!lastInteraction || lastInteraction.sender === 'bot' || !watsonId) return false
 
     const { context, output } = await Watson.sendMessage({ context: lastInteraction.context, message: lastInteraction.content, sessionId: watsonId })
 
@@ -37,12 +37,12 @@ const Chat = () => {
     if (!skills) return false
 
     if (skills.getDate) handleDate(skills)
-    if (skills.getEmail) dispatch(setChatActions({ getEmail: skills.getEmail }, 'Digite seu e-mail:'))
+    if (skills.getEmail) dispatch(setChatActions({ getEmail: skills.getEmail }, 'Digite seu e-mail...'))
     if (skills.getLocation) handleGeolocation(skills)
-    if (skills.getName) dispatch(setChatActions({ getName: skills.getName }, 'Digite seu nome:'))
-    if (skills.getService) dispatch(setChatActions({ getService: skills.getService }, 'Selecione o servico desejado:'))
+    if (skills.getName) dispatch(setChatActions({ getName: skills.getName }, 'Digite seu nome...'))
+    if (skills.getService) dispatch(setChatActions({ getService: skills.getService }, 'Selecione o servico desejado...'))
+    if (skills.getSchedules) dispatch(setChatActions({ getSchedules: skills.getSchedules }, 'Digite o id do agendamento...'))
     if (skills.finishedSchedule) dispatch(setChatActions({ finishedSchedule: skills.finishedSchedule }, `Ainda precisa de ajuda, ${user.name[0].toUpperCase() + user.name.slice(1)}?`))
-    // if ((!skills.getEmail && skills.email) && (!skills.getName && skills.name)) await Users.save({ email: user.email, name: user.name })
   }
 
   const firstInteraction = async () => {

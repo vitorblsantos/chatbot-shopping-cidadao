@@ -27,7 +27,7 @@ export const Overflow = styled.div`
   height: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
-  padding: 20px 0;
+  padding: 20px 0 32px;
   position: relative;
   width: 332px;
 `

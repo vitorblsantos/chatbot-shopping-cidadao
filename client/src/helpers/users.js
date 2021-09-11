@@ -9,6 +9,12 @@ const create = async ({ email, name }) => {
   return data
 }
 
+const get = async ({ email }) => {
+  const { data } = await Api.get(`/data/users/${email}`)
+  return data
+}
+
 export default {
-  create
+  create,
+  get
 }

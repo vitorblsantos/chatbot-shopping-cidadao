@@ -3,6 +3,7 @@
 import Api from './api'
 import DateFNS from './date'
 import Distance from './geolocation'
+import Email from './email'
 import LocalStorage from './localStorage'
 import Message from './messages'
 import Schedule from './schedule'
@@ -14,6 +15,7 @@ export {
   Api,
   DateFNS,
   Distance,
+  Email,
   LocalStorage,
   Message,
   Schedule,

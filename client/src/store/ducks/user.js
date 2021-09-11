@@ -1,4 +1,4 @@
-'use strict'
+import { Api } from '../../helpers'
 
 const INITIAL_STATE = {
   coords: {},
@@ -7,7 +7,8 @@ const INITIAL_STATE = {
   id: '',
   interactions: [],
   scheduledDate: new Date(),
-  scheduledStation: ''
+  scheduledStation: '',
+  schedules: []
 }
 
 export const Types = {
@@ -17,7 +18,8 @@ export const Types = {
   SET_USER_COORDS: 'SET_USER_COORDS',
   SET_USER_NAME: 'SET_USER_NAME',
   SET_USER_SCHEDULED_DATE: 'SET_USER_SCHEDULED_DATE',
-  SET_USER_SCHEDULED_STATION: 'SET_USER_SCHEDULED_STATION'
+  SET_USER_SCHEDULED_STATION: 'SET_USER_SCHEDULED_STATION',
+  SET_USER_SCHEDULES: 'SET_USER_INTERACTION'
 }
 
 export default function reducer (state = INITIAL_STATE, { type, payload }) {
@@ -36,6 +38,8 @@ export default function reducer (state = INITIAL_STATE, { type, payload }) {
       return { ...state, scheduledDate: payload.scheduledDate }
     case Types.SET_USER_SCHEDULED_STATION:
       return { ...state, scheduledStation: payload.scheduledStation }
+    case Types.SET_USER_SCHEDULES:
+      return { ...state, schedules: payload.schedules }
     default:
       return state
   }
@@ -105,5 +109,12 @@ export const setUserScheduledStation = scheduledStation => {
     payload: {
       scheduledStation
     }
+  }
+}
+
+export const setUserSchedules = identifier => {
+  return async (dispatch, getState) => {
+    const { data } = await Api.get(`/data/schedules/${identifier}`)
+    console.log(data)
   }
 }

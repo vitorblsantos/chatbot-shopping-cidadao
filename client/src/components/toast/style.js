@@ -66,7 +66,7 @@ export const Position = styled.div`
   position: fixed;
   height: 80px;
   opacity: 1;
-  right: 12px;
+  right: 20px;
   transition: all .2s;
   transition-timing-function: ease-in-out;
   visibility: visible;
