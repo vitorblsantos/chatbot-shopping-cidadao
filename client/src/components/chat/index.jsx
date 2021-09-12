@@ -146,17 +146,6 @@ const Chat = () => {
     setWatsonId(id)
   }
 
-  // const restartFlow = async () => {
-  //   dispatch(setChatLoaderActive(true))
-  //   dispatch(setOptions([]))
-  //   const lastInteraction = chatbot.messages[chatbot.messages.length - 1]
-  //   const { context, output } = await Watson.sendMessage({ context: lastInteraction.context, message: '', sessionId: watsonId })
-
-  //   if (!output.generic) return false
-
-  //   await handleBotMessage(context, output.generic, watsonId)
-  // }
-
   const setupSession = async ({ active }) => {
     if (!active) return false
     if (navigator.geolocation) navigator.geolocation.getCurrentPosition(handlePositions)
