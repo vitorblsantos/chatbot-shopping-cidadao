@@ -1,7 +1,7 @@
 module.exports = {
   down: queryInterface => queryInterface.dropTable('schedules'),
   up: (queryInterface, DataTypes) => queryInterface.createTable('schedules', {
-    _id: {
+    id: {
       allowNull: false,
       defaultValue: DataTypes.UUIDV4,
       type: DataTypes.UUID,
@@ -11,19 +11,17 @@ module.exports = {
       allowNull: false,
       type: DataTypes.DATE
     },
-
     date: {
       allowNull: false,
       type: DataTypes.DATE
     },
-
     session: {
       allowNull: false,
       defaultValue: DataTypes.UUIDV4,
       type: DataTypes.UUID,
       references: {
         model: 'sessions',
-        key: '_id'
+        key: 'id'
       }
     },
     station: {
@@ -32,8 +30,15 @@ module.exports = {
       type: DataTypes.UUID,
       references: {
         model: 'stations',
-        key: '_id'
+        key: 'id'
       }
+    },
+    status: {
+      allowNull: false,
+      defaultValue: 'waiting',
+      type: DataTypes.ENUM({
+        values: ['active', 'canceled', 'waiting']
+      })
     },
     updatedAt: {
       allowNull: false,
@@ -45,7 +50,7 @@ module.exports = {
       type: DataTypes.UUID,
       references: {
         model: 'users',
-        key: '_id'
+        key: 'id'
       }
     }
   })

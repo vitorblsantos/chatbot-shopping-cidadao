@@ -60,7 +60,7 @@ export function setWatsonSessionId () {
     dispatch({
       type: Types.SET_WATSON_SESSION_ID,
       payload: {
-        _id: session._id,
+        _id: session.id,
         id: session.watsonId,
         createdAt: DateFNS.current,
         expiration: DateFNS.expiration

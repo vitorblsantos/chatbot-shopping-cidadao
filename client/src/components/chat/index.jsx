@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { format, utcToZonedTime } from 'date-fns-tz'
 
-import { Api, Distance, Message, Sleep, Watson } from '../../helpers'
+import { Api, Distance, Message, Notification, Schedule, Sleep, Watson } from '../../helpers'
 
 import { getStations } from '../../store/ducks/stations'
 
@@ -42,7 +42,7 @@ const Chat = () => {
     if (skills.getName) dispatch(setChatActions({ getName: skills.getName }, 'Digite seu nome...'))
     if (skills.getService) dispatch(setChatActions({ getService: skills.getService }, 'Selecione o servico desejado...'))
     if (skills.getSchedules) dispatch(setChatActions({ getSchedules: skills.getSchedules }, 'Digite o id do agendamento...'))
-    if (skills.finishedSchedule) dispatch(setChatActions({ finishedSchedule: skills.finishedSchedule }, `Ainda precisa de ajuda, ${user.name[0].toUpperCase() + user.name.slice(1)}?`))
+    if (skills.finishedSchedule) handleSchedule(skills)
   }
 
   const firstInteraction = async () => {
@@ -75,7 +75,8 @@ const Chat = () => {
 
   const handleDate = async ({ getDate }) => {
     const options = []
-    const { data } = await Api.get('/data/schedules/available')
+    dispatch(setChatActions({ getDate }, 'Selecione a data desejada:'))
+    const { data } = await Api.get('/schedules/available')
     data && data.map(el => {
       const option = {
         label: '',
@@ -116,15 +117,15 @@ const Chat = () => {
         label: '',
         value: {
           input: {
-            text: ''
+            text: '',
+            value: ''
           }
         }
       }
       option.label = el.description
       option.value.input.text = el.description
-      option.value.input.value = el._id
-      options.push(option)
-      return el
+      option.value.input.value = el.id
+      return options.push(option)
     })
 
     dispatch(setOptions(options))
@@ -139,6 +140,12 @@ const Chat = () => {
       longitude: position.coords.longitude
     }
     dispatch(setUserCoords(coords))
+  }
+
+  const handleSchedule = skills => {
+    dispatch(setChatActions({ finishedSchedule: skills.finishedSchedule }, `Ainda precisa de ajuda, ${user.name[0].toUpperCase() + user.name.slice(1)}?`))
+    Notification.sendEmail({ email: user.email, id: user.id, link: '#', usuario: user.name })
+    Schedule.create({ date: user.scheduledDate, session: watson.session._id, station: user.scheduledStation, user: user.id })
   }
 
   const handleWatsonId = ({ id }) => {

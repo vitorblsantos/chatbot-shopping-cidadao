@@ -1,7 +1,7 @@
 module.exports = {
   down: queryInterface => queryInterface.dropTable('messages'),
   up: (queryInterface, DataTypes) => queryInterface.createTable('messages', {
-    _id: {
+    id: {
       allowNull: false,
       defaultValue: DataTypes.UUIDV4,
       type: DataTypes.UUID,
@@ -20,7 +20,7 @@ module.exports = {
       type: DataTypes.UUID,
       references: {
         model: 'sessions',
-        key: '_id'
+        key: 'id'
       }
     },
     updatedAt: {

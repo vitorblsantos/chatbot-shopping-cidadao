@@ -1,10 +1,10 @@
 const { v4 } = require('uuid')
 
-const { Stations } = require('../../data/')
-const { DateFNS } = require('../../server/helpers/')
+const { Stations } = require('../../../data/')
+const { DateFNS } = require('../../helpers')
 
 const draftStations = Stations.map((station, index) => {
-  station._id = v4()
+  station.id = v4()
   station.createdAt = DateFNS.current
   station.updatedAt = DateFNS.current
   return station

@@ -5,7 +5,7 @@ import compression from 'compression'
 import cors from 'cors'
 import express from 'express'
 
-import { Data, Email, Watson, Webhooks } from './routes'
+import { Data, Email, Schedules, Watson, Webhooks } from './routes'
 
 const Server = express()
 
@@ -22,6 +22,7 @@ Server.use(json())
 
 Server.use('/email', Email)
 Server.use('/data', Data)
+Server.use('/schedules', Schedules)
 Server.use('/watson', Watson)
 Server.use('/webhooks', Webhooks)
 

@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   }
 
   Session.init({
-    _id: {
+    id: {
       allowNull: false,
       defaultValue: DataTypes.UUIDV4,
       type: DataTypes.UUID,

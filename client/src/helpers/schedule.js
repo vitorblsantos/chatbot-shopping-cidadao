@@ -8,7 +8,7 @@ const create = async ({ date, session, station, user }) => {
     user
   }
 
-  const { data } = await Api.post('/data/schedules', { ...params })
+  const { data } = await Api.post('/schedules', { ...params })
   return data
 }
 

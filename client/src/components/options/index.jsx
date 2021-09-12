@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Slider from 'react-slick'
 import { format, utcToZonedTime } from 'date-fns-tz'
 
-import { Message, Schedule, Sleep } from '../../helpers'
+import { Message, Sleep } from '../../helpers'
 import { setMessages, setChatActions, setChatLoaderActive, setOptions } from '../../store/ducks/chatbot'
 import { addUserInteraction, setUserScheduledDate, setUserScheduledStation } from '../../store/ducks/user'
 
@@ -38,6 +38,12 @@ const Options = () => {
 
   const handleOption = (context, input) => {
     if (slidingOptions) return false
+    const toISOFormat = dateTimeString => {
+      const [date, time] = dateTimeString.split(' ')
+      const [DD, MM, YYYY] = date.split('/')
+      const [HH, mm] = time.split(':')
+      return `${YYYY}-${MM}-${DD}T${HH}:${mm}`
+    }
     let canSubmit = true
     context = {
       skills: {
@@ -60,14 +66,13 @@ const Options = () => {
             'main skill': {
               user_defined: {
                 ...context?.skills['main skill']?.user_defined,
-                date: new Date(input.text),
+                date: toISOFormat(input.text),
                 getDate: false
               }
             }
           }
         }
-        Schedule.create({ date: new Date(input.text), session: watson.session._id, station: user.scheduledStation, user: user.id })
-        dispatch(setUserScheduledDate(new Date(input.text)))
+        dispatch(setUserScheduledDate(toISOFormat(input.text)))
         dispatch(setChatActions({ getDate: false }, ''))
       } else {
         canSubmit = false

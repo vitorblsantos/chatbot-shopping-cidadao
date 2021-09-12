@@ -52,25 +52,26 @@ const Footer = () => {
 
     if (userDefined.getEmail) {
       if ((Email.valid(inputMessage))) {
-        const { _id, name } = await User.get({ email: inputMessage })
-        if (_id) dispatch(setUserId(_id))
-        if (name) dispatch(setUserName(name))
-
+        const { id, name } = await User.get({ email: inputMessage })
         context = {
           skills: {
             'main skill': {
               user_defined: {
                 ...context?.skills['main skill']?.user_defined,
-                userData: true,
                 email: inputMessage,
-                getEmail: false,
-                getName: false,
-                name: name
+                getEmail: false
               }
             }
           }
         }
-
+        if (id && name) {
+          context.skills['main skill'].user_defined.getName = false
+          context.skills['main skill'].user_defined.name = name
+          context.skills['main skill'].user_defined.userData = true
+          context.skills['main skill'].user_defined.userId = id
+          dispatch(setUserId(id))
+          dispatch(setUserName(name))
+        }
         dispatch(setChatActions({ getEmail: false }, ''))
         dispatch(setUserEmail(inputMessage))
       } else {
@@ -95,8 +96,8 @@ const Footer = () => {
         dispatch(setChatActions({ getName: false }, ''))
         dispatch(setUserName(inputMessage))
         if (!user.id) {
-          const { _id } = await User.create({ email: user.email, name: inputMessage })
-          dispatch(setUserId(_id))
+          const { id } = await User.create({ email: user.email, name: inputMessage })
+          dispatch(setUserId(id))
         }
       } else {
         canSubmit = false

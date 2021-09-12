@@ -9,7 +9,7 @@ const create = async (req, res) => {
   try {
     await Message.create({
       content: draftContent,
-      session: dataValues._id
+      session: dataValues.id
     })
 
     return res.status(200).send('Message created')

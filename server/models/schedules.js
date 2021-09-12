@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   }
 
   Schedule.init({
-    _id: {
+    id: {
       allowNull: false,
       defaultValue: DataTypes.UUIDV4,
       type: DataTypes.UUID,
@@ -17,17 +17,23 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE
     },
     session: {
-      referencesKey: '_id',
+      referencesKey: 'id',
       references: 'sessions',
       type: DataTypes.UUID
     },
     station: {
-      referencesKey: '_id',
+      referencesKey: 'id',
       references: 'stations',
       type: DataTypes.UUID
     },
+    status: {
+      defaultValue: 'waiting',
+      type: DataTypes.ENUM({
+        values: ['active', 'canceled', 'waiting']
+      })
+    },
     user: {
-      referencesKey: '_id',
+      referencesKey: 'id',
       references: 'users',
       type: DataTypes.UUID
     }

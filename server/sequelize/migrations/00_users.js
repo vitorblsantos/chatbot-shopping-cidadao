@@ -1,7 +1,7 @@
 module.exports = {
   down: queryInterface => queryInterface.dropTable('users'),
   up: (queryInterface, DataTypes) => queryInterface.createTable('users', {
-    _id: {
+    id: {
       allowNull: false,
       defaultValue: DataTypes.UUIDV4,
       type: DataTypes.UUID,

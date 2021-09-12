@@ -6,6 +6,7 @@ import Distance from './geolocation'
 import Email from './email'
 import LocalStorage from './localStorage'
 import Message from './messages'
+import Notification from './notifications'
 import Schedule from './schedule'
 import Sleep from './sleep'
 import User from './users'
@@ -18,6 +19,7 @@ export {
   Email,
   LocalStorage,
   Message,
+  Notification,
   Schedule,
   Sleep,
   User,

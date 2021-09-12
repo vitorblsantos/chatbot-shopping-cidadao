@@ -13,14 +13,15 @@ const create = async (req, res) => {
 
 const get = async (req, res) => {
   const { email } = req.params
-  const { dataValues } = await User.findOne({
+  let data = await User.findOne({
     where: {
       email: {
         [Op.eq]: email
       }
     }
   })
-  res.status(200).send(dataValues)
+  data = data?.dataValues || []
+  res.status(200).send(data)
 }
 
 export default {

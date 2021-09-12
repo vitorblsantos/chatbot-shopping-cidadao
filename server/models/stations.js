@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   }
 
   Station.init({
-    _id: {
+    id: {
       allowNull: false,
       defaultValue: DataTypes.UUIDV4,
       type: DataTypes.UUID,

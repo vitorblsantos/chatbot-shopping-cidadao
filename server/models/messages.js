@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   }
 
   Message.init({
-    _id: {
+    id: {
       allowNull: false,
       defaultValue: DataTypes.UUIDV4,
       type: DataTypes.UUID,
@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(150)
     },
     session: {
-      referencesKey: '_id',
+      referencesKey: 'id',
       references: 'sessions',
       type: DataTypes.UUID
     }
