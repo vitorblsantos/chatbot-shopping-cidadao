@@ -1,6 +1,6 @@
 import { Op } from 'sequelize'
 import { DateFNS } from '../helpers'
-import { Schedule } from '../models/'
+import { Schedule, Station, User } from '../models/'
 
 const create = async (req, res) => {
   const { date, session, station, user } = req.body
@@ -44,14 +44,52 @@ const getAvailableDates = async (_, res) => {
 
 const getByIdentifier = async (req, res) => {
   const { id } = req.params
-  const data = await Schedule.findOne({
+  let user = {
+    id: '',
+    email: ''
+  }
+  if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(id)) {
+    const queryUser = await User.findOne({
+      where: {
+        email: {
+          [Op.eq]: id
+        }
+      }
+    })
+    user = queryUser?.dataValues
+  }
+
+  const schedules = await Schedule.findAll({
+    order: [
+      ['date', 'ASC']
+    ],
     where: {
-      id: {
-        [Op.eq]: id
+      date: {
+        [Op.gt]: new Date()
+      },
+      status: {
+        [Op.in]: ['active', 'waiting']
+      },
+      user: {
+        [Op.eq]: user.id
       }
     }
   })
-  res.status(200).send(data)
+
+  await Promise.all(schedules.map(async el => {
+    const querySession = await Station.findOne({
+      where: {
+        id: {
+          [Op.eq]: el.station
+        }
+      }
+    })
+    el.station = querySession?.dataValues.description
+    el.user = user.email
+    return el
+  }))
+
+  res.status(200).send(schedules)
 }
 
 export default {

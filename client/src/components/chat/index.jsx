@@ -41,7 +41,7 @@ const Chat = () => {
     if (skills.getLocation) handleGeolocation(skills)
     if (skills.getName) dispatch(setChatActions({ getName: skills.getName }, 'Digite seu nome...'))
     if (skills.getService) dispatch(setChatActions({ getService: skills.getService }, 'Selecione o servico desejado...'))
-    if (skills.getSchedules) dispatch(setChatActions({ getSchedules: skills.getSchedules }, 'Digite o id do agendamento...'))
+    if (skills.getSchedules) dispatch(setChatActions({ getSchedules: skills.getSchedules }, 'Digite o email ou id do agendamento'))
     if (skills.finishedSchedule) handleSchedule(skills)
   }
 

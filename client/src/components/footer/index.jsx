@@ -4,7 +4,7 @@ import { format, utcToZonedTime } from 'date-fns-tz'
 
 import { setChatActions, setChatActive, setChatLoaderActive, setMessages, setOptions } from '../../store/ducks/chatbot'
 import { setToastActive } from '../../store/ducks/toast'
-import { addUserInteraction, setUserEmail, setUserId, setUserName, setUserSchedules } from '../../store/ducks/user'
+import { addUserInteraction, getUserSchedules, setUserEmail, setUserId, setUserName, setUserSchedules } from '../../store/ducks/user'
 
 import { Email, Message, User } from '../../helpers'
 
@@ -106,7 +106,7 @@ const Footer = () => {
 
     if (userDefined.getSchedules) {
       // UUIDV4
-      if (((/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i).test(inputMessage))) return handleUserSchedules({ context, message: inputMessage })
+      if (((/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i).test(inputMessage)) || Email.valid(inputMessage)) return handleUserSchedules({ context, message: inputMessage })
       canSubmit = false
     }
 

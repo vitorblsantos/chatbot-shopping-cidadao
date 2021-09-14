@@ -115,7 +115,6 @@ export const setUserScheduledStation = scheduledStation => {
 
 export const setUserSchedules = identifier => {
   return async (dispatch, getState) => {
-    const { data } = await Api.get(`/data/schedules/${identifier}`)
-    console.log(data)
+    const { data } = await Api.get(`/schedules/${identifier}`)
   }
 }
