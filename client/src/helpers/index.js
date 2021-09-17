@@ -5,7 +5,6 @@ import DateFNS from './date'
 import Distance from './geolocation'
 import Email from './email'
 import LocalStorage from './localStorage'
-import Message from './messages'
 import Notification from './notifications'
 import Schedule from './schedule'
 import Sleep from './sleep'
@@ -18,7 +17,6 @@ export {
   Distance,
   Email,
   LocalStorage,
-  Message,
   Notification,
   Schedule,
   Sleep,

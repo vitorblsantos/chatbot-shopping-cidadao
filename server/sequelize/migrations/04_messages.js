@@ -9,11 +9,19 @@ module.exports = {
     },
     content: {
       allowNull: false,
-      type: DataTypes.STRING(150)
+      type: DataTypes.TEXT
+    },
+    context: {
+      allowNull: false,
+      type: DataTypes.TEXT
     },
     createdAt: {
       allowNull: false,
       type: DataTypes.DATE
+    },
+    sender: {
+      allowNull: false,
+      type: DataTypes.STRING(5)
     },
     session: {
       allowNull: false,

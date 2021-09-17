@@ -14,7 +14,15 @@ module.exports = (sequelize, DataTypes) => {
     },
     content: {
       allowNull: false,
-      type: DataTypes.STRING(150)
+      type: DataTypes.TEXT
+    },
+    context: {
+      allowNull: false,
+      type: DataTypes.TEXT
+    },
+    sender: {
+      allowNull: false,
+      type: DataTypes.STRING(5)
     },
     session: {
       referencesKey: 'id',

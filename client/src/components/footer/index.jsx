@@ -4,9 +4,9 @@ import { format, utcToZonedTime } from 'date-fns-tz'
 
 import { setChatActions, setChatActive, setChatLoaderActive, setMessages, setOptions } from '../../store/ducks/chatbot'
 import { setToastActive } from '../../store/ducks/toast'
-import { addUserInteraction, getUserSchedules, setUserEmail, setUserId, setUserName, setUserSchedules } from '../../store/ducks/user'
+import { addUserInteraction, setUserEmail, setUserId, setUserName, setUserSchedules } from '../../store/ducks/user'
 
-import { Email, Message, User } from '../../helpers'
+import { Email, User } from '../../helpers'
 
 import { Background, Button, Container, Input, Send } from './style'
 
@@ -15,7 +15,7 @@ const Footer = () => {
   const [context, setContext] = useState({})
   const [inputMessage, setInputMessage] = useState('')
 
-  const { chatbot, watson, user } = useSelector(state => state)
+  const { chatbot, user } = useSelector(state => state)
 
   const handleContext = messages => {
     const lastInteraction = messages[chatbot.messages.length - 1]
@@ -110,12 +110,13 @@ const Footer = () => {
       canSubmit = false
     }
 
+    console.log(userDefined.finishedSchedules)
+
     if (!canSubmit || !inputMessage) return false
     return handleMessages({ context, message: inputMessage, sender: 'user' })
   }
 
   const handleMessages = ({ context, message, sender }) => {
-    Message.create({ content: { context, message, sender }, sessionId: watson.session.id })
     setInputMessage('')
     dispatch(setChatLoaderActive(true))
     dispatch(setOptions([]))

@@ -9,7 +9,8 @@ const INITIAL_STATE = {
     getLocation: false,
     getName: false,
     getService: false,
-    userData: false
+    userData: false,
+    useLastScheduleData: false
   },
   input: {
     placeholder: ''

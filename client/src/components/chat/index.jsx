@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { format, utcToZonedTime } from 'date-fns-tz'
 
-import { Api, Distance, Message, Notification, Schedule, Sleep, Watson } from '../../helpers'
+import { Api, Distance, Notification, Schedule, Sleep, Watson } from '../../helpers'
 
 import { getStations } from '../../store/ducks/stations'
 
@@ -43,6 +43,7 @@ const Chat = () => {
     if (skills.getService) dispatch(setChatActions({ getService: skills.getService }, 'Selecione o servico desejado...'))
     if (skills.getSchedules) dispatch(setChatActions({ getSchedules: skills.getSchedules }, 'Digite o email ou id do agendamento'))
     if (skills.finishedSchedule) handleSchedule(skills)
+    if (skills.useLastScheduleData) handleLastScheduleData()
   }
 
   const firstInteraction = async () => {
@@ -63,7 +64,6 @@ const Chat = () => {
   }
 
   const handleBotMessage = async (context, messages, watsonId) => {
-    Message.create({ content: { context, messages, sender: 'bot' }, sessionId: watsonId })
     for (let counter = 0; counter < messages.length; counter++) {
       messages[counter].sender = 'bot'
       if (messages[counter].response_type === 'option') return (dispatch(setOptions(messages[counter].options)) && dispatch(setChatLoaderActive(false)))
@@ -131,6 +131,10 @@ const Chat = () => {
     dispatch(setOptions(options))
 
     dispatch(setChatActions({ getLocation }, 'Selecione o posto de atendimento:'))
+  }
+
+  const handleLastScheduleData = () => {
+    console.log(0)
   }
 
   const handlePositions = position => {
