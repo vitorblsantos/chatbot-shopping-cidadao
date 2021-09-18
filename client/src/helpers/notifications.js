@@ -7,7 +7,6 @@ const sendEmail = async ({ email, id, link, usuario }) => {
     link,
     usuario
   }
-  console.log(params)
   await Api.post('/email', { ...params })
 }
 

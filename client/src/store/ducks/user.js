@@ -35,7 +35,6 @@ export default function reducer (state = INITIAL_STATE, { type, payload }) {
     case Types.SET_USER_NAME:
       return { ...state, name: payload.name }
     case Types.SET_USER_SCHEDULED_DATE:
-      console.log(payload)
       return { ...state, scheduledDate: payload.scheduledDate }
     case Types.SET_USER_SCHEDULED_STATION:
       return { ...state, scheduledStation: payload.scheduledStation }

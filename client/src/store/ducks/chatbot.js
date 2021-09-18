@@ -2,15 +2,22 @@
 
 const INITIAL_STATE = {
   active: false,
-  actions: {
-    finishedSchedule: false,
-    getDate: false,
-    getEmail: false,
-    getLocation: false,
-    getName: false,
-    getService: false,
-    userData: false,
-    useLastScheduleData: false
+  context: {
+    date: '',
+    email: '',
+    finishedSchedule: '',
+    firstInteraction: '',
+    getDate: '',
+    getEmail: '',
+    getLocation: '',
+    getName: '',
+    getService: '',
+    location: '',
+    name: '',
+    service: '',
+    useLastScheduleData: '',
+    userData: '',
+    userId: ''
   },
   input: {
     placeholder: ''
@@ -25,7 +32,7 @@ const INITIAL_STATE = {
 
 export const Types = {
   SET_CHAT_ACTIVE: 'SET_CHAT_ACTIVE',
-  SET_CHAT_ACTIONS: 'SET_CHAT_ACTIONS',
+  SET_CHAT_CONTEXT: 'SET_CHAT_CONTEXT',
   SET_CHAT_INPUT_PLACEHOLDER: 'SET_CHAT_INPUT_PLACEHOLDER',
   SET_CHAT_LOADER_ACTIVE: 'SET_CHAT_LOADER_ACTIVE',
   SET_MESSAGES: 'SET_MESSAGES',
@@ -33,22 +40,13 @@ export const Types = {
 }
 
 export default function reducer (state = INITIAL_STATE, { type, payload }) {
-  switch (type) {
-    case Types.SET_CHAT_ACTIVE:
-      return { ...state, ...payload }
-    case Types.SET_CHAT_ACTIONS:
-      return { ...state, actions: { ...state.actions, ...payload } }
-    case Types.SET_CHAT_INPUT_PLACEHOLDER:
-      return { ...state, input: { ...state.input, ...payload } }
-    case Types.SET_CHAT_LOADER_ACTIVE :
-      return { ...state, loader: { ...state.loader, ...payload } }
-    case Types.SET_MESSAGES:
-      return { ...state, messages: [...state.messages, { ...payload }] }
-    case Types.SET_OPTIONS:
-      return { ...state, options: payload.options }
-    default:
-      return state
-  }
+  if (type === Types.SET_CHAT_ACTIVE) return { ...state, ...payload }
+  if (type === Types.SET_CHAT_CONTEXT) return { ...state, context: { ...state.context, ...payload } }
+  if (type === Types.SET_CHAT_INPUT_PLACEHOLDER) return { ...state, input: { ...state.input, ...payload } }
+  if (type === Types.SET_CHAT_LOADER_ACTIVE) return { ...state, loader: { ...state.loader, ...payload } }
+  if (type === Types.SET_MESSAGES) return { ...state, messages: [...state.messages, { ...payload }] }
+  if (type === Types.SET_OPTIONS) return { ...state, options: payload.options }
+  return state
 }
 
 export function setChatActive (active) {
@@ -60,12 +58,12 @@ export function setChatActive (active) {
   }
 }
 
-export function setChatActions (actions, placeholder) {
-  return (dispatch) => {
+export function setChatContext (context, placeholder) {
+  return (dispatch, getState) => {
     dispatch({
-      type: Types.SET_CHAT_ACTIONS,
+      type: Types.SET_CHAT_CONTEXT,
       payload: {
-        ...actions
+        ...context
       }
     })
     dispatch({

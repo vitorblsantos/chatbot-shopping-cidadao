@@ -4,7 +4,7 @@ import Slider from 'react-slick'
 import { format, utcToZonedTime } from 'date-fns-tz'
 
 import { Sleep } from '../../helpers'
-import { setMessages, setChatActions, setChatLoaderActive, setOptions } from '../../store/ducks/chatbot'
+import { setMessages, setChatContext, setChatLoaderActive, setOptions } from '../../store/ducks/chatbot'
 import { addUserInteraction, setUserScheduledDate, setUserScheduledStation } from '../../store/ducks/user'
 
 import { Container, Item, Option } from './style'
@@ -49,13 +49,14 @@ const Options = () => {
       skills: {
         'main skill': {
           user_defined: {
-            ...chatbot.actions,
+            ...chatbot.context,
             ...context?.skills['main skill']?.user_defined,
             firstInteraction: false
           }
         }
       }
     }
+    dispatch(setChatContext({ firstInteraction: true }, ''))
 
     const userDefined = context.skills['main skill'].user_defined
 
@@ -73,7 +74,7 @@ const Options = () => {
           }
         }
         dispatch(setUserScheduledDate(toISOFormat(input.text)))
-        dispatch(setChatActions({ getDate: false }, ''))
+        dispatch(setChatContext({ date: toISOFormat(input.text), getDate: false }, ''))
       } else {
         canSubmit = false
       }
@@ -93,7 +94,7 @@ const Options = () => {
           }
         }
         dispatch(setUserScheduledStation(input.value))
-        dispatch(setChatActions({ getLocation: false }, ''))
+        dispatch(setChatContext({ getLocation: false, location: input.value }, ''))
       } else {
         canSubmit = false
       }
@@ -112,7 +113,7 @@ const Options = () => {
             }
           }
         }
-        dispatch(setChatActions({ getService: false }, ''))
+        dispatch(setChatContext({ getService: false, service: input.text }, ''))
       } else {
         canSubmit = false
       }

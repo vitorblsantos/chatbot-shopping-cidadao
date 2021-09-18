@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { format, utcToZonedTime } from 'date-fns-tz'
 
-import { setChatActions, setChatActive, setChatLoaderActive, setMessages, setOptions } from '../../store/ducks/chatbot'
+import { setChatContext, setChatActive, setChatLoaderActive, setMessages, setOptions } from '../../store/ducks/chatbot'
 import { setToastActive } from '../../store/ducks/toast'
 import { addUserInteraction, setUserEmail, setUserId, setUserName, setUserSchedules } from '../../store/ducks/user'
 
@@ -40,13 +40,15 @@ const Footer = () => {
       skills: {
         'main skill': {
           user_defined: {
-            ...chatbot.actions,
+            ...chatbot.context,
             ...context?.skills['main skill']?.user_defined,
             firstInteraction: false
           }
         }
       }
     }
+
+    dispatch(setChatContext({ firstInteraction: false }, ''))
 
     const userDefined = context.skills['main skill'].user_defined
 
@@ -71,8 +73,9 @@ const Footer = () => {
           context.skills['main skill'].user_defined.userId = id
           dispatch(setUserId(id))
           dispatch(setUserName(name))
+          dispatch(setChatContext({ email: inputMessage, getName: false, name: name, userData: true, userId: id }, ''))
         }
-        dispatch(setChatActions({ getEmail: false }, ''))
+        dispatch(setChatContext({ email: inputMessage, getEmail: false }, ''))
         dispatch(setUserEmail(inputMessage))
       } else {
         canSubmit = false
@@ -93,7 +96,7 @@ const Footer = () => {
             }
           }
         }
-        dispatch(setChatActions({ getName: false }, ''))
+        dispatch(setChatContext({ getName: false, name: inputMessage, userData: true }, ''))
         dispatch(setUserName(inputMessage))
         if (!user.id) {
           const { id } = await User.create({ email: user.email, name: inputMessage })
@@ -109,8 +112,6 @@ const Footer = () => {
       if (((/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i).test(inputMessage)) || Email.valid(inputMessage)) return handleUserSchedules({ context, message: inputMessage })
       canSubmit = false
     }
-
-    console.log(userDefined.finishedSchedules)
 
     if (!canSubmit || !inputMessage) return false
     return handleMessages({ context, message: inputMessage, sender: 'user' })
