@@ -44,10 +44,12 @@ const getAvailableDates = async (_, res) => {
 
 const getByIdentifier = async (req, res) => {
   const { id } = req.params
+  let schedules
   let user = {
     id: '',
     email: ''
   }
+
   if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(id)) {
     const queryUser = await User.findOne({
       where: {
@@ -57,34 +59,47 @@ const getByIdentifier = async (req, res) => {
       }
     })
     user = queryUser?.dataValues
+
+    schedules = await Schedule.findAll({
+      order: [
+        ['date', 'ASC']
+      ],
+      where: {
+        date: {
+          [Op.gt]: new Date()
+        },
+        status: {
+          [Op.in]: ['active', 'waiting']
+        },
+        user: {
+          [Op.eq]: user.id
+        }
+      }
+    })
   }
 
-  const schedules = await Schedule.findAll({
-    order: [
-      ['date', 'ASC']
-    ],
-    where: {
-      date: {
-        [Op.gt]: new Date()
-      },
-      status: {
-        [Op.in]: ['active', 'waiting']
-      },
-      user: {
-        [Op.eq]: user.id
+  if ((/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i).test(id)) {
+    schedules = await Schedule.findAll({
+      order: [
+        ['date', 'ASC']
+      ],
+      where: {
+        id: {
+          [Op.eq]: id
+        }
       }
-    }
-  })
+    })
+  }
 
   await Promise.all(schedules.map(async el => {
-    const querySession = await Station.findOne({
+    const queryStation = await Station.findOne({
       where: {
         id: {
           [Op.eq]: el.station
         }
       }
     })
-    el.station = querySession?.dataValues.description
+    el.station = queryStation?.dataValues.description
     el.user = user.email
     return el
   }))
