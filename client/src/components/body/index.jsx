@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 import Bot from '../bot'
 import Loader from '../loader'
 import Options from '../options'
+import Schedules from '../schedules'
 import SingleOption from '../singleOption'
 import User from '../user'
 
@@ -38,6 +39,7 @@ const Body = () => {
             }
             {chatbot.loader.active && <Loader />}
             {chatbot.options.length && chatbot.options.length === 1 ? <SingleOption /> : ''}
+            <Schedules />
             <AlwaysScrollToBottom />
           </Overflow>
           {chatbot.options.length && chatbot.options.length >= 2 ? <Options /> : ''}
