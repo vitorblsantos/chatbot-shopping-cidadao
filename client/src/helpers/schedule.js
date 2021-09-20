@@ -12,6 +12,12 @@ const create = async ({ date, session, station, user }) => {
   return data
 }
 
+const getByIdentifier = async identifier => {
+  const { data } = await Api.get(`/schedules/${identifier}`)
+  return data
+}
+
 export default {
-  create
+  create,
+  getByIdentifier
 }

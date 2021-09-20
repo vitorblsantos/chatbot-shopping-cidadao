@@ -4,7 +4,7 @@ import { format, utcToZonedTime } from 'date-fns-tz'
 
 import { setChatContext, setChatActive, setChatLoaderActive, setMessages, setOptions } from '../../store/ducks/chatbot'
 import { setToastActive } from '../../store/ducks/toast'
-import { addUserInteraction, setUserEmail, setUserId, setUserName, setUserSchedules } from '../../store/ducks/user'
+import { addUserInteraction, setUserEmail, setUserId, setUserName } from '../../store/ducks/user'
 
 import { Email, User } from '../../helpers'
 
@@ -40,7 +40,6 @@ const Footer = () => {
       skills: {
         'main skill': {
           user_defined: {
-            ...chatbot.context,
             ...context?.skills['main skill']?.user_defined,
             firstInteraction: false
           }
@@ -51,6 +50,19 @@ const Footer = () => {
     dispatch(setChatContext({ firstInteraction: false }, ''))
 
     const userDefined = context.skills['main skill'].user_defined
+
+    if (userDefined.finishedSchedule) {
+      context = {
+        skills: {
+          'main skill': {
+            user_defined: {
+              ...context?.skills['main skill']?.user_defined,
+              finishedSchedule: false
+            }
+          }
+        }
+      }
+    }
 
     if (userDefined.getEmail) {
       if ((Email.valid(inputMessage))) {
@@ -73,13 +85,18 @@ const Footer = () => {
           context.skills['main skill'].user_defined.userId = id
           dispatch(setUserId(id))
           dispatch(setUserName(name))
-          dispatch(setChatContext({ email: inputMessage, getName: false, name: name, userData: true, userId: id }, ''))
+          dispatch(setChatContext({ getName: false, name: name, userData: true, userId: id }, ''))
         }
         dispatch(setChatContext({ email: inputMessage, getEmail: false }, ''))
         dispatch(setUserEmail(inputMessage))
       } else {
         canSubmit = false
       }
+    }
+
+    if (userDefined.getIdentifier) {
+      // UUIDV4
+      if (((/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i).test(inputMessage)) || Email.valid(inputMessage)) return handleUserIdentifier({ context, message: inputMessage })
     }
 
     if (userDefined.getName) {
@@ -108,9 +125,32 @@ const Footer = () => {
     }
 
     if (userDefined.getSchedules) {
-      // UUIDV4
-      if (((/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i).test(inputMessage)) || Email.valid(inputMessage)) return handleUserSchedules({ context, message: inputMessage })
-      canSubmit = false
+      context = {
+        skills: {
+          'main skill': {
+            user_defined: {
+              ...context?.skills['main skill']?.user_defined,
+              getSchedules: false
+            }
+          }
+        }
+      }
+      dispatch(setChatContext({ getSchedules: false }, ''))
+    }
+
+    if (userDefined.useLastScheduleData) {
+      context = {
+        skills: {
+          'main skill': {
+            user_defined: {
+              ...context?.skills['main skill']?.user_defined,
+              schedulesIdentifier: user.email,
+              useLastScheduleData: false
+            }
+          }
+        }
+      }
+      dispatch(setChatContext({ schedulesIdentifier: user.email, useLastScheduleData: false }))
     }
 
     if (!canSubmit || !inputMessage) return false
@@ -125,19 +165,20 @@ const Footer = () => {
     dispatch(addUserInteraction('footer', 'handleFlow', { message: inputMessage }))
   }
 
-  const handleUserSchedules = ({ context, message }) => {
+  const handleUserIdentifier = ({ context, message }) => {
     context = {
       skills: {
         'main skill': {
           user_defined: {
             ...context?.skills['main skill']?.user_defined,
-            getSchedules: false,
+            getIdentifier: false,
             schedulesIdentifier: message
           }
         }
       }
     }
-    dispatch(setUserSchedules(message))
+    dispatch(setChatContext({ getIdentifier: false, schedulesIdentifier: message }, ''))
+    // dispatch(setUserSchedules(message))
     return handleMessages({ context, message: message, sender: 'user' })
   }
 

@@ -49,7 +49,6 @@ const Options = () => {
       skills: {
         'main skill': {
           user_defined: {
-            ...chatbot.context,
             ...context?.skills['main skill']?.user_defined,
             firstInteraction: false
           }
@@ -117,6 +116,10 @@ const Options = () => {
       } else {
         canSubmit = false
       }
+    }
+
+    if (userDefined.useLastScheduleData) {
+      dispatch(setChatContext({ schedulesIdentifier: user.email, useLastScheduleData: false }))
     }
 
     if (!canSubmit || !input) return false

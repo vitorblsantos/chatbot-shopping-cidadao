@@ -20,7 +20,7 @@ const AlwaysScrollToBottom = () => {
 }
 
 const Body = () => {
-  const { chatbot } = useSelector(state => state)
+  const { chatbot, user } = useSelector(state => state)
 
   return (
     <Container>
@@ -37,9 +37,9 @@ const Body = () => {
                 )
               })
             }
-            {chatbot.loader.active && <Loader />}
+            {chatbot.loader.active ? <Loader /> : ''}
             {chatbot.options.length && chatbot.options.length === 1 ? <SingleOption /> : ''}
-            <Schedules />
+            {!chatbot.loader.active && user.schedules.length > 0 ? <Schedules /> : ''}
             <AlwaysScrollToBottom />
           </Overflow>
           {chatbot.options.length && chatbot.options.length >= 2 ? <Options /> : ''}

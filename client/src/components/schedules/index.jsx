@@ -53,23 +53,23 @@ const Schedules = () => {
 
   return (
     <>
-      <Bot content={{ text: 'Aqui estão o(s) seu(s) agendamento(s):' }} time={format(utcToZonedTime(new Date(), 'America/Sao_paulo'), 'HH:mm')} />
       <Container>
         <Slider ref={slideRef} {...settings}>
           <Item key={1}>
             <Option>
               <Header>
                 <Calendar />
-                <Text title>Biometria</Text>
+                <Text title='true'>Biometria</Text>
               </Header>
               <Body>
-                <Row><Text body><Bold>Id. do Agendamento:</Bold> foo@bar.com</Text></Row>
-                <Row><Text body><Bold>Data:</Bold> {new Date().toLocaleDateString()}</Text></Row>
-                <Row><Text body><Bold>Estacao:</Bold> Betina</Text></Row>
-                <Row><Text body><Bold>Status:</Bold> aguardando confirmacao</Text></Row>
-                <Row end>
-                  <Button error>Cancelar</Button>
-                  <Button success>Confirmar</Button>
+                <Row><Text body='true'><Bold>Identificador:</Bold> foo@bar.com</Text></Row>
+                <Row><Text body='true'><Bold>Email:</Bold> foo@bar.com</Text></Row>
+                <Row><Text body='true'><Bold>Data:</Bold> {new Date().toLocaleDateString()}</Text></Row>
+                <Row><Text body='true'><Bold>Estacao:</Bold> Betina</Text></Row>
+                <Row><Text body='true'><Bold>Status:</Bold> aguardando confirmacao</Text></Row>
+                <Row end='true'>
+                  <Button error='true'>Cancelar</Button>
+                  <Button success='true'>Confirmar</Button>
                 </Row>
               </Body>
             </Option>

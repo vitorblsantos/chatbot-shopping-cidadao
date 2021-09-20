@@ -80,7 +80,7 @@ export const Option = styled.div`
   cursor: pointer;
   font-size: .7rem;
   font-weight: bold;
-  height: 152px;
+  height: 172px;
   margin: 0 4px;
   padding: 8px 12px;
   width: 280px;

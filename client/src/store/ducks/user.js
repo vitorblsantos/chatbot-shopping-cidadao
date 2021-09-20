@@ -1,4 +1,6 @@
-import { Api } from '../../helpers'
+import { Schedule, Sleep } from '../../helpers'
+import { setChatContext, setChatLoaderActive, setMessages } from '../../store/ducks/chatbot'
+import { format, utcToZonedTime } from 'date-fns-tz'
 
 const INITIAL_STATE = {
   coords: {},
@@ -13,6 +15,7 @@ const INITIAL_STATE = {
 
 export const Types = {
   ADD_USER_INTERACTION: 'ADD_USER_INTERACTION',
+  CLEAR_USER_SCHEDULES: 'CLEAR_USER_SCHEDULES',
   SET_USER_EMAIL: 'SET_USER_EMAIL',
   SET_USER_ID: 'SET_USER_ID',
   SET_USER_COORDS: 'SET_USER_COORDS',
@@ -28,6 +31,8 @@ export default function reducer (state = INITIAL_STATE, { type, payload }) {
       return { ...state, email: payload.email }
     case Types.ADD_USER_INTERACTION:
       return { ...state, interactions: [...state.interactions, { ...payload }] }
+    case Types.CLEAR_USER_SCHEDULES:
+      return { ...state, schedules: [] }
     case Types.SET_USER_COORDS:
       return { ...state, coords: payload.coords }
     case Types.SET_USER_ID:
@@ -39,7 +44,7 @@ export default function reducer (state = INITIAL_STATE, { type, payload }) {
     case Types.SET_USER_SCHEDULED_STATION:
       return { ...state, scheduledStation: payload.scheduledStation }
     case Types.SET_USER_SCHEDULES:
-      return { ...state, schedules: payload.schedules }
+      return { ...state, schedules: [...state.schedules, ...payload] }
     default:
       return state
   }
@@ -53,6 +58,12 @@ export const addUserInteraction = (description, origin, param) => {
       origin,
       ...param
     }
+  }
+}
+
+export const clearUserSchedules = () => {
+  return {
+    type: Types.CLEAR_USER_SCHEDULES
   }
 }
 
@@ -84,7 +95,7 @@ export const setUserCoords = coords => {
 }
 
 export const setUserName = name => {
-  return (dispatch, getState) => {
+  return (dispatch, _) => {
     dispatch({
       type: Types.SET_USER_NAME,
       payload: {
@@ -112,8 +123,30 @@ export const setUserScheduledStation = scheduledStation => {
   }
 }
 
-export const setUserSchedules = identifier => {
+export const setUserSchedules = (skills) => {
   return async (dispatch, getState) => {
-    const { data } = await Api.get(`/schedules/${identifier}`)
+    const { chatbot } = getState(state => state)
+    let identifier = chatbot.context.schedulesIdentifier
+    if (skills.useLastScheduleData) identifier = skills.email
+    const schedules = await Schedule.getByIdentifier(identifier)
+    dispatch(setChatLoaderActive(true))
+    await Sleep(5000)
+    dispatch(setChatLoaderActive(false))
+    if (schedules.length) {
+      dispatch({
+        type: Types.SET_USER_SCHEDULES,
+        payload: schedules
+      })
+      dispatch(setChatContext({ findSchedules: true }, ''))
+    } else {
+      const lastInteraction = chatbot.messages[chatbot.messages.length - 1]
+      dispatch(clearUserSchedules())
+      dispatch(setChatContext({ findSchedules: false, getIdentifier: false }, ''))
+      dispatch(setChatLoaderActive(true))
+      dispatch(setMessages({ content: { text: 'Não encontrei nenhum agendamento ativo para esse email/identificador.' }, context: { ...lastInteraction.context }, sender: 'bot', time: format(utcToZonedTime(new Date(), 'America/Sao_paulo'), 'HH:mm') }))
+      await Sleep(chatbot.loader.timer)
+      dispatch(setMessages({ content: { text: `Por favor, entre em contato com a central ${'<a href="http://central.uai.com.br/minha_central/index.shtml">clicando aqui</a>'}` }, context: { ...lastInteraction.context }, sender: 'bot', time: format(utcToZonedTime(new Date(), 'America/Sao_paulo'), 'HH:mm') }))
+      return dispatch(setChatLoaderActive(false))
+    }
   }
 }

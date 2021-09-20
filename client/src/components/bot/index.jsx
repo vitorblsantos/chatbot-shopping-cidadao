@@ -1,16 +1,18 @@
 import React from 'react'
+import { sanitize } from 'dompurify'
 import { array, object, string } from 'prop-types'
 
 import { Balloon, Hour, Icon, Image, Row } from './style'
 
 const Bot = ({ content, time }) => {
+  const sanitizer = sanitize
   return (
     <Row>
       <Icon>
         <Image />
       </Icon>
       <Balloon>
-        {content.text}
+        <span dangerouslySetInnerHTML={{ __html: sanitizer(content.text) }} />
         <Hour>
           {time}
         </Hour>

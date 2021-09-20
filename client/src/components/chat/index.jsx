@@ -7,7 +7,7 @@ import { Api, Distance, Notification, Schedule, Sleep, Watson } from '../../help
 import { getStations } from '../../store/ducks/stations'
 
 import { setChatContext, setChatLoaderActive, setMessages, setOptions } from '../../store/ducks/chatbot'
-import { setUserCoords } from '../../store/ducks/user'
+import { clearUserSchedules, setUserCoords, setUserSchedules } from '../../store/ducks/user'
 import { setWatsonFlowStart, setWatsonSessionId } from '../../store/ducks/watson'
 
 import Body from '../body'
@@ -26,6 +26,13 @@ const Chat = () => {
 
     if (!lastInteraction || lastInteraction.sender === 'bot' || !watsonId) return false
 
+    lastInteraction.context = {
+      ...chatbot.context,
+      ...lastInteraction.context
+    }
+
+    dispatch(clearUserSchedules())
+
     const { context, output } = await Watson.sendMessage({ context: lastInteraction.context, message: lastInteraction.content, sessionId: watsonId })
 
     if (!output.generic) return false
@@ -36,14 +43,23 @@ const Chat = () => {
 
     if (!skills) return false
 
+    if (skills.finishedSchedule) createSchedule(skills)
     if (skills.getDate) handleDate(skills)
     if (skills.getEmail) dispatch(setChatContext({ getEmail: skills.getEmail }, 'Digite seu e-mail...'))
+    if (skills.getIdentifier) handleIdentifier(skills)
     if (skills.getLocation) handleGeolocation(skills)
     if (skills.getName) dispatch(setChatContext({ getName: skills.getName }, 'Digite seu nome...'))
     if (skills.getService) dispatch(setChatContext({ getService: skills.getService }, 'Selecione o servico desejado...'))
-    if (skills.getSchedules) dispatch(setChatContext({ getSchedules: skills.getSchedules }, 'Digite o email ou id do agendamento'))
-    if (skills.finishedSchedule) handleSchedule(skills)
-    if (skills.useLastScheduleData) handleLastScheduleData()
+    if (skills.getSchedules) handleSchedules(skills)
+    if (skills.newSchedule) handleSchedulesIdentifier(skills)
+    if (skills.schedulesIdentifier) handleSchedulesIdentifier(skills)
+    if (skills.useLastScheduleData) handleLastScheduledData(skills)
+  }
+
+  const createSchedule = async () => {
+    await Notification.sendEmail({ email: user.email, id: user.id, link: '#', usuario: user.name })
+    await Schedule.create({ date: user.scheduledDate, session: watson.session._id, station: user.scheduledStation, user: user.id })
+    return dispatch(setChatContext({ finishedSchedule: false }, `Ainda precisa de ajuda, ${user.name[0].toUpperCase() + user.name.slice(1)}?`))
   }
 
   const firstInteraction = async () => {
@@ -64,7 +80,7 @@ const Chat = () => {
     await handleBotMessage(context, output.generic, watsonId)
   }
 
-  const handleBotMessage = async (context, messages, watsonId) => {
+  const handleBotMessage = async (context, messages) => {
     for (let counter = 0; counter < messages.length; counter++) {
       messages[counter].sender = 'bot'
       if (messages[counter].response_type === 'option') return (dispatch(setOptions(messages[counter].options)) && dispatch(setChatLoaderActive(false)))
@@ -134,8 +150,13 @@ const Chat = () => {
     dispatch(setChatContext({ getLocation }, 'Selecione o posto de atendimento:'))
   }
 
-  const handleLastScheduleData = () => {
-    console.log(0)
+  const handleIdentifier = () => {
+    dispatch(clearUserSchedules())
+    dispatch(setChatContext({ getIdentifier: false }, 'Digite o email ou id do agendamento'))
+  }
+
+  const handleLastScheduledData = skills => {
+    dispatch(setChatContext({ schedulesIdentifier: user.email, useLastScheduleData: skills.useLastScheduleData }))
   }
 
   const handlePositions = position => {
@@ -147,10 +168,13 @@ const Chat = () => {
     dispatch(setUserCoords(coords))
   }
 
-  const handleSchedule = skills => {
-    dispatch(setChatContext({ finishedSchedule: skills.finishedSchedule }, `Ainda precisa de ajuda, ${user.name[0].toUpperCase() + user.name.slice(1)}?`))
-    Notification.sendEmail({ email: user.email, id: user.id, link: '#', usuario: user.name })
-    Schedule.create({ date: user.scheduledDate, session: watson.session._id, station: user.scheduledStation, user: user.id })
+  const handleSchedules = async (skills) => {
+    dispatch(setChatContext({ getSchedules: skills.getSchedules }, ''))
+    dispatch(setUserSchedules(skills))
+  }
+
+  const handleSchedulesIdentifier = skills => {
+    dispatch(setChatContext({ schedulesIdentifier: skills.schedulesIdentifier }, ''))
   }
 
   const handleWatsonId = ({ id }) => {

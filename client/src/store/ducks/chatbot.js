@@ -5,15 +5,19 @@ const INITIAL_STATE = {
   context: {
     date: '',
     email: '',
+    findSchedules: '',
     finishedSchedule: '',
     firstInteraction: '',
     getDate: '',
     getEmail: '',
+    getIdentifier: '',
     getLocation: '',
     getName: '',
+    getSchedules: '',
     getService: '',
     location: '',
     name: '',
+    schedulesIdentifier: '',
     service: '',
     useLastScheduleData: '',
     userData: '',
@@ -59,7 +63,7 @@ export function setChatActive (active) {
 }
 
 export function setChatContext (context, placeholder) {
-  return (dispatch, getState) => {
+  return (dispatch, _) => {
     dispatch({
       type: Types.SET_CHAT_CONTEXT,
       payload: {

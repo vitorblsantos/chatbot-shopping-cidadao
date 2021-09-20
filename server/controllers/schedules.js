@@ -60,6 +60,8 @@ const getByIdentifier = async (req, res) => {
     })
     user = queryUser?.dataValues
 
+    if (!user) res.status(200).send([])
+
     schedules = await Schedule.findAll({
       order: [
         ['date', 'ASC']
@@ -92,6 +94,10 @@ const getByIdentifier = async (req, res) => {
   }
 
   await Promise.all(schedules.map(async el => {
+    const handleStatus = status => {
+      if (status === 'waiting') return 'Aguardando confirmação'
+      return 'Ativo'
+    }
     const queryStation = await Station.findOne({
       where: {
         id: {
@@ -99,8 +105,16 @@ const getByIdentifier = async (req, res) => {
         }
       }
     })
+    const queryUser = await User.findOne({
+      where: {
+        id: {
+          [Op.eq]: el.user
+        }
+      }
+    })
+    el.status = handleStatus(el.status)
     el.station = queryStation?.dataValues.description
-    el.user = user.email
+    el.user = queryUser?.dataValues.email
     return el
   }))
 

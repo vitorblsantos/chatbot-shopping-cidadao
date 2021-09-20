@@ -18,12 +18,16 @@
   "parserOptions": {
     "ecmaVersion": 2020
   },
-  "plugins": ["react"],
+  "plugins": [
+    "react",
+    "jam3"
+  ],
   "rules": {
     "comma-dangle": "error",
     "indent": ["error", 2, { 
       "SwitchCase": 1 
     }],
+    "jam3/no-sanitizer-with-danger": 2,
     "no-console": 0,
     "no-extra-semi": "error",
     "quotes": [ "error", "single" ],
