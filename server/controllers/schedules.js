@@ -3,13 +3,14 @@ import { DateFNS } from '../helpers'
 import { Schedule, Station, User } from '../models/'
 
 const create = async (req, res) => {
-  const { date, session, station, user } = req.body
+  const { date, session, service, station, user } = req.body
   try {
     res.status(201).send(await Schedule.create({
       date,
-      session: session,
-      station: station,
-      user: user
+      session,
+      service,
+      station,
+      user
     }))
   } catch (err) {
     res.status(500).send(err)

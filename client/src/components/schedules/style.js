@@ -12,24 +12,6 @@ export const Bold = styled.span`
   font-weight: 600;
 `
 
-export const Button = styled.button`
-  border: 0;
-  border-radius: 20px;
-  color: #FFF;
-  cursor: pointer;
-  font-weight: 600;
-  padding: 4px 8px;
-
-  ${({ success }) => success && css`
-    background: #26B16D;
-    margin: 0 0 0 8px;
-  `}
-
-  ${({ error }) => error && css`
-    background: #e96658;
-  `}
-`
-
 export const Container = styled.div`
   display: inline-block;
   margin: 12px 0 0;

@@ -1,8 +1,9 @@
 import { Api } from '../helpers'
 
-const create = async ({ date, session, station, user }) => {
+const create = async ({ date, service, session, station, user }) => {
   const params = {
     date,
+    service,
     session,
     station,
     user

@@ -7,7 +7,7 @@ import Bot from '../bot'
 
 import { Sleep } from '../../helpers'
 
-import { Body, Bold, Button, Calendar, Container, Header, Item, Option, Row, Text } from './style'
+import { Body, Bold, Calendar, Container, Header, Item, Option, Row, Text } from './style'
 
 const Schedules = () => {
   const slideRef = useRef(null)
@@ -55,25 +55,25 @@ const Schedules = () => {
     <>
       <Container>
         <Slider ref={slideRef} {...settings}>
-          <Item key={1}>
-            <Option>
-              <Header>
-                <Calendar />
-                <Text title='true'>Biometria</Text>
-              </Header>
-              <Body>
-                <Row><Text body='true'><Bold>Identificador:</Bold> foo@bar.com</Text></Row>
-                <Row><Text body='true'><Bold>Email:</Bold> foo@bar.com</Text></Row>
-                <Row><Text body='true'><Bold>Data:</Bold> {new Date().toLocaleDateString()}</Text></Row>
-                <Row><Text body='true'><Bold>Estacao:</Bold> Betina</Text></Row>
-                <Row><Text body='true'><Bold>Status:</Bold> aguardando confirmacao</Text></Row>
-                <Row end='true'>
-                  <Button error='true'>Cancelar</Button>
-                  <Button success='true'>Confirmar</Button>
-                </Row>
-              </Body>
-            </Option>
-          </Item>
+          {
+            user.schedules && user.schedules.map((el, i) => (
+              <Item key={i}>
+                <Option>
+                  <Header>
+                    <Calendar />
+                    <Text title='true'>{el.service}</Text>
+                  </Header>
+                  <Body>
+                    <Row><Text body='true'><Bold>Identificador:</Bold> {el.id}</Text></Row>
+                    <Row><Text body='true'><Bold>Email:</Bold> {el.user}</Text></Row>
+                    <Row><Text body='true'><Bold>Data:</Bold> {format(utcToZonedTime(new Date(el.date), 'America/Sao_paulo'), 'HH:mm')} </Text></Row>
+                    <Row><Text body='true'><Bold>Estação:</Bold> {el.station}</Text></Row>
+                    <Row><Text body='true'><Bold>Status:</Bold> {el.status}</Text></Row>
+                  </Body>
+                </Option>
+              </Item>
+            ))
+          }
         </Slider>
       </Container>
       <Bot content={{ text: 'Ainda precisa de ajuda?' }} time={format(utcToZonedTime(new Date(), 'America/Sao_paulo'), 'HH:mm')} />

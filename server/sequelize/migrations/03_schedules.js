@@ -15,6 +15,10 @@ module.exports = {
       allowNull: false,
       type: DataTypes.DATE
     },
+    service: {
+      allowNull: false,
+      type: DataTypes.TEXT
+    },
     session: {
       allowNull: false,
       defaultValue: DataTypes.UUIDV4,

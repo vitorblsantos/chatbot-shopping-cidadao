@@ -16,6 +16,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.DATE
     },
+    service: {
+      allowNull: false,
+      type: DataTypes.TEXT
+    },
     session: {
       referencesKey: 'id',
       references: 'sessions',

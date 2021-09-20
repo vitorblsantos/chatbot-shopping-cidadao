@@ -57,8 +57,8 @@ const Chat = () => {
   }
 
   const createSchedule = async () => {
+    await Schedule.create({ date: user.scheduledDate, session: watson.session._id, service: chatbot.context.service, station: user.scheduledStation, user: user.id })
     await Notification.sendEmail({ email: user.email, id: user.id, link: '#', usuario: user.name })
-    await Schedule.create({ date: user.scheduledDate, session: watson.session._id, station: user.scheduledStation, user: user.id })
     return dispatch(setChatContext({ finishedSchedule: false }, `Ainda precisa de ajuda, ${user.name[0].toUpperCase() + user.name.slice(1)}?`))
   }
 
