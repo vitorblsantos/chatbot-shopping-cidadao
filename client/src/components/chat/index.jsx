@@ -58,7 +58,7 @@ const Chat = () => {
 
   const createSchedule = async () => {
     const schedule = await Schedule.create({ date: user.scheduledDate, session: watson.session._id, service: chatbot.context.service, station: user.scheduledStation, user: user.id })
-    await Notification.sendEmail({ email: user.email, id: user.id, link: `http://chatbot-cidadao.herokuapp.com/ativar/${schedule.id}`, usuario: user.name })
+    await Notification.sendEmail({ email: user.email, id: user.id, link: `https://chatbot-cidadao.herokuapp.com/#/ativar/${schedule.id}`, usuario: user.name })
     return dispatch(setChatContext({ finishedSchedule: false }, `Ainda precisa de ajuda, ${user.name[0].toUpperCase() + user.name.slice(1)}?`))
   }
 
