@@ -2,6 +2,16 @@ import { Op } from 'sequelize'
 import { DateFNS } from '../helpers'
 import { Schedule, Station, User } from '../models/'
 
+const active = async (req, res) => {
+  const { id } = req.params
+  Schedule.update({
+    status: 'active'
+  }, {
+    where: { id }
+  })
+  res.status(200).send('Agendamento ativado')
+}
+
 const create = async (req, res) => {
   const { date, session, service, station, user } = req.body
   try {
@@ -122,9 +132,21 @@ const getByIdentifier = async (req, res) => {
   res.status(200).send(schedules)
 }
 
+const inactive = async (req, res) => {
+  const { id } = req.params
+  Schedule.update({
+    status: 'canceled'
+  }, {
+    where: { id }
+  })
+  res.status(200).send('Agendamento cancelado')
+}
+
 export default {
+  active,
   create,
   get,
   getAvailableDates,
-  getByIdentifier
+  getByIdentifier,
+  inactive
 }

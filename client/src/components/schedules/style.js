@@ -51,6 +51,7 @@ export const Text = styled.label`
     font-size: 14px;
     font-weight: 600;
     margin: 0 0 4px 8px;
+    text-transform: capitalize;
   `}
 `
 

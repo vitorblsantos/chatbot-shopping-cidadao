@@ -1,5 +1,3 @@
-'use strict'
-
 import Email from './email'
 import Data from './data'
 import Schedules from './schedules'
