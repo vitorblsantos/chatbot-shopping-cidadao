@@ -1,17 +1,19 @@
 import React from 'react'
+import { HashRouter as Router, Route } from 'react-router-dom'
 
-import Chat from './components/chat'
-import Outside from './components/outside'
-import Toast from './components/toast'
+import Active from './pages/active'
+import Cancel from './pages/cancel'
+import Home from './pages/home'
 
 import './styles/main.scss'
 
 const App = () => {
   return (
-    <Outside>
-      <Chat />
-      <Toast />
-    </Outside>
+    <Router>
+      <Route path='/' exact component={Home} />
+      <Route path='/ativar/:id' component={Active} />
+      <Route path='/inativar/:id' component={Cancel} />
+    </Router>
   )
 }
 

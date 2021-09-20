@@ -3,7 +3,7 @@ import { DateFNS } from '../helpers'
 import { Schedule, Station, User } from '../models/'
 
 const active = async (req, res) => {
-  const { id } = req.params
+  const { id } = req.body
   Schedule.update({
     status: 'active'
   }, {
@@ -133,7 +133,7 @@ const getByIdentifier = async (req, res) => {
 }
 
 const inactive = async (req, res) => {
-  const { id } = req.params
+  const { id } = req.body
   Schedule.update({
     status: 'canceled'
   }, {
