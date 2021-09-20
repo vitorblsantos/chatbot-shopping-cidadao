@@ -11,8 +11,9 @@ export const Background = styled.div`
   top: 0;
   width: 100%;
 
-  @media(max-widt: 992px) {
+  @media(max-width: 992px) {
     background: url(${ImagePortalMobi}) no-repeat;
+    background-size: 100% 100%;
   }
 `
 

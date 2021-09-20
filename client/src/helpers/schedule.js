@@ -1,6 +1,6 @@
 import { Api } from '../helpers'
 
-const active = async (params) => {
+const active = async params => {
   const { data } = await Api.post('/schedules/active', { ...params })
   return data
 }
