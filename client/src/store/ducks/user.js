@@ -76,6 +76,15 @@ export const setUserEmail = email => {
   }
 }
 
+export const setUserEmail = email => {
+  return {
+    type: Types.SET_USER_EMAIL,
+    payload: {
+      email
+    }
+  }
+}
+
 export const setUserId = id => {
   return {
     type: Types.SET_USER_ID,

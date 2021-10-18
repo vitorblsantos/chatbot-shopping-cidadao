@@ -31,8 +31,12 @@ const sendMessage = async ({ context, message, sessionId }) => {
       options: {
         return_context: true
       }
+<<<<<<< HEAD
     },
     context
+=======
+    }
+>>>>>>> master
   })
   return result
 }
