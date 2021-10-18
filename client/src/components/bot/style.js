@@ -5,13 +5,23 @@ export const Balloon = styled.div`
   align-items: center;
   background: #fff7ef;
   border: 1px solid #f7921e;
-  border-radius: 16px;
+  border-radius: 8px;
+  border-top-left-radius: 4px;
   display: flex;
-  font-size: .95rem;
+  font-size: .9rem;
   height: fit-content;
   line-height: 1.2;
-  margin: 4px 0 0 0;
+  margin: 8px 0 0;
   padding: 8px 12px;
+  position: relative;
+`
+
+export const Hour = styled.div`
+  bottom: -16px;
+  color: #333;
+  font-size: .53rem;
+  position: absolute;
+  right: 4px;
 `
 
 export const Image = styled(ImageBalloon)`

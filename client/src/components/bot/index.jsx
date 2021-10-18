@@ -1,25 +1,30 @@
-'use strict'
-
 import React from 'react'
-import { object } from 'prop-types'
+import { sanitize } from 'dompurify'
+import { array, object, string } from 'prop-types'
 
-import { Balloon, Icon, Image, Row } from './style'
+import { Balloon, Hour, Icon, Image, Row } from './style'
 
-const Bot = ({ content }) => {
+const Bot = ({ content, time }) => {
+  const sanitizer = sanitize
   return (
     <Row>
       <Icon>
         <Image />
       </Icon>
       <Balloon>
-        {content.text}
+        <span dangerouslySetInnerHTML={{ __html: sanitizer(content.text) }} />
+        <Hour>
+          {time}
+        </Hour>
       </Balloon>
     </Row>
   )
 }
 
 Bot.propTypes = {
-  content: object
+  content: object,
+  options: array,
+  time: string
 }
 
 export default Bot

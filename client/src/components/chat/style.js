@@ -10,14 +10,14 @@ export const Container = styled.div`
   opacity: 0;
   margin: 0 0 0 auto;
   position: absolute;
-  right: 12px;
+  right: 20px;
   transition: height .1s, opacity .1s, visibility .1s, width .1s;
   transition-timing-function: ease-in-out;
   visibility: hidden;
   width: 0;
 
   ${({ active }) => active && css`
-    height: 500px;
+    height: 492px;
     opacity: 1;
     transition: height .3s, opacity .5s, margin .2s, visibility .5s, width .1s;
     transition-timing-function: ease-in-out;

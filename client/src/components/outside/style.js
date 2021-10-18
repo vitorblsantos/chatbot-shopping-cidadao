@@ -1,19 +1,25 @@
 import styled from 'styled-components'
-import ImagePortal from '../../images/background.png'
+import ImagePortalDesk from '../../images/background-desktop.png'
+import ImagePortalMobi from '../../images/background-mobile.png'
 
 export const Background = styled.div`
-  background: url(${ImagePortal}) no-repeat;
+  background: url(${ImagePortalDesk}) no-repeat;
   background-size: 100%;
   height: 100%;
   left: 0;
   position: absolute;
   top: 0;
   width: 100%;
+
+  @media(max-width: 992px) {
+    background: url(${ImagePortalMobi}) no-repeat;
+    background-size: 100% 100%;
+  }
 `
 
 export const Container = styled.div`
   bottom: 0;
-  height: 536px;
+  height: 564px;
   overflow: hidden;
   position: fixed;
   right: 0;

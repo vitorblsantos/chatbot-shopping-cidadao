@@ -1,6 +1,6 @@
 # Shopping Cidadao
 
-Boilerplate used to develop Sticker App. 
+Challenge FIAP. 
 
 ## Table of Contents
 - [Dependencies](#dependencies)
@@ -17,9 +17,10 @@ Clone these template, install dependencies and be happy:
 
 ```sh
 git clone https://github.com/vitorblsantos/shopping-cidadao
-cd ./boilerplate-react-node
+cd ./shopping-cidadao
 yarn
-yarn build
+yarn dev - Dev
+yarn build - Prod
 yarn start
 ```
 

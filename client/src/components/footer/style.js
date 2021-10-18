@@ -33,9 +33,10 @@ export const Container = styled.div`
   border-bottom-right-radius: 10px;
   bottom: 0;
   display: flex;
+  flex-flow: column nowrap;
   height: 68px;
-  justify-content: flex-start;
-  padding: 0 8px;
+  justify-content: center;
+  padding: 0 4px;
   position: relative;
   width: 100%;
 `
@@ -49,7 +50,7 @@ export const Input = styled.input`
   font-size: .9rem;
   height: 32px;
   padding: 4px 12px;
-  width: 79%;
+  width: 100%;
 `
 export const Send = styled(SendImage)`
   height: 24px;

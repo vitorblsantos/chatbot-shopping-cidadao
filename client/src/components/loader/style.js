@@ -56,6 +56,6 @@ export const NoWrap = styled.div`
 
 export const Row = styled.div`
   display: flex;
-  margin: 0;
+  margin: 4px 0 0;
   padding: 0 20px 0 8px;
 `

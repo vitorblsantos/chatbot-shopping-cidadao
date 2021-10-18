@@ -10,11 +10,11 @@ const Loader = () => (
         <Bot />
       </Icon>
       <Container>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
       </Container>
     </NoWrap>
   </Row>

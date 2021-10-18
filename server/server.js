@@ -5,7 +5,7 @@ import compression from 'compression'
 import cors from 'cors'
 import express from 'express'
 
-import { Watson, Webhooks } from './routes'
+import { Data, Email, Schedules, Watson, Webhooks } from './routes'
 
 const Server = express()
 
@@ -20,7 +20,10 @@ Server.use(compression())
 Server.use(express.static('./build/'))
 Server.use(json())
 
+Server.use('/email', Email)
+Server.use('/data', Data)
+Server.use('/schedules', Schedules)
 Server.use('/watson', Watson)
 Server.use('/webhooks', Webhooks)
 
-export default Server
+module.exports = Server

@@ -1,18 +1,18 @@
-'use strict'
-
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Slider from 'react-slick'
+import { format, utcToZonedTime } from 'date-fns-tz'
 
 import { Sleep } from '../../helpers'
-import { setMessages, setChatLoaderActive, setOptions } from '../../store/ducks/chatbot'
-import { addUserInteraction } from '../../store/ducks/user'
+import { setMessages, setChatContext, setChatLoaderActive, setOptions } from '../../store/ducks/chatbot'
+import { addUserInteraction, setUserScheduledDate, setUserScheduledStation } from '../../store/ducks/user'
 
 import { Container, Item, Option } from './style'
 
 const Options = () => {
   const dispatch = useDispatch()
   const slideRef = useRef(null)
+  const [context, setContext] = useState({})
   const [slideOptions, setSlideOptions] = useState(false)
   const [slidingOptions, setSlidingOptions] = useState(false)
   const { chatbot, user } = useSelector(state => state)
@@ -30,10 +30,101 @@ const Options = () => {
     setSlideOptions(true)
   }
 
-  const handleOption = (input) => {
+  const handleContext = messages => {
+    const lastInteraction = messages[chatbot.messages.length - 1]
+    if (!lastInteraction) return false
+    setContext({ ...lastInteraction.context })
+  }
+
+  const handleOption = (context, input) => {
     if (slidingOptions) return false
+    const toISOFormat = dateTimeString => {
+      const [date, time] = dateTimeString.split(' ')
+      const [DD, MM, YYYY] = date.split('/')
+      const [HH, mm] = time.split(':')
+      return `${YYYY}-${MM}-${DD}T${HH}:${mm}`
+    }
+    let canSubmit = true
+    context = {
+      skills: {
+        'main skill': {
+          user_defined: {
+            ...context?.skills['main skill']?.user_defined,
+            firstInteraction: false
+          }
+        }
+      }
+    }
+    dispatch(setChatContext({ firstInteraction: true }, ''))
+
+    const userDefined = context.skills['main skill'].user_defined
+
+    if (userDefined.getDate) {
+      if (typeof input.text === 'string') {
+        context = {
+          skills: {
+            'main skill': {
+              user_defined: {
+                ...context?.skills['main skill']?.user_defined,
+                date: toISOFormat(input.text),
+                getDate: false
+              }
+            }
+          }
+        }
+        dispatch(setUserScheduledDate(toISOFormat(input.text)))
+        dispatch(setChatContext({ date: toISOFormat(input.text), getDate: false }, ''))
+      } else {
+        canSubmit = false
+      }
+    }
+
+    if (userDefined.getLocation) {
+      if (typeof input.text === 'string') {
+        context = {
+          skills: {
+            'main skill': {
+              user_defined: {
+                ...context?.skills['main skill']?.user_defined,
+                getLocation: false,
+                location: input.value
+              }
+            }
+          }
+        }
+        dispatch(setUserScheduledStation(input.value))
+        dispatch(setChatContext({ getLocation: false, location: input.value }, ''))
+      } else {
+        canSubmit = false
+      }
+    }
+
+    if (userDefined.getService) {
+      if (typeof input.text === 'string') {
+        context = {
+          skills: {
+            'main skill': {
+              user_defined: {
+                ...context?.skills['main skill']?.user_defined,
+                getService: false,
+                service: input.text
+              }
+            }
+          }
+        }
+        dispatch(setChatContext({ getService: false, service: input.text }, ''))
+      } else {
+        canSubmit = false
+      }
+    }
+
+    if (userDefined.useLastScheduleData) {
+      dispatch(setChatContext({ schedulesIdentifier: user.email, useLastScheduleData: false }))
+    }
+
+    if (!canSubmit || !input) return false
     dispatch(addUserInteraction('click-option', 'handleOption', input))
-    dispatch(setMessages('user', input.text))
+    dispatch(setMessages({ content: input.text, context, sender: 'user', time: format(utcToZonedTime(new Date(), 'America/Sao_paulo'), 'HH:mm') }))
     dispatch(setChatLoaderActive(true))
     dispatch(setOptions([]))
   }
@@ -56,6 +147,10 @@ const Options = () => {
   }
 
   useEffect(() => {
+    handleContext(chatbot.messages)
+  }, [chatbot.messages])
+
+  useEffect(() => {
     animateOptions()
   }, [chatbot.options])
 
@@ -66,7 +161,7 @@ const Options = () => {
           chatbot.options.map(({ label, value }, i) => {
             return (
               <Item key={i}>
-                <Option onClick={() => handleOption(value.input)}>
+                <Option onClick={() => handleOption(context, value.input)}>
                   {label}
                 </Option>
               </Item>

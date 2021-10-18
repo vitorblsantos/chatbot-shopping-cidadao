@@ -1,19 +1,13 @@
-import 'dotenv/config'
-import mongoose from 'mongoose'
+require('dotenv/config')
 
-import Server from './server'
+const database = require('./sequelize/')
 
-const { MONGO_DB, MONGO_URL, MONGO_PARAMS, API_PORT } = process.env
+const Server = require('./server.js')
 
-const urlString = `${MONGO_URL}${MONGO_DB}${MONGO_PARAMS}`
+const { PORT } = process.env
 
-mongoose.connect(urlString, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: true
+database.authenticate().then(() => {
+  return Server.listen(PORT || 5000, () => console.log(`Server running on port: ${PORT || 5000}`))
+}).catch(err => {
+  throw new Error(err)
 })
-
-Server.listen(API_PORT, () => console.log(`Server running on port: ${API_PORT}`))
-
-// mongoose.connection.on('connected', () => Server.listen(API_PORT, () => console.log(`Server running on port: ${API_PORT}`)))
-// mongoose.connection.on('error', console.error.bind(console, 'Mongoose connection error:'))

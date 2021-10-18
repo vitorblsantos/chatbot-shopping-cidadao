@@ -1,17 +1,21 @@
 import React from 'react'
+import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 
-import Chat from './components/chat'
-import Outside from './components/outside'
-import Toast from './components/toast'
+import Active from './pages/active'
+import Cancel from './pages/cancel'
+import Home from './pages/home'
 
 import './styles/main.scss'
 
 const App = () => {
   return (
-    <Outside>
-      <Chat />
-      <Toast />
-    </Outside>
+    <Router>
+      <Switch>
+        <Route exact path='/' component={Home} />
+        <Route exact path='/ativar/:id' component={Active} />
+        <Route exact path='/inativar/:id' component={Cancel} />
+      </Switch>
+    </Router>
   )
 }
 

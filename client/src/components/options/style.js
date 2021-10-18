@@ -17,13 +17,13 @@ export const Item = styled.div`
 export const Option = styled.button`
   background: #f7921e;
   border: 0;
-  border-radius: 10px;
+  border-radius: 8px;
   color: #ffffff;
   cursor: pointer;
-  font-size: .75rem;
+  font-size: .7rem;
   font-weight: bold;
   height: 32px;
   margin: 0 4px;
   padding: 8px 4px;
-  width: -webkit-fill-available;
+  width: 152px;
 `
