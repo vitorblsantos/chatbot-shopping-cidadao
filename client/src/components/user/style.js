@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const Balloon = styled.div`
-  background: #2222220a;
+  background: #c8dffb40;
   border: 1px solid #222;
   border-radius: 8px;
   border-top-right-radius: 4px;

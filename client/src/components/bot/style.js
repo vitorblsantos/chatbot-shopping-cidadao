@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import ImageBalloon from '../../images/balloon.svg'
+import ImageBalloon from '../../images/icon-chat-bubble.png'
 
 export const Balloon = styled.div`
   align-items: center;
@@ -14,6 +14,7 @@ export const Balloon = styled.div`
   margin: 8px 0 0;
   padding: 8px 12px;
   position: relative;
+  max-width: 248px;
 `
 
 export const Hour = styled.div`
@@ -24,14 +25,16 @@ export const Hour = styled.div`
   right: 4px;
 `
 
-export const Image = styled(ImageBalloon)`
+export const Image = styled.div`
+  background: url(${ImageBalloon}) no-repeat;
+  background-size: contain ;
   height: 36px;
-  width: auto;
+  width: 36px;
 `
 
 export const Icon = styled.div`
   height: 44px;
-  margin: 0 4px 0 0;
+  margin: 0 8px 0 0;
   width: 44px;
 `
 

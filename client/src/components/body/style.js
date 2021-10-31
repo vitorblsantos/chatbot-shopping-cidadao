@@ -12,7 +12,7 @@ const MessageAnimation = keyframes`
 `
 
 export const Container = styled.div`
-  background: #f7f7f7;
+  background: #f5f5f5;
   border: 1px solid #272525;
   border-bottom: 0;
   border-top: 0;
