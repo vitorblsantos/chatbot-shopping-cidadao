@@ -28,15 +28,14 @@ export const Hour = styled.div`
 export const Image = styled.div`
   background: url(${ImageBalloon}) no-repeat;
   background-position: center;
-  background-size: 100%;
-  height: 36px;
-  width: 36px;
+  background-size: 32px;
+  height: 32px;
 `
 
 export const Icon = styled.div`
-  height: 44px;
+  height: 40px;
   margin: 0 8px 0 0;
-  width: 44px;
+  width: 36px;
 `
 
 export const Row = styled.div`

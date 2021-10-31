@@ -1,25 +1,37 @@
 import styled from 'styled-components'
-import SendImage from '../../images/send.svg'
+import SendImage from '../../images/icon-submit.png'
 
 export const Background = styled.div`
-  align-items: center;
-  background: #ffffff;
-  border-radius: 20px;
+  background: #f9f9f9;
+  border-radius: 24px;
   display: flex;
+  flex-wrap: wrap;
+  height: 100%;
   width: 100%;
 `
 
 export const Button = styled.button`
   align-items: center;
-  background: #ffffff;
+  background: transparent;
   border: 0;
-  border-bottom-right-radius: 20px;
-  border-top-right-radius: 20px;
+  border-bottom-right-radius: 10px;
+  border-top-right-radius: 10px;
   cursor: pointer;
   display: flex;
-  height: 42px;
+  height: 100%;
   justify-content: center;
-  width: 40px;
+  position: relative;
+  width: 15%;
+  :before {
+    background: #333;
+    border-radius: 100%;
+    content: '';
+    left: -4px;
+    position: absolute;
+    top: 7px;
+    width: 2px;
+    height: 70%;
+  }
   :focus {
     outline: none;
   }
@@ -34,25 +46,40 @@ export const Container = styled.div`
   bottom: 0;
   display: flex;
   flex-flow: column nowrap;
-  height: 68px;
+  height: 80px;
   justify-content: center;
-  padding: 0 4px;
+  padding: 16px 4px;
   position: relative;
   width: 100%;
+
+  &:before {
+    background: #3c3c3c;
+    box-shadow: 0px 4px 20px #fff, 0px -4px 20px #3c3c3c;
+    content: '';
+    height: 1px;
+    left: -2px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
 `
 
 export const Input = styled.input`
+  background: transparent;
   border: 0;
-  box-shadow: rgba(0, 0, 0, .16) 0px 10px 36px 0px, rgba(0, 0, 0, .06) 0px 0px 0px 1px;
-  border-bottom-left-radius: 20px;
-  border-top-left-radius: 20px;
-  color: #000000;
-  font-size: .9rem;
-  height: 32px;
-  padding: 4px 12px;
-  width: 100%;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  color: #3c3c3c;
+  font-size: .88rem;
+  font-weight: 500;
+  height: 100%;
+  padding: 0 12px;
+  width: 77%;
 `
-export const Send = styled(SendImage)`
-  height: 24px;
-  width: auto;
+export const Send = styled.div`
+  background: url(${SendImage}) no-repeat;
+  background-position: center;
+  background-size: contain;
+  height: 32px;
+  width: 24px;
 `
