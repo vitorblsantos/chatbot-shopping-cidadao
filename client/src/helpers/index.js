@@ -1,5 +1,3 @@
-'use strict'
-
 import Api from './api'
 import DateFNS from './date'
 import Distance from './geolocation'

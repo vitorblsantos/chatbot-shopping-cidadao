@@ -1,5 +1,3 @@
-'use strict'
-
 import 'dotenv/config'
 import AssistantV2 from 'ibm-watson/assistant/v2'
 import { IamAuthenticator } from 'ibm-watson/auth'

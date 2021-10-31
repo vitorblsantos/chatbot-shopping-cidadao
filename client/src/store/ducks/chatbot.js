@@ -1,5 +1,3 @@
-'use strict'
-
 const INITIAL_STATE = {
   active: false,
   context: {

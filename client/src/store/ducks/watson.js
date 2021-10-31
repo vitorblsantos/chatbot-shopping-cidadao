@@ -1,5 +1,3 @@
-'use strict'
-
 import { Api, DateFNS, LocalStorage } from '../../helpers'
 
 const INITIAL_STATE = {

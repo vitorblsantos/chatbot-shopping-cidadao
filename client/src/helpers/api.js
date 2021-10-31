@@ -1,5 +1,3 @@
-'use strict'
-
 import 'dotenv/config'
 import { create } from 'axios'
 

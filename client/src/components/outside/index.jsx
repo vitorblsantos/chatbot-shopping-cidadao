@@ -1,5 +1,3 @@
-'use strict'
-
 import React from 'react'
 import { node } from 'prop-types'
 

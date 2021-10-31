@@ -1,5 +1,3 @@
-'use strict'
-
 import { Watson } from '../services'
 
 import { Message, Session } from '../models/'
