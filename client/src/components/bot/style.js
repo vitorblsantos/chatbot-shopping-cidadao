@@ -27,7 +27,8 @@ export const Hour = styled.div`
 
 export const Image = styled.div`
   background: url(${ImageBalloon}) no-repeat;
-  background-size: contain ;
+  background-position: center;
+  background-size: 100%;
   height: 36px;
   width: 36px;
 `
@@ -42,5 +43,9 @@ export const Row = styled.div`
   align-items: flex-start;
   display: flex;
   flex-wrap: nowrap;
-  padding: 0 20px 0 8px;
+  padding: 0 12px 0 8px;
+
+  @media (max-width: 992px) {
+    padding-right: 28px;
+  }
 `

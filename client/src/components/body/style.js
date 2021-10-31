@@ -18,7 +18,7 @@ export const Container = styled.div`
   border-top: 0;
   display: flex;
   flex-flow: column nowrap;
-  height: 74%;
+  height: 78%;
   overflow: hidden;
   width: 100%;
 `

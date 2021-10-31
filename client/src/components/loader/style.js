@@ -9,7 +9,8 @@ const animation = keyframes`
 
 export const Bot = styled.div`
   background: url(${ImageBalloon}) no-repeat;
-  background-size: contain;
+  background-position: center;
+  background-size: 100%;
   height: 36px;
   width: 36px;
 `
