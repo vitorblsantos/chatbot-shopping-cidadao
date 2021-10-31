@@ -74,6 +74,7 @@ export function setChatContext (context, placeholder) {
         placeholder
       }
     })
+    Promise.resolve()
   }
 }
 
