@@ -1,13 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
-import Slider from 'react-slick'
 import { format, utcToZonedTime } from 'date-fns-tz'
+import Slider from 'react-slick'
+
+import { func, string } from 'prop-types'
 
 import Bot from '../bot'
 
 import { Sleep } from '../../helpers'
 
-import { Body, Bold, Calendar, Container, Header, Item, Option, Row, Text } from './style'
+import { Body, Bold, Calendar, Container, Header, Item, NextArrow, Option, PrevArrow, Row, Text } from './style'
+
+import './slide.scss'
 
 const Schedules = () => {
   const slideRef = useRef(null)
@@ -26,15 +30,21 @@ const Schedules = () => {
     setSlideOptions(true)
   }
 
+  const HandleNextArrow = ({ className, onClick }) => <NextArrow {... { className, onClick }} />
+
+  const HandlePrevArrow = ({ className, onClick }) => <PrevArrow {... { className, onClick }} />
+
   const handleSlideOptions = active => {
     setSlideOptions(true)
     setSlidingOptions(active)
   }
 
   const settings = {
-    arrows: false,
+    arrows: user.schedules,
     dots: false,
     infinite: false,
+    nextArrow: <HandleNextArrow />,
+    prevArrow: <HandlePrevArrow />,
     slidesToScroll: 1,
     slidesToShow: 1,
     swipeToSlide: true,
@@ -50,6 +60,16 @@ const Schedules = () => {
   useEffect(() => {
     animateOptions()
   }, [slidingOptions.options])
+
+  HandleNextArrow.propTypes = {
+    className: string,
+    onClick: func
+  }
+
+  HandlePrevArrow.propTypes = {
+    className: string,
+    onClick: func
+  }
 
   return (
     <>
