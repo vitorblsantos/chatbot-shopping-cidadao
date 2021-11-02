@@ -22,7 +22,9 @@ const INITIAL_STATE = {
     userId: ''
   },
   input: {
-    placeholder: ''
+    disabled: false,
+    placeholder: '',
+    warning: false
   },
   loader: {
     active: true,
@@ -35,7 +37,9 @@ const INITIAL_STATE = {
 export const Types = {
   SET_CHAT_ACTIVE: 'SET_CHAT_ACTIVE',
   SET_CHAT_CONTEXT: 'SET_CHAT_CONTEXT',
+  SET_CHAT_INPUT_DISABLED: 'SET_CHAT_INPUT_DISABLED',
   SET_CHAT_INPUT_PLACEHOLDER: 'SET_CHAT_INPUT_PLACEHOLDER',
+  SET_CHAT_INPUT_WARNING: 'SET_CHAT_INPUT_WARNING',
   SET_CHAT_LOADER_ACTIVE: 'SET_CHAT_LOADER_ACTIVE',
   SET_MESSAGES: 'SET_MESSAGES',
   SET_OPTIONS: 'SET_OPTIONS'
@@ -44,7 +48,9 @@ export const Types = {
 export default function reducer (state = INITIAL_STATE, { type, payload }) {
   if (type === Types.SET_CHAT_ACTIVE) return { ...state, ...payload }
   if (type === Types.SET_CHAT_CONTEXT) return { ...state, context: { ...state.context, ...payload } }
+  if (type === Types.SET_CHAT_INPUT_DISABLED) return { ...state, input: { ...state.input, ...payload } }
   if (type === Types.SET_CHAT_INPUT_PLACEHOLDER) return { ...state, input: { ...state.input, ...payload } }
+  if (type === Types.SET_CHAT_INPUT_WARNING) return { ...state, input: { ...state.input, ...payload } }
   if (type === Types.SET_CHAT_LOADER_ACTIVE) return { ...state, loader: { ...state.loader, ...payload } }
   if (type === Types.SET_MESSAGES) return { ...state, messages: [...state.messages, { ...payload }] }
   if (type === Types.SET_OPTIONS) return { ...state, options: payload.options }
@@ -60,7 +66,7 @@ export function setChatActive (active) {
   }
 }
 
-export function setChatContext (context, placeholder) {
+export function setChatContext (context) {
   return (dispatch, _) => {
     dispatch({
       type: Types.SET_CHAT_CONTEXT,
@@ -68,13 +74,39 @@ export function setChatContext (context, placeholder) {
         ...context
       }
     })
+  }
+}
+
+export function setChatInputDisabled (disabled) {
+  return (dispatch, _) => {
+    dispatch({
+      type: Types.SET_CHAT_INPUT_DISABLED,
+      payload: {
+        disabled
+      }
+    })
+  }
+}
+
+export function setChatInputPlaceholder (placeholder) {
+  return (dispatch, _) => {
     dispatch({
       type: Types.SET_CHAT_INPUT_PLACEHOLDER,
       payload: {
         placeholder
       }
     })
-    Promise.resolve()
+  }
+}
+
+export function setChatInputWarning (warning) {
+  return (dispatch, _) => {
+    dispatch({
+      type: Types.SET_CHAT_INPUT_WARNING,
+      payload: {
+        warning
+      }
+    })
   }
 }
 

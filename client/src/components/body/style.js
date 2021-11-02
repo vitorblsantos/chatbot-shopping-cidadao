@@ -17,8 +17,8 @@ export const Container = styled.div`
   border-bottom: 0;
   border-top: 0;
   display: flex;
+  flex: 1;
   flex-flow: column nowrap;
-  height: 75%;
   overflow: hidden;
   width: 100%;
 `
@@ -29,7 +29,7 @@ export const Overflow = styled.div`
   overflow-y: scroll;
   padding: 20px 0 32px;
   position: relative;
-  width: 332px;
+  width: 336px;
 `
 
 export const Row = styled.div`
@@ -40,27 +40,25 @@ export const Row = styled.div`
   ${({ user }) => !user
     ? css`
       &:not(:first-of-type) {
-        margin: 16px 0 0;
+        margin: 20px 0 0;
       }
     `
     : css`
-      margin: 24px 0 0;
+      margin: 32px 0 0;
     `
 }
 `
 
 export const Status = styled.div`
   align-items: center;
-  background: rgb(28 24 24 / 46%);
+  background: rgb(139 13 13 / 80%);
   color: #ffffff;
   display: flex;
   font-size: .75rem;
   font-weight: 700;
-  height: 24px;
   justify-content: center;
-  letter-spacing: .8px;
+  letter-spacing: -.2px;
   text-align: center;
-  text-transform: uppercase;
   width: 100%;
 `
 export const Warning = styled.img.attrs(() => ({

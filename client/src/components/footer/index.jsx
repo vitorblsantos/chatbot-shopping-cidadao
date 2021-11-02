@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { format, utcToZonedTime } from 'date-fns-tz'
 
-import { setChatContext, setChatActive, setChatLoaderActive, setMessages, setOptions } from '../../store/ducks/chatbot'
+import { setChatContext, setChatActive, setChatLoaderActive, setMessages, setOptions, setChatInputWarning, setChatInputPlaceholder } from '../../store/ducks/chatbot'
 import { setToastActive } from '../../store/ducks/toast'
 import { addUserInteraction, setUserEmail, setUserId, setUserName } from '../../store/ducks/user'
 
 import { Email, User } from '../../helpers'
 
-import { Background, Button, Container, Input, Send } from './style'
+import { Button, Container, Input, Send, Wrapper } from './style'
 
 const Footer = () => {
   const dispatch = useDispatch()
@@ -47,7 +47,7 @@ const Footer = () => {
       }
     }
 
-    dispatch(setChatContext({ firstInteraction: false }, ''))
+    dispatch(setChatContext({ firstInteraction: false }))
 
     const userDefined = context.skills['main skill'].user_defined
 
@@ -62,10 +62,12 @@ const Footer = () => {
           }
         }
       }
+      dispatch(setChatInputPlaceholder(''))
     }
 
     if (userDefined.getEmail) {
       if ((Email.valid(inputMessage))) {
+        canSubmit = true
         const { id, name } = await User.get({ email: inputMessage })
         context = {
           skills: {
@@ -85,12 +87,15 @@ const Footer = () => {
           context.skills['main skill'].user_defined.userId = id
           dispatch(setUserId(id))
           dispatch(setUserName(name))
-          dispatch(setChatContext({ getName: false, name: name, userData: true, userId: id }, ''))
+          dispatch(setChatContext({ getName: false, name: name, userData: true, userId: id }))
         }
-        dispatch(setChatContext({ email: inputMessage, getEmail: false }, ''))
+        dispatch(setChatInputWarning(!canSubmit))
+        dispatch(setChatInputPlaceholder(''))
+        dispatch(setChatContext({ email: inputMessage, getEmail: false }))
         dispatch(setUserEmail(inputMessage))
       } else {
         canSubmit = false
+        return dispatch(setChatInputWarning(!canSubmit))
       }
     }
 
@@ -101,6 +106,7 @@ const Footer = () => {
 
     if (userDefined.getName) {
       if (typeof inputMessage === 'string') {
+        canSubmit = true
         context = {
           skills: {
             'main skill': {
@@ -113,18 +119,21 @@ const Footer = () => {
             }
           }
         }
-        dispatch(setChatContext({ getName: false, name: inputMessage, userData: true }, ''))
+        dispatch(setChatContext({ getName: false, name: inputMessage, userData: true }))
         dispatch(setUserName(inputMessage))
         if (!user.id) {
           const { id } = await User.create({ email: user.email, name: inputMessage })
           dispatch(setUserId(id))
         }
+        dispatch(setChatInputWarning(!canSubmit))
       } else {
         canSubmit = false
+        return dispatch(setChatInputWarning(!canSubmit))
       }
     }
 
     if (userDefined.getSchedules) {
+      canSubmit = true
       context = {
         skills: {
           'main skill': {
@@ -135,10 +144,13 @@ const Footer = () => {
           }
         }
       }
-      dispatch(setChatContext({ getSchedules: false }, ''))
+      dispatch(setChatInputWarning(!canSubmit))
+      dispatch(setChatContext({ getSchedules: false }))
+      dispatch(setChatInputPlaceholder(''))
     }
 
     if (userDefined.useLastScheduleData) {
+      canSubmit = true
       context = {
         skills: {
           'main skill': {
@@ -150,6 +162,7 @@ const Footer = () => {
           }
         }
       }
+      dispatch(setChatInputWarning(!canSubmit))
       dispatch(setChatContext({ schedulesIdentifier: user.email, useLastScheduleData: false }))
     }
 
@@ -177,8 +190,8 @@ const Footer = () => {
         }
       }
     }
-    dispatch(setChatContext({ getIdentifier: false, schedulesIdentifier: message }, ''))
-    // dispatch(setUserSchedules(message))
+    dispatch(setChatContext({ getIdentifier: false, schedulesIdentifier: message }))
+    dispatch(setChatInputPlaceholder(''))
     return handleMessages({ context, message: message, sender: 'user' })
   }
 
@@ -188,12 +201,12 @@ const Footer = () => {
 
   return (
     <Container>
-      <Background>
+      <Wrapper>
         <Input onChange={(e) => handleInput(e)} onKeyDown={e => handleKey(e)} placeholder={chatbot.input.placeholder || 'Digite sua mensagem...'} value={inputMessage} />
         <Button>
-          <Send />
+          <Send onClick={() => handleFlow(context, inputMessage)} />
         </Button>
-      </Background>
+      </Wrapper>
     </Container>
   )
 }

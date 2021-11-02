@@ -13,7 +13,7 @@ const arrow = styled.div`
   position: absolute;
   top: 80px;
   width: 28px;
-  z-index: 10;
+  z-index: 2;
 `
 
 export const Body = styled.div`

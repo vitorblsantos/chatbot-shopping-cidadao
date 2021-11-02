@@ -1,5 +1,5 @@
 import { Schedule, Sleep } from '../../helpers'
-import { setChatContext, setChatLoaderActive, setMessages } from '../../store/ducks/chatbot'
+import { setChatContext, setChatInputPlaceholder, setChatLoaderActive, setMessages } from '../../store/ducks/chatbot'
 import { format, utcToZonedTime } from 'date-fns-tz'
 
 const INITIAL_STATE = {
@@ -137,11 +137,13 @@ export const setUserSchedules = (skills) => {
         type: Types.SET_USER_SCHEDULES,
         payload: schedules
       })
-      dispatch(setChatContext({ findSchedules: true }, ''))
+      dispatch(setChatContext({ findSchedules: true }))
+      dispatch(setChatInputPlaceholder(''))
     } else {
       const lastInteraction = chatbot.messages[chatbot.messages.length - 1]
       dispatch(clearUserSchedules())
-      dispatch(setChatContext({ findSchedules: false, getIdentifier: false }, ''))
+      dispatch(setChatContext({ findSchedules: false, getIdentifier: false }))
+      dispatch(setChatInputPlaceholder(''))
       dispatch(setChatLoaderActive(true))
       dispatch(setMessages({ content: { text: 'Não encontrei nenhum agendamento ativo para esse email/identificador.' }, context: { ...lastInteraction.context }, sender: 'bot', time: format(utcToZonedTime(new Date(), 'America/Sao_paulo'), 'HH:mm') }))
       await Sleep(chatbot.loader.timer)

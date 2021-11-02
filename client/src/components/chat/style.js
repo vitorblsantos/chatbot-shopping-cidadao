@@ -6,6 +6,8 @@ export const Container = styled.div`
   border: 0;
   border-radius: 10px;
   bottom: 20px;
+  display: flex;
+  flex-flow: column nowrap;
   height: 0;
   opacity: 0;
   margin: 0 0 0 auto;
@@ -17,7 +19,7 @@ export const Container = styled.div`
   width: 0;
 
   ${({ active }) => active && css`
-    height: 540px;
+    height: 580px;
     opacity: 1;
     transition: height .3s, opacity .5s, margin .2s, visibility .5s, width .1s;
     transition-timing-function: ease-in-out;

@@ -40,11 +40,7 @@ export const Button = styled.button`
 
 export const Container = styled.div`
   align-items: center;
-  border: 1px solid #000000;
   border-bottom: 0;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  background: #3c3c3c;
   display: flex;
   height: 48px;
   justify-content: center;
@@ -60,16 +56,20 @@ export const Span = styled.span`
   position: relative;
 `
 
-export const Status = styled.div`
-  align-items: center;
-  background: #f7921e;
-  border: 1px solid #000;
-  border-bottom: 0;
-  border-top: 0;
-  color: #ffffff;
-  display: flex;
-  font-size: .8rem;
-  height: 8px;
-  justify-content: center;
-  width: 100%;
+export const Wrapper = styled.div`
+  background: #3c3c3c;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  position: relative;
+  &:after {
+    background: #f7921e;
+    bottom: -8px;
+    color: #ffffff;
+    content: '';
+    height: 8px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+  }
 `

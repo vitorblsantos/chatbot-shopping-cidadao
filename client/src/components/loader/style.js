@@ -10,9 +10,9 @@ const animation = keyframes`
 export const Bot = styled.div`
   background: url(${ImageBalloon}) no-repeat;
   background-position: center;
-  background-size: 32px;
-  height: 32px;
-  width: 32px;
+  background-size: contain;
+  height: 28px;
+  width: 28px;
 `
 
 export const Container = styled.div`
@@ -47,9 +47,9 @@ export const Container = styled.div`
 `
 
 export const Icon = styled.div`
-  height: 32px;
+  height: 28px;
   margin: 0 8px 0 0;
-  width: auto;
+  width: 28px;
 `
 
 export const NoWrap = styled.div`
@@ -59,6 +59,6 @@ export const NoWrap = styled.div`
 
 export const Row = styled.div`
   display: flex;
-  margin: 4px 0 0;
+  margin: 16px 0 0;
   padding: 0 20px 0 8px;
 `

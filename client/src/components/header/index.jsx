@@ -6,7 +6,7 @@ import { addUserInteraction } from '../../store/ducks/user'
 import { setChatActive } from '../../store/ducks/chatbot'
 import { setToastActive } from '../../store/ducks/toast'
 
-import { Bot, Button, Container, Span, Status } from './style'
+import { Bot, Button, Container, Span, Wrapper } from './style'
 
 const Header = () => {
   const dispatch = useDispatch()
@@ -22,14 +22,13 @@ const Header = () => {
   }
 
   return (
-    <>
+    <Wrapper>
       <Container>
         <Bot />
         <Span>Chatbot - UAI</Span>
         <Button onClick={handleChat}> + </Button>
       </Container>
-      <Status />
-    </>
+    </Wrapper>
   )
 }
 

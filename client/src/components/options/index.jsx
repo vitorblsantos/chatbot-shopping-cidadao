@@ -4,7 +4,7 @@ import Slider from 'react-slick'
 import { format, utcToZonedTime } from 'date-fns-tz'
 
 import { Sleep } from '../../helpers'
-import { setMessages, setChatContext, setChatLoaderActive, setOptions } from '../../store/ducks/chatbot'
+import { setMessages, setChatContext, setChatLoaderActive, setOptions, setChatInputWarning, setChatInputPlaceholder } from '../../store/ducks/chatbot'
 import { addUserInteraction, setUserScheduledDate, setUserScheduledStation } from '../../store/ducks/user'
 
 import { Container, Item, Option } from './style'
@@ -55,7 +55,8 @@ const Options = () => {
         }
       }
     }
-    dispatch(setChatContext({ firstInteraction: true }, ''))
+    dispatch(setChatContext({ firstInteraction: true }))
+    dispatch(setChatInputPlaceholder(''))
 
     const userDefined = context.skills['main skill'].user_defined
 
@@ -72,10 +73,13 @@ const Options = () => {
             }
           }
         }
+        dispatch(setChatInputWarning(!canSubmit))
         dispatch(setUserScheduledDate(toISOFormat(input.text)))
-        dispatch(setChatContext({ date: toISOFormat(input.text), getDate: false }, ''))
+        dispatch(setChatContext({ date: toISOFormat(input.text), getDate: false }))
+        dispatch(setChatInputPlaceholder(''))
       } else {
         canSubmit = false
+        dispatch(setChatInputWarning(!canSubmit))
       }
     }
 
@@ -92,10 +96,13 @@ const Options = () => {
             }
           }
         }
+        dispatch(setChatInputWarning(!canSubmit))
         dispatch(setUserScheduledStation(input.value))
-        dispatch(setChatContext({ getLocation: false, location: input.value }, ''))
+        dispatch(setChatContext({ getLocation: false, location: input.value }))
+        dispatch(setChatInputPlaceholder(''))
       } else {
         canSubmit = false
+        dispatch(setChatInputWarning(!canSubmit))
       }
     }
 
@@ -112,9 +119,11 @@ const Options = () => {
             }
           }
         }
-        dispatch(setChatContext({ getService: false, service: input.text }, ''))
+        dispatch(setChatInputWarning(!canSubmit))
+        dispatch(setChatContext({ getService: false, service: input.text }))
       } else {
         canSubmit = false
+        dispatch(setChatInputWarning(!canSubmit))
       }
     }
 

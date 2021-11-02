@@ -14,7 +14,7 @@ export const Balloon = styled.div`
   margin: 8px 0 0;
   padding: 8px 12px;
   position: relative;
-  max-width: 248px;
+  max-width: 260px;
 `
 
 export const Hour = styled.div`
@@ -28,14 +28,15 @@ export const Hour = styled.div`
 export const Image = styled.div`
   background: url(${ImageBalloon}) no-repeat;
   background-position: center;
-  background-size: 32px;
-  height: 32px;
+  background-size: contain;
+  height: 28px;
+  width: 28px;
 `
 
 export const Icon = styled.div`
-  height: 40px;
+  height: 28px;
   margin: 0 8px 0 0;
-  width: 36px;
+  width: 28px;
 `
 
 export const Row = styled.div`
