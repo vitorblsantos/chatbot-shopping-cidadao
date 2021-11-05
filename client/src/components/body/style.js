@@ -13,21 +13,21 @@ const MessageAnimation = keyframes`
 
 export const Container = styled.div`
   background: #f5f5f5;
-  border: 1px solid #272525;
-  border-bottom: 0;
-  border-top: 0;
+  border: 1px solid #3c3c3c;
   display: flex;
   flex: 1;
   flex-flow: column nowrap;
   overflow: hidden;
+  position: relative;
   width: 100%;
 `
 
 export const Overflow = styled.div`
   height: 100%;
+  left: 0;
   overflow-x: hidden;
   overflow-y: scroll;
-  padding: 20px 0 32px;
+  padding: 28px 12px 32px 0;
   position: relative;
   width: 336px;
 `

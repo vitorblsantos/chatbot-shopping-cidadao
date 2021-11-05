@@ -23,7 +23,7 @@ const Body = () => {
     <Container>
       {chatbot.active &&
         <>
-          <Overflow>
+          <Overflow id='overflow'>
             {
               chatbot.messages.map(({ sender, content, time }, i) => {
                 return (

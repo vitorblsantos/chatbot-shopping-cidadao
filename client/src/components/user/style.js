@@ -28,7 +28,7 @@ export const Row = styled.div`
   display: flex;
   flex: 1;
   flex-wrap: wrap;
-  padding: 0 12px 0 52px;
+  padding: 0 0 0 52px;
 
   @media (max-width: 992px) {
     padding-right: 28px;

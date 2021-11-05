@@ -14,7 +14,7 @@ export const Balloon = styled.div`
   margin: 8px 0 0;
   padding: 8px 12px;
   position: relative;
-  max-width: 260px;
+  width: 100%;
 `
 
 export const Hour = styled.div`
@@ -43,7 +43,7 @@ export const Row = styled.div`
   align-items: flex-start;
   display: flex;
   flex-wrap: nowrap;
-  padding: 0 12px 0 8px;
+  padding: 0 0 0 8px;
 
   @media (max-width: 992px) {
     padding-right: 28px;

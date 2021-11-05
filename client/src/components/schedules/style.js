@@ -30,9 +30,9 @@ export const Bold = styled.span`
 export const Container = styled.div`
   display: inline-block;
   margin: 12px 0 0;
-  padding: 8px 4px;
+  padding: 8px 0;
   position: relative;
-  width: 100%;
+  width: 316px;
 `
 
 export const Calendar = styled.img.attrs(() => ({
@@ -56,11 +56,11 @@ export const Item = styled.div`
 `
 
 export const NextArrow = styled(arrow)`
-  right: 8px;
+  right: 0px;
 `
 
 export const Option = styled.div`
-  background: #f8f6f2;
+  background: #fff7ef;
   border: 1px solid #f7921e;
   border-radius: 8px;
   color: #ffffff;
@@ -68,14 +68,14 @@ export const Option = styled.div`
   font-size: .7rem;
   font-weight: bold;
   height: 172px;
-  margin: 0 4px;
-  padding: 8px 12px;
-  width: 264px;
+  margin: 0 auto;
+  padding: 8px 0 8px 16px;
+  width: 90%;
 `
 
 export const PrevArrow = styled(arrow)`
   background-position-x: 9px;
-  left: 10px;
+  left: 2px;
   transform: rotate(180deg);
 `
 

@@ -101,7 +101,14 @@ const Footer = () => {
 
     if (userDefined.getIdentifier) {
       // UUIDV4
-      if (((/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i).test(inputMessage)) || Email.valid(inputMessage)) return handleUserIdentifier({ context, message: inputMessage })
+      if (((/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i).test(inputMessage)) || Email.valid(inputMessage)) {
+        canSubmit = true
+        dispatch(setChatInputWarning(!canSubmit))
+        return handleUserIdentifier({ context, message: inputMessage })
+      } else {
+        canSubmit = false
+        return dispatch(setChatInputWarning(!canSubmit))
+      }
     }
 
     if (userDefined.getName) {

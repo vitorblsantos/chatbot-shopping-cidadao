@@ -86,7 +86,7 @@ const Schedules = () => {
                   <Body>
                     <Row><Text body='true'><Bold>Identificador:</Bold> {el.id}</Text></Row>
                     <Row><Text body='true'><Bold>Email:</Bold> {el.user}</Text></Row>
-                    <Row><Text body='true'><Bold>Data:</Bold> {format(utcToZonedTime(new Date(el.date), 'America/Sao_paulo'), 'HH:mm')} </Text></Row>
+                    <Row><Text body='true'><Bold>Data:</Bold> {format(utcToZonedTime(new Date(el.date), 'America/Sao_paulo'), 'dd/mm/yy, HH:mm')} </Text></Row>
                     <Row><Text body='true'><Bold>Estação:</Bold> {el.station}</Text></Row>
                     <Row><Text body='true'><Bold>Status:</Bold> {el.status}</Text></Row>
                   </Body>

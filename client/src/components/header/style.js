@@ -60,16 +60,7 @@ export const Wrapper = styled.div`
   background: #3c3c3c;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  box-shadow: rgba(247, 146, 30, .4) 0px 5px, rgba(247, 146, 30, .3) 0px 10px, rgba(247, 146, 30, .2) 0px 15px;
   position: relative;
-  &:after {
-    background: #f7921e;
-    bottom: -8px;
-    color: #ffffff;
-    content: '';
-    height: 8px;
-    left: 0;
-    position: absolute;
-    width: 100%;
-    z-index: 2;
-  }
+  z-index: 3;
 `

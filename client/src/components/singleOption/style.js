@@ -18,6 +18,6 @@ export const Row = styled.div`
   display: flex;
   flex-wrap: nowrap;
   justify-content: flex-end;
-  padding: 0 12px 0 52px;
+  padding: 0 0 0 52px;
   margin: 20px 0 0;
 `
