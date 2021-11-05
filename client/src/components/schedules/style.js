@@ -1,5 +1,20 @@
 import styled, { css } from 'styled-components'
+import iconArrow from '../../images/icon-arrow.png'
 import iconCalendar from '../../images/icon-calendar.png'
+
+const arrow = styled.div`
+  background: url(${iconArrow}) no-repeat;
+  background-color: #fff;
+  background-position: center;
+  background-size: 10px;
+  border: 1px solid #f7921e;
+  border-radius: 20px;
+  height: 28px;
+  position: absolute;
+  top: 80px;
+  width: 28px;
+  z-index: 10;
+`
 
 export const Body = styled.div`
   display: flex;
@@ -40,19 +55,8 @@ export const Item = styled.div`
   justify-content: center;
 `
 
-export const Text = styled.label`
-  color: #333;
-  ${({ body }) => body && css`
-    font-size: 12px;
-    margin: 0 0 0 4px;
-  `}
-
-  ${({ title }) => title && css`
-    font-size: 14px;
-    font-weight: 600;
-    margin: 0 0 4px 8px;
-    text-transform: capitalize;
-  `}
+export const NextArrow = styled(arrow)`
+  right: 8px;
 `
 
 export const Option = styled.div`
@@ -66,7 +70,13 @@ export const Option = styled.div`
   height: 172px;
   margin: 0 4px;
   padding: 8px 12px;
-  width: 280px;
+  width: 264px;
+`
+
+export const PrevArrow = styled(arrow)`
+  background-position-x: 9px;
+  left: 10px;
+  transform: rotate(180deg);
 `
 
 export const Row = styled.div`
@@ -80,5 +90,20 @@ export const Row = styled.div`
   ${({ end }) => end && css`
     justify-content: flex-end;
     margin: 8px 0 0;
+  `}
+`
+
+export const Text = styled.label`
+  color: #333;
+  ${({ body }) => body && css`
+    font-size: 12px;
+    margin: 0 0 0 4px;
+  `}
+
+  ${({ title }) => title && css`
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 4px 8px;
+    text-transform: capitalize;
   `}
 `

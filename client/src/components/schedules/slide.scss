@@ -1,0 +1,9 @@
+.slick {
+  &-disabled {
+    opacity: 0;
+    visibility: hidden;
+  }
+  &-slider {
+    display: flex;
+  }
+}

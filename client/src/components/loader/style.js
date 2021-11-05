@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components'
-import ImageBalloon from '../../images/balloon.svg'
+import ImageBalloon from '../../images/icon-chat-bubble.png'
 
 const animation = keyframes`
   0% { transform: scaleY(.25) }
@@ -7,9 +7,12 @@ const animation = keyframes`
   40%, 100% { transform: scaleY(.25) } 
 `
 
-export const Bot = styled(ImageBalloon)`
-  height: 40px;
-  width: auto;
+export const Bot = styled.div`
+  background: url(${ImageBalloon}) no-repeat;
+  background-position: center;
+  background-size: 32px;
+  height: 32px;
+  width: 32px;
 `
 
 export const Container = styled.div`
@@ -45,7 +48,7 @@ export const Container = styled.div`
 
 export const Icon = styled.div`
   height: 32px;
-  margin: 0 4px 0 0;
+  margin: 0 8px 0 0;
   width: auto;
 `
 

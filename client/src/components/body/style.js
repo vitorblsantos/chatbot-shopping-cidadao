@@ -12,13 +12,13 @@ const MessageAnimation = keyframes`
 `
 
 export const Container = styled.div`
-  background: #f7f7f7;
+  background: #f5f5f5;
   border: 1px solid #272525;
   border-bottom: 0;
   border-top: 0;
   display: flex;
   flex-flow: column nowrap;
-  height: 74%;
+  height: 75%;
   overflow: hidden;
   width: 100%;
 `
@@ -51,19 +51,22 @@ export const Row = styled.div`
 
 export const Status = styled.div`
   align-items: center;
-  background: #5f5c5a;
+  background: rgb(28 24 24 / 46%);
   color: #ffffff;
   display: flex;
-  font-size: .8rem;
+  font-size: .75rem;
+  font-weight: 700;
+  height: 24px;
   justify-content: center;
-  padding: 2px 0;
+  letter-spacing: .8px;
   text-align: center;
+  text-transform: uppercase;
   width: 100%;
 `
 export const Warning = styled.img.attrs(() => ({
   src: WarningImage
 }))`
-  height: auto;
   margin: 0 4px 0 0;
-  width: 12px;
+  height: 10px;
+  width: auto;
 `

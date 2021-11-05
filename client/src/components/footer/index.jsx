@@ -191,7 +191,7 @@ const Footer = () => {
       <Background>
         <Input onChange={(e) => handleInput(e)} onKeyDown={e => handleKey(e)} placeholder={chatbot.input.placeholder || 'Digite sua mensagem...'} value={inputMessage} />
         <Button>
-          <Send onClick={() => handleFlow(context, inputMessage)} />
+          <Send />
         </Button>
       </Background>
     </Container>

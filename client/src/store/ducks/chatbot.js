@@ -1,5 +1,3 @@
-'use strict'
-
 const INITIAL_STATE = {
   active: false,
   context: {
@@ -76,6 +74,7 @@ export function setChatContext (context, placeholder) {
         placeholder
       }
     })
+    Promise.resolve()
   }
 }
 

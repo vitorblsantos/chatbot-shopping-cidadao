@@ -1,5 +1,3 @@
-'use strict'
-
 import 'dotenv/config'
 import AssistantV2 from 'ibm-watson/assistant/v2'
 import { IamAuthenticator } from 'ibm-watson/auth'
@@ -31,12 +29,8 @@ const sendMessage = async ({ context, message, sessionId }) => {
       options: {
         return_context: true
       }
-<<<<<<< HEAD
     },
     context
-=======
-    }
->>>>>>> master
   })
   return result
 }

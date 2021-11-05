@@ -46,7 +46,7 @@ export const Container = styled.div`
   border-top-right-radius: 10px;
   background: #3c3c3c;
   display: flex;
-  height: 52px;
+  height: 48px;
   justify-content: center;
   line-height: 1;
   position: relative;

@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const Balloon = styled.div`
-  background: #2222220a;
+  background: #c8dffb40;
   border: 1px solid #222;
   border-radius: 8px;
   border-top-right-radius: 4px;
@@ -28,5 +28,9 @@ export const Row = styled.div`
   display: flex;
   flex: 1;
   flex-wrap: wrap;
-  padding: 0 20px 0 52px;
+  padding: 0 12px 0 52px;
+
+  @media (max-width: 992px) {
+    padding-right: 28px;
+  }
 `

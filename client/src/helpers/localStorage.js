@@ -1,5 +1,3 @@
-'use strict'
-
 const { localStorage } = window
 
 const Get = key => localStorage.getItem(key || '')
