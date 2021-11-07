@@ -9,11 +9,29 @@ const arrow = styled.div`
   background-size: 10px;
   border: 1px solid #f7921e;
   border-radius: 20px;
+  cursor: pointer;
   height: 28px;
   position: absolute;
   top: 80px;
   width: 28px;
   z-index: 2;
+`
+
+const button = styled.button`
+  border: 0;
+  border-radius: 12px;
+  color: #fff;
+  cursor: pointer;
+  margin: 12px 8px 4px auto;
+  padding: 4px 8px;
+  transition: all .3s ease-in-out ;
+`
+
+export const ActiveButton = styled(button)`
+  background-color: #4aa14a;
+  &:hover {
+    background-color: #5cb55c;
+  }
 `
 
 export const Body = styled.div`
@@ -25,6 +43,13 @@ export const Body = styled.div`
 
 export const Bold = styled.span`
   font-weight: 600;
+`
+
+export const CancelButton = styled(button)`
+  background-color: #e44b3b;
+  &:hover {
+    background-color: #e56557;
+  }
 `
 
 export const Container = styled.div`
@@ -67,8 +92,8 @@ export const Option = styled.div`
   cursor: pointer;
   font-size: .7rem;
   font-weight: bold;
-  height: 172px;
   margin: 0 auto;
+  min-height: 172px;
   padding: 8px 0 8px 16px;
   width: 90%;
 `
@@ -104,6 +129,6 @@ export const Text = styled.label`
     font-size: 14px;
     font-weight: 600;
     margin: 0 0 4px 8px;
-    text-transform: capitalize;
+    text-transform: uppercase;
   `}
 `

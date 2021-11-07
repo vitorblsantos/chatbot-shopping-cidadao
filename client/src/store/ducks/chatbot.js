@@ -35,6 +35,7 @@ const INITIAL_STATE = {
 }
 
 export const Types = {
+  RESTART_FLOW: 'RESTART_FLOW',
   SET_CHAT_ACTIVE: 'SET_CHAT_ACTIVE',
   SET_CHAT_CONTEXT: 'SET_CHAT_CONTEXT',
   SET_CHAT_INPUT_DISABLED: 'SET_CHAT_INPUT_DISABLED',
@@ -46,6 +47,7 @@ export const Types = {
 }
 
 export default function reducer (state = INITIAL_STATE, { type, payload }) {
+  if (type === Types.RESTART_FLOW) return { ...INITIAL_STATE }
   if (type === Types.SET_CHAT_ACTIVE) return { ...state, ...payload }
   if (type === Types.SET_CHAT_CONTEXT) return { ...state, context: { ...state.context, ...payload } }
   if (type === Types.SET_CHAT_INPUT_DISABLED) return { ...state, input: { ...state.input, ...payload } }
@@ -55,6 +57,12 @@ export default function reducer (state = INITIAL_STATE, { type, payload }) {
   if (type === Types.SET_MESSAGES) return { ...state, messages: [...state.messages, { ...payload }] }
   if (type === Types.SET_OPTIONS) return { ...state, options: payload.options }
   return state
+}
+
+export function restartFlow () {
+  return {
+    type: Types.RESTART_FLOW
+  }
 }
 
 export function setChatActive (active) {

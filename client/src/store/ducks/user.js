@@ -16,6 +16,7 @@ const INITIAL_STATE = {
 export const Types = {
   ADD_USER_INTERACTION: 'ADD_USER_INTERACTION',
   CLEAR_USER_SCHEDULES: 'CLEAR_USER_SCHEDULES',
+  RESTART_USER_SCHEDULES: 'RESTART_USER_SCHEDULES',
   SET_USER_EMAIL: 'SET_USER_EMAIL',
   SET_USER_ID: 'SET_USER_ID',
   SET_USER_COORDS: 'SET_USER_COORDS',
@@ -26,28 +27,17 @@ export const Types = {
 }
 
 export default function reducer (state = INITIAL_STATE, { type, payload }) {
-  switch (type) {
-    case Types.SET_USER_EMAIL:
-      return { ...state, email: payload.email }
-    case Types.ADD_USER_INTERACTION:
-      return { ...state, interactions: [...state.interactions, { ...payload }] }
-    case Types.CLEAR_USER_SCHEDULES:
-      return { ...state, schedules: [] }
-    case Types.SET_USER_COORDS:
-      return { ...state, coords: payload.coords }
-    case Types.SET_USER_ID:
-      return { ...state, id: payload.id }
-    case Types.SET_USER_NAME:
-      return { ...state, name: payload.name }
-    case Types.SET_USER_SCHEDULED_DATE:
-      return { ...state, scheduledDate: payload.scheduledDate }
-    case Types.SET_USER_SCHEDULED_STATION:
-      return { ...state, scheduledStation: payload.scheduledStation }
-    case Types.SET_USER_SCHEDULES:
-      return { ...state, schedules: [...state.schedules, ...payload] }
-    default:
-      return state
-  }
+  if (type === Types.ADD_USER_INTERACTION) return { ...state, interactions: [...state.interactions, { ...payload }] }
+  if (type === Types.CLEAR_USER_SCHEDULES) return { ...state, schedules: [] }
+  if (type === Types.RESTART_USER_SCHEDULES) return { ...INITIAL_STATE }
+  if (type === Types.SET_USER_COORDS) return { ...state, coords: payload.coords }
+  if (type === Types.SET_USER_EMAIL) return { ...state, email: payload.email }
+  if (type === Types.SET_USER_ID) return { ...state, id: payload.id }
+  if (type === Types.SET_USER_NAME) return { ...state, name: payload.name }
+  if (type === Types.SET_USER_SCHEDULED_DATE) return { ...state, scheduledDate: payload.scheduledDate }
+  if (type === Types.SET_USER_SCHEDULED_STATION) return { ...state, scheduledStation: payload.scheduledStation }
+  if (type === Types.SET_USER_SCHEDULES) return { ...state, schedules: [...state.schedules, ...payload] }
+  return state
 }
 
 export const addUserInteraction = (description, origin, param) => {
@@ -64,6 +54,12 @@ export const addUserInteraction = (description, origin, param) => {
 export const clearUserSchedules = () => {
   return {
     type: Types.CLEAR_USER_SCHEDULES
+  }
+}
+
+export const restartUserSchedules = () => {
+  return {
+    type: Types.RESTART_USER_SCHEDULES
   }
 }
 

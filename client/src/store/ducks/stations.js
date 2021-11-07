@@ -7,12 +7,8 @@ export const Types = {
 }
 
 export default function reducer (state = INITIAL_STATE, { type, payload }) {
-  switch (type) {
-    case Types.SET_STATIONS:
-      return payload.data
-    default:
-      return state
-  }
+  if (type === Types.SET_STATIONS) return payload.data
+  return state
 }
 
 export function getStations () {

@@ -14,7 +14,6 @@ export const Balloon = styled.div`
   margin: 8px 0 0;
   padding: 8px 12px;
   position: relative;
-  width: 100%;
 `
 
 export const Hour = styled.div`

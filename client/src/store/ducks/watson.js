@@ -1,4 +1,4 @@
-import { Api, DateFNS, LocalStorage } from '../../helpers'
+import { Api, DateFNS } from '../../helpers'
 
 const INITIAL_STATE = {
   session: {
@@ -13,18 +13,21 @@ const INITIAL_STATE = {
 }
 
 export const Types = {
+  RESTART_WATSON: 'RESTART_WATSON',
   SET_WATSON_FLOW_START: 'SET_WATSON_FLOW_START',
   SET_WATSON_SESSION_ID: 'SET_WATSON_SESSION_ID'
 }
 
 export default function reducer (state = INITIAL_STATE, { type, payload }) {
-  switch (type) {
-    case Types.SET_WATSON_FLOW_START:
-      return { ...state, flow: { ...state.flow, ...payload } }
-    case Types.SET_WATSON_SESSION_ID:
-      return { ...state, session: { ...state.session, ...payload } }
-    default:
-      return state
+  if (type === Types.RESTART_WATSON) return { ...INITIAL_STATE }
+  if (type === Types.SET_WATSON_FLOW_START) return { ...state, flow: { ...state.flow, ...payload } }
+  if (type === Types.SET_WATSON_SESSION_ID) return { ...state, session: { ...state.session, ...payload } }
+  return state
+}
+
+export function restartWatson () {
+  return {
+    type: Types.RESTART_WATSON
   }
 }
 
@@ -39,27 +42,13 @@ export function setWatsonFlowStart (start) {
 
 export function setWatsonSessionId () {
   return async (dispatch, getState) => {
-    // const watsonLS = JSON.parse(LocalStorage.Get('watson'))
-    // const watsonState = getState(state => state.watson)
-
-    let session = ''
-    // let sessionValid = false
-
-    // if (watsonLS && DateFNS.compare(watsonLS.expiration, DateFNS.current) === 1) sessionValid = true
-
-    // if (sessionValid) {
-    //   session = watsonState.session ? watsonState.session : watsonLS.session
-    // } else {
     const { data } = await Api.get('/watson/session')
-    LocalStorage.Set('watson', JSON.stringify({ expiration: DateFNS.expiration, session: data }))
-    session = data
-    // }
 
     dispatch({
       type: Types.SET_WATSON_SESSION_ID,
       payload: {
-        _id: session.id,
-        id: session.watsonId,
+        _id: data.id,
+        id: data.watsonId,
         createdAt: DateFNS.current,
         expiration: DateFNS.expiration
       }

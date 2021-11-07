@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import { format, utcToZonedTime } from 'date-fns-tz'
 import Slider from 'react-slick'
 
@@ -9,11 +10,12 @@ import Bot from '../bot'
 
 import { Sleep } from '../../helpers'
 
-import { Body, Bold, Calendar, Container, Header, Item, NextArrow, Option, PrevArrow, Row, Text } from './style'
+import { ActiveButton, Body, Bold, Calendar, CancelButton, Container, Header, Item, NextArrow, Option, PrevArrow, Row, Text } from './style'
 
 import './slide.scss'
 
 const Schedules = () => {
+  const history = useHistory()
   const slideRef = useRef(null)
   const [slideOptions, setSlideOptions] = useState(false)
   const [slidingOptions, setSlidingOptions] = useState(false)
@@ -33,6 +35,11 @@ const Schedules = () => {
   const HandleNextArrow = ({ className, onClick }) => <NextArrow {... { className, onClick }} />
 
   const HandlePrevArrow = ({ className, onClick }) => <PrevArrow {... { className, onClick }} />
+
+  const handleSchedule = (active, id) => {
+    if (!active) return history.push(`/inativar/${id}`)
+    return history.push(`/ativar/${id}`)
+  }
 
   const handleSlideOptions = active => {
     setSlideOptions(true)
@@ -84,12 +91,16 @@ const Schedules = () => {
                     <Text title='true'>{el.service}</Text>
                   </Header>
                   <Body>
-                    <Row><Text body='true'><Bold>Identificador:</Bold> {el.id}</Text></Row>
+                    <Row><Text body='true'><Bold>Id:</Bold> {el.id}</Text></Row>
                     <Row><Text body='true'><Bold>Email:</Bold> {el.user}</Text></Row>
-                    <Row><Text body='true'><Bold>Data:</Bold> {format(utcToZonedTime(new Date(el.date), 'America/Sao_paulo'), 'dd/mm/yy, HH:mm')} </Text></Row>
+                    <Row><Text body='true'><Bold>Data:</Bold> {format(utcToZonedTime(new Date(el.date), 'America/Sao_paulo'), 'dd/MM/yy, HH:mm')} </Text></Row>
                     <Row><Text body='true'><Bold>Estação:</Bold> {el.station}</Text></Row>
                     <Row><Text body='true'><Bold>Status:</Bold> {el.status}</Text></Row>
                   </Body>
+                  <Row>
+                    {el.status === 'Aguardando confirmação' && <ActiveButton onClick={() => handleSchedule(true, el.id)}>Ativar agendamento</ActiveButton>}
+                    {el.status === 'Ativo' && <CancelButton onClick={() => handleSchedule(false, el.id)}>Cancelar agendamento</CancelButton>}
+                  </Row>
                 </Option>
               </Item>
             ))
