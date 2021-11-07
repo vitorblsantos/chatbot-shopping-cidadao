@@ -12,7 +12,7 @@ export const Bot = styled.div`
   background-position: center;
   background-size: contain;
   height: 28px;
-  width: 28px;
+  width: 32px;
 `
 
 export const Container = styled.div`

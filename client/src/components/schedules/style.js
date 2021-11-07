@@ -29,8 +29,10 @@ const button = styled.button`
 
 export const ActiveButton = styled(button)`
   background-color: #4aa14a;
+  border: 1px solid #4aa14a;
   &:hover {
-    background-color: #5cb55c;
+    background-color: #fff;
+    color: #4aa14a;
   }
 `
 
@@ -47,8 +49,10 @@ export const Bold = styled.span`
 
 export const CancelButton = styled(button)`
   background-color: #e44b3b;
+  border: 1px solid #e44b3b;
   &:hover {
-    background-color: #e56557;
+    background-color: #fff;
+    color: #e44b3b;
   }
 `
 
