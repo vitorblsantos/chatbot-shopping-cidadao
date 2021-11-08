@@ -106,8 +106,8 @@ const Chat = () => {
           }
         }
       }
-      option.label = format(new Date(el), 'dd/MM/yyyy HH:mm')
-      option.value.input.text = format(new Date(el), 'dd/MM/yyyy HH:mm')
+      option.label = format(utcToZonedTime(new Date(el), 'America/Sao_paulo'), 'dd/MM/yyyy HH:mm')
+      option.value.input.text = format(utcToZonedTime(new Date(el), 'America/Sao_paulo'), 'dd/MM/yyyy HH:mm')
       options.push(option)
       return el
     })
