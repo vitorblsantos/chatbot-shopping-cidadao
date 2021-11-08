@@ -19,7 +19,7 @@ export const Background = styled.div`
 
 export const Container = styled.div`
   bottom: 0;
-  height: 600px;
+  height: 500px;
   overflow: hidden;
   position: fixed;
   right: 0;

@@ -19,7 +19,7 @@ export const Container = styled.div`
   width: 0;
 
   ${({ active }) => active && css`
-    height: 580px;
+    height: 480px;
     opacity: 1;
     transition: height .3s, opacity .5s, margin .2s, visibility .5s, width .1s;
     transition-timing-function: ease-in-out;
