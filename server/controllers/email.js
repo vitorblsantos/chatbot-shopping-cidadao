@@ -8,7 +8,7 @@ const submit = async (req, res) => {
     const transporter = createTransport({
       auth: {
         user: 'dreamteamfiap21@gmail.com',
-        pass: 'w!PqSxwiePzf'
+        pass: 'vfjkfqsobofmuhib'
       },
       host: 'smtp.gmail.com',
       port: 465,
